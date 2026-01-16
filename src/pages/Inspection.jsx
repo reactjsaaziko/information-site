@@ -119,6 +119,12 @@ const faqs = [
   { q: 'Do I need lab tests for every product?', a: 'No, lab tests are only required if mandated by the product type or destination regulations. Most inspections cover visual and measurable checks.' }
 ]
 
+// Related Guides for SEO
+const relatedGuides = [
+  { label: 'Quality Inspection Checklist', to: '/guides/quality-inspection-checklist' },
+  { label: 'Supplier Verification Checklist', to: '/guides/supplier-verification-checklist' }
+]
+
 const Inspection = () => {
   const heroRef = useRef(null)
   const [expandedFaq, setExpandedFaq] = useState(null)
@@ -497,6 +503,24 @@ const Inspection = () => {
                   </motion.div>
                 )}
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Related Guides Section */}
+      <section className="inspection-section">
+        <div className="inspection-container">
+          <div className="inspection-section-header">
+            <span className="inspection-section-badge">Guides</span>
+            <h2 className="inspection-section-title">Related Guides</h2>
+          </div>
+          <div className="inspection-related-links">
+            {relatedGuides.map((guide, index) => (
+              <Link key={index} to={guide.to} className="inspection-related-link">
+                <ArrowRight size={16} />
+                {guide.label}
+              </Link>
             ))}
           </div>
         </div>

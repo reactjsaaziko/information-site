@@ -905,3 +905,48 @@
     justify-content: center;
   }
 }
+
+
+/* SEO: Related Links Styles */
+.dispute-related-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.dispute-related-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.dispute-related-link:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.dispute-related-link svg {
+  color: var(--primary);
+}
+
+@media (max-width: 767px) {
+  .dispute-related-links {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dispute-related-link {
+    justify-content: center;
+  }
+}

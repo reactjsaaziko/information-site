@@ -107,7 +107,7 @@ const Navbar = ({ darkMode = false }) => {
         }}>
           <img 
             src="/aaziko-logo.png" 
-            alt="Aaziko" 
+            alt="Aaziko - Global B2B Trade Platform" 
             style={{
               height: '32px',
               width: 'auto',
@@ -164,7 +164,7 @@ const Navbar = ({ darkMode = false }) => {
                       }}
                     >
                       {item.label}
-                      <ChevronDown size={14} style={{ 
+                      <ChevronDown size={14} aria-hidden="true" style={{ 
                         transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0)',
                         transition: 'transform 0.2s ease'
                       }} />
@@ -306,6 +306,8 @@ const Navbar = ({ darkMode = false }) => {
         {isMobile && (
           <button
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
             style={{
               background: 'transparent',
               border: 'none',

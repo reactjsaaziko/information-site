@@ -9,7 +9,7 @@ import {
   Users, MessageSquare, Calculator, Factory,
   Package, ChevronDown, BadgeCheck, Wallet,
   Landmark, FileCheck, Banknote, Receipt,
-  Scale, Percent, Lock, Eye, Headphones
+  Scale, Percent, Lock, Eye, Headphones, ArrowRight
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -87,6 +87,12 @@ const faqs = [
   { q: 'Who provides financing?', a: 'Verified NBFC & banking partners.' },
   { q: 'What are the rates?', a: 'Indicative, based on partner terms.' },
   { q: 'How long for approval?', a: '3-7 business days.' }
+]
+
+// Related Guides for SEO
+const relatedGuides = [
+  { label: 'International Payment Terms Guide', to: '/guides/international-payment-terms' },
+  { label: 'Incoterms Explained', to: '/guides/incoterms-explained' }
 ]
 
 const Finance = () => {
@@ -374,6 +380,24 @@ const Finance = () => {
               <BadgeCheck size={18} />
               Join as Partner
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Related Guides Section */}
+      <section className="finance-section">
+        <div className="finance-container">
+          <div className="finance-section-header">
+            <span className="finance-section-badge">Guides</span>
+            <h2 className="finance-section-title">Related Guides</h2>
+          </div>
+          <div className="finance-related-links">
+            {relatedGuides.map((guide, index) => (
+              <Link key={index} to={guide.to} className="finance-related-link">
+                <ArrowRight size={16} />
+                {guide.label}
+              </Link>
+            ))}
           </div>
         </div>
       </section>

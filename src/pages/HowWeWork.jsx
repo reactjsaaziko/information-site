@@ -1,7 +1,7 @@
-  // How We Work Page - Aaziko Trade Journey
+  // How We Work Page - Aaziko Trade Journey + SEO
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import {
   Globe, FileText, ShieldCheck, BadgeCheck,
@@ -17,6 +17,32 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import AnimatedBackground from '../components/ui/AnimatedBackground'
 import './HowWeWork.css'
+
+// SEO: FAQ Data
+const seoFaqs = [
+  { q: 'How long does the typical order process take?', a: 'Timeline depends on product complexity and shipping method. Typical orders: 2-4 weeks for production, 1 week for inspection, 4-6 weeks for sea freight. Total: 8-12 weeks for sea freight orders.' },
+  { q: 'What payment methods are available?', a: 'Aaziko supports multiple payment options including bank transfer, letter of credit, and escrow-style milestone payments. Payment terms are agreed during order confirmation.' },
+  { q: 'Is inspection mandatory?', a: 'Inspection is strongly recommended but not always mandatory. It is essential for first orders, high-value shipments, and custom products. Inspection provides evidence that protects both buyer and seller.' },
+  { q: 'What happens if there is a problem with my order?', a: 'Aaziko provides dispute resolution support using order history, contracts, and inspection evidence. Issues are reviewed based on documented facts.' },
+  { q: 'Can I communicate directly with suppliers?', a: 'Yes. Aaziko provides a communication workspace where buyers and sellers can discuss requirements, share files, and track conversations.' }
+]
+
+// SEO: Related internal links
+const seoRelatedLinks = [
+  { label: 'Submit RFQ', to: '/rfq' },
+  { label: 'Verified Suppliers', to: '/verified-suppliers' },
+  { label: 'Dispute Resolution', to: '/dispute-resolution' },
+  { label: 'Shipment Tracking', to: '/shipment-tracking' },
+  { label: 'Contact Us', to: '/contact' }
+]
+
+// Related Guides for SEO
+const relatedGuides = [
+  { label: 'Import Process Step by Step', to: '/guides/import-process-step-by-step' },
+  { label: 'Export Process Step by Step', to: '/guides/export-process-step-by-step' },
+  { label: 'RFQ Template', to: '/guides/rfq-template' },
+  { label: 'MOQ, Lead Time & Sampling', to: '/guides/moq-lead-time-sampling' }
+]
 
 
 // Buyer journey comparison data
@@ -221,6 +247,7 @@ const orderProcessSteps = [
 
 const HowWeWork = () => {
   const heroRef = useRef(null)
+  const [expandedFaq, setExpandedFaq] = useState(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -246,8 +273,8 @@ const HowWeWork = () => {
             <span>For Global Buyers + Indian Sellers</span>
           </div>
           <h1 className="hww-hero-title">
-            A clear order journey — where every step is{' '}
-            <span className="hww-gradient-text">visible, documented, and accountable</span>
+            How Aaziko Works: A Clear Order Journey for{' '}
+            <span className="hww-gradient-text">Global Trade</span>
           </h1>
           <p className="hww-hero-subtitle">
             Aaziko organizes global trade into structured milestones so buyers can purchase with confidence 
@@ -500,6 +527,76 @@ const HowWeWork = () => {
                 Talk to Aaziko Expert
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SEO: FAQ Section */}
+      <section className="hww-section">
+        <div className="hww-container">
+          <div className="hww-section-header">
+            <span className="hww-section-badge">FAQ</span>
+            <h2 className="hww-section-title">Frequently Asked Questions</h2>
+          </div>
+          <div className="hww-faq-list">
+            {seoFaqs.map((faq, index) => (
+              <div key={index} className={`hww-faq-item ${expandedFaq === index ? 'open' : ''}`}>
+                <button 
+                  className="hww-faq-question"
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown size={20} className="hww-faq-chevron" />
+                </button>
+                <AnimatePresence>
+                  {expandedFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="hww-faq-answer"
+                    >
+                      <p>{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO: Related Pages */}
+      <section className="hww-section hww-section-alt">
+        <div className="hww-container">
+          <div className="hww-section-header">
+            <h2 className="hww-section-title">Related Resources</h2>
+          </div>
+          <div className="hww-related-links">
+            {seoRelatedLinks.map((link, index) => (
+              <Link key={index} to={link.to} className="hww-related-link">
+                <ArrowRight size={16} />
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Related Guides Section */}
+      <section className="hww-section">
+        <div className="hww-container">
+          <div className="hww-section-header">
+            <h2 className="hww-section-title">Related Guides</h2>
+          </div>
+          <div className="hww-related-links">
+            {relatedGuides.map((guide, index) => (
+              <Link key={index} to={guide.to} className="hww-related-link">
+                <ArrowRight size={16} />
+                {guide.label}
+              </Link>
+            ))}
           </div>
         </div>
       </section>

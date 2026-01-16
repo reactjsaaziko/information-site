@@ -1,9 +1,41 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, ArrowRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
 import './ExportDocumentation.css';
 
+// SEO: FAQ Data
+const faqs = [
+  { q: 'What documents must the seller provide?', a: 'Sellers must provide: Commercial Invoice with complete product and value details, Packing List with carton-level breakdown, and any product-specific documents like test reports or certifications.' },
+  { q: 'What is the difference between Proforma Invoice and Commercial Invoice?', a: 'Proforma Invoice is a preliminary document used to confirm order terms before production. Commercial Invoice is the final, official invoice used for customs clearance and payment.' },
+  { q: 'Do I need a Certificate of Origin for every shipment?', a: 'Not always. COO is required when the destination country mandates it, when claiming preferential duty rates under trade agreements, or when the buyer specifically requests it.' },
+  { q: 'What happens if my documents have errors?', a: 'Document errors cause customs delays and may require amendments (additional fees and time). Significant errors can result in detailed inspections, duty disputes, or shipment rejection.' },
+  { q: 'How do I know which product-specific documents I need?', a: 'Requirements depend on product category and destination country. Common triggers: electronics need test reports, food needs health certificates, chemicals need MSDS.' }
+];
+
+// SEO: Related internal links
+const relatedLinks = [
+  { label: 'Customs Documentation', to: '/customs-documentation' },
+  { label: 'Trade Agreements', to: '/trade-agreements' },
+  { label: 'Export Import Guides', to: '/guides' },
+  { label: 'How We Work', to: '/how-we-work' },
+  { label: 'Verified Suppliers', to: '/verified-suppliers' }
+];
+
+// Related Guides for SEO
+const relatedGuides = [
+  { label: 'Export Documents from India', to: '/guides/export-documents-from-india' },
+  { label: 'Export Process Step by Step', to: '/guides/export-process-step-by-step' },
+  { label: 'Incoterms Explained', to: '/guides/incoterms-explained' },
+  { label: 'How to Find HS Code', to: '/guides/how-to-find-hs-code' }
+];
+
 const ExportDocumentation = () => {
+  const [expandedFaq, setExpandedFaq] = useState(null);
+  
   return (
     <div className="export-doc-page">
       <AnimatedBackground />
@@ -17,7 +49,7 @@ const ExportDocumentation = () => {
       {/* Hero Section */}
       <section className="export-doc-hero">
         <div className="export-doc-hero-content">
-          <h1>Export Documents, Made Simple.</h1>
+          <h1>Export Documentation: Essential Documents for International Shipping</h1>
           <p className="export-doc-hero-subtitle">
             International buyers and customs need clean, accurate documents. Aaziko provides a clear checklist 
             so your shipment moves smoothly—easy, transparent, and trustful.
@@ -159,6 +191,70 @@ const ExportDocumentation = () => {
           </div>
         </div>
       </section>
+
+      {/* SEO: FAQ Section */}
+      <section className="export-doc-section export-doc-section-alt">
+        <div className="export-doc-container">
+          <h2 className="export-doc-section-title">Frequently Asked Questions</h2>
+          <div className="export-doc-faq-list">
+            {faqs.map((faq, index) => (
+              <div key={index} className={`export-doc-faq-item ${expandedFaq === index ? 'open' : ''}`}>
+                <button 
+                  className="export-doc-faq-question"
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown size={20} className="export-doc-faq-chevron" />
+                </button>
+                <AnimatePresence>
+                  {expandedFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="export-doc-faq-answer"
+                    >
+                      <p>{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO: Related Pages */}
+      <section className="export-doc-section">
+        <div className="export-doc-container">
+          <h2 className="export-doc-section-title">Related Resources</h2>
+          <div className="export-doc-related-links">
+            {relatedLinks.map((link, index) => (
+              <Link key={index} to={link.to} className="export-doc-related-link">
+                <ArrowRight size={16} />
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Related Guides Section */}
+      <section className="export-doc-section export-doc-section-alt">
+        <div className="export-doc-container">
+          <h2 className="export-doc-section-title">Related Guides</h2>
+          <div className="export-doc-related-links">
+            {relatedGuides.map((guide, index) => (
+              <Link key={index} to={guide.to} className="export-doc-related-link">
+                <ArrowRight size={16} />
+                {guide.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

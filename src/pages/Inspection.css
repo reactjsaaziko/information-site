@@ -1849,3 +1849,41 @@
     padding: 24px;
   }
 }
+
+
+/* Related Links Section */
+.inspection-related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.inspection-related-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 8px;
+  color: #2563eb;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.inspection-related-link:hover {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: #2563eb;
+  transform: translateY(-2px);
+}
+
+.inspection-related-link svg {
+  transition: transform 0.2s ease;
+}
+
+.inspection-related-link:hover svg {
+  transform: translateX(3px);
+}

@@ -1035,3 +1035,41 @@
     justify-content: center;
   }
 }
+
+
+/* Related Links Section */
+.finance-related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.finance-related-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 8px;
+  color: #2563eb;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.finance-related-link:hover {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: #2563eb;
+  transform: translateY(-2px);
+}
+
+.finance-related-link svg {
+  transition: transform 0.2s ease;
+}
+
+.finance-related-link:hover svg {
+  transform: translateX(3px);
+}

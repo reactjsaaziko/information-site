@@ -1,4 +1,4 @@
-// Export & Import Guides Page - Redesigned for better readability
+// Export & Import Guides Page - Redesigned for better readability + SEO
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -13,6 +13,120 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import AnimatedBackground from '../components/ui/AnimatedBackground'
 import './ExportImportGuides.css'
+
+// SEO: FAQ Data
+const faqs = [
+  { q: 'What is an HS code and why is it important?', a: 'An HS (Harmonized System) code is a standardized numerical code used worldwide to classify traded products. It determines applicable customs duties, required permits, and documentation. Using the wrong HS code can result in incorrect duty payments, customs delays, or penalties.' },
+  { q: 'What is the difference between FOB and CIF?', a: 'FOB (Free On Board) means the seller delivers goods to the vessel at the origin port—the buyer handles freight and insurance from there. CIF (Cost, Insurance, Freight) means the seller pays for freight and insurance to the destination port.' },
+  { q: 'How long does international shipping take?', a: 'Sea freight typically takes 4-8 weeks depending on the route. Air freight takes 1-2 weeks. Add time for production, inspection, and customs clearance. Total lead time is usually 6-12 weeks for sea freight.' },
+  { q: 'Do I need a Certificate of Origin for every shipment?', a: 'Not always, but many countries require it for customs clearance or to claim preferential duty rates under trade agreements. Check your destination country requirements.' },
+  { q: 'When should I use pre-shipment inspection?', a: 'Use inspection for first orders with new suppliers, high-value shipments, custom or OEM products, and bulk orders. Inspection provides evidence of quality and quantity before shipping.' }
+]
+
+// SEO: Related internal links
+const relatedLinks = [
+  { label: 'Customs Documentation', to: '/customs-documentation' },
+  { label: 'Export Documentation', to: '/export-documentation' },
+  { label: 'Trade Agreements', to: '/trade-agreements' },
+  { label: 'Shipment Tracking', to: '/shipment-tracking' },
+  { label: 'How We Work', to: '/how-we-work' }
+]
+
+// Guide pages data for "More Guides" section
+const guidePages = [
+  { 
+    title: 'Export Documents from India', 
+    description: 'Complete checklist of documents required for exporting from India',
+    to: '/guides/export-documents-from-india',
+    icon: FileText
+  },
+  { 
+    title: 'Import Documents Checklist', 
+    description: 'Essential documents every importer needs for customs clearance',
+    to: '/guides/import-documents-checklist',
+    icon: ClipboardCheck
+  },
+  { 
+    title: 'Incoterms Explained', 
+    description: 'FOB, CIF, DDP and more - understand who pays for what',
+    to: '/guides/incoterms-explained',
+    icon: Scale
+  },
+  { 
+    title: 'How to Find HS Code', 
+    description: 'Step-by-step guide to product classification for customs',
+    to: '/guides/how-to-find-hs-code',
+    icon: Tag
+  },
+  { 
+    title: 'Export Process Step by Step', 
+    description: 'Complete export journey from order to delivery',
+    to: '/guides/export-process-step-by-step',
+    icon: Ship
+  },
+  { 
+    title: 'Import Process Step by Step', 
+    description: 'Full import workflow from sourcing to warehouse',
+    to: '/guides/import-process-step-by-step',
+    icon: Truck
+  },
+  { 
+    title: 'RFQ Template', 
+    description: 'How to write effective Request for Quotation',
+    to: '/guides/rfq-template',
+    icon: FileCheck
+  },
+  { 
+    title: 'MOQ, Lead Time & Sampling', 
+    description: 'Understanding minimum orders, timelines, and samples',
+    to: '/guides/moq-lead-time-sampling',
+    icon: Clock
+  },
+  // Cluster B - Logistics & Shipping
+  { 
+    title: 'Sea vs Air Freight', 
+    description: 'How to choose the right shipping mode for your cargo',
+    to: '/guides/sea-vs-air-freight',
+    icon: Ship
+  },
+  { 
+    title: 'Export Packaging & Labeling', 
+    description: 'Packaging standards and labeling requirements for export',
+    to: '/guides/export-packaging-labeling',
+    icon: Box
+  },
+  { 
+    title: 'Shipment Tracking Milestones', 
+    description: 'Understanding cargo journey checkpoints and delays',
+    to: '/guides/shipment-tracking-milestones',
+    icon: Truck
+  },
+  { 
+    title: 'Customs Clearance Basics', 
+    description: 'Essential guide to clearing goods through customs',
+    to: '/guides/customs-clearance-basics',
+    icon: Shield
+  },
+  // Cluster C - Finance, Quality & Suppliers
+  { 
+    title: 'International Payment Terms', 
+    description: 'T/T, L/C, D/P explained - choose the right payment method',
+    to: '/guides/international-payment-terms',
+    icon: DollarSign
+  },
+  { 
+    title: 'Quality Inspection Checklist', 
+    description: 'Pre-shipment inspection guide for buyers',
+    to: '/guides/quality-inspection-checklist',
+    icon: ClipboardCheck
+  },
+  { 
+    title: 'Supplier Verification Checklist', 
+    description: 'How to vet and verify suppliers before ordering',
+    to: '/guides/supplier-verification-checklist',
+    icon: CheckCircle
+  }
+]
 
 const quickStartCards = [
   { icon: Tag, title: 'HS Code', description: 'Product classification for duties & docs', color: '#2563eb' },
@@ -105,6 +219,7 @@ const ExportImportGuides = () => {
   const heroRef = useRef(null)
   const [activeDocTab, setActiveDocTab] = useState('commercial')
   const [openAccordion, setOpenAccordion] = useState(null)
+  const [expandedFaq, setExpandedFaq] = useState(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -132,10 +247,11 @@ const ExportImportGuides = () => {
             <span>Trade Guides</span>
           </div>
           <h1 className="eig-hero-title">
-            Export & Import <span className="eig-gradient-text">Made Simple</span>
+            Export & Import Guides: <span className="eig-gradient-text">Practical Steps for International Trade</span>
           </h1>
           <p className="eig-hero-subtitle">
-            Practical guidance on documents, shipping, customs & inspection for global trade.
+            Comprehensive guidance on documents, shipping, customs, and inspection. 
+            Learn HS codes, Incoterms, and compliance requirements for successful global trade.
           </p>
         </div>
       </section>
@@ -371,7 +487,82 @@ const ExportImportGuides = () => {
         </div>
       </section>
 
+      {/* More Guides Section */}
+      <section className="eig-section">
+        <div className="eig-container">
+          <div className="eig-section-header">
+            <h2 className="eig-section-title">More Guides</h2>
+            <p className="eig-section-subtitle">In-depth guides for specific trade topics</p>
+          </div>
+          <div className="eig-guides-grid">
+            {guidePages.map((guide, index) => (
+              <Link key={index} to={guide.to} className="eig-guide-card">
+                <div className="eig-guide-icon">
+                  <guide.icon size={24} />
+                </div>
+                <div className="eig-guide-content">
+                  <h3>{guide.title}</h3>
+                  <p>{guide.description}</p>
+                </div>
+                <ArrowRight size={18} className="eig-guide-arrow" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
+      {/* SEO: FAQ Section */}
+      <section className="eig-section eig-section-alt">
+        <div className="eig-container">
+          <div className="eig-section-header">
+            <h2 className="eig-section-title">Frequently Asked Questions</h2>
+            <p className="eig-section-subtitle">Common questions about export-import procedures</p>
+          </div>
+          <div className="eig-faq-list">
+            {faqs.map((faq, index) => (
+              <div key={index} className={`eig-faq-item ${expandedFaq === index ? 'open' : ''}`}>
+                <button 
+                  className="eig-faq-question"
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown size={20} className="eig-faq-chevron" />
+                </button>
+                <AnimatePresence>
+                  {expandedFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="eig-faq-answer"
+                    >
+                      <p>{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO: Related Pages */}
+      <section className="eig-section">
+        <div className="eig-container">
+          <div className="eig-section-header">
+            <h2 className="eig-section-title">Related Resources</h2>
+          </div>
+          <div className="eig-related-links">
+            {relatedLinks.map((link, index) => (
+              <Link key={index} to={link.to} className="eig-related-link">
+                <ArrowRight size={16} />
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

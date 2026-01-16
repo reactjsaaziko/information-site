@@ -33,7 +33,7 @@ const Footer = () => {
     { label: 'Inspection & Quality Checks', path: '/buyers/benefits' },
     { label: 'Customs & Documentation Help', path: '/customs-documentation' },
     { label: 'Shipment Tracking & Delivery Support', path: '/shipment-tracking' },
-    { label: 'Dispute & Resolution Support', path: '/policy' }
+    { label: 'Dispute & Resolution Support', path: '/dispute-resolution' }
   ]
 
   const suppliersLinks = [
@@ -129,7 +129,7 @@ const Footer = () => {
             <div className="footer-column footer-brand">
               <div className="brand-header">
                 <div className="brand-logo">
-                  <img src="/aaziko-logo.png" alt="Aaziko" className="logo-image" />
+                  <img src="/aaziko-logo.png" alt="Aaziko - Global B2B Trade Platform" className="logo-image" />
                 </div>
                 <p className="brand-tagline">Make Planet Your Market.</p>
               </div>
@@ -240,7 +240,7 @@ const Footer = () => {
             <div className="accordion-brand">
               <div className="brand-header">
                 <div className="brand-logo">
-                  <img src="/aaziko-logo.png" alt="Aaziko" className="logo-image" />
+                  <img src="/aaziko-logo.png" alt="Aaziko - Global B2B Trade Platform" className="logo-image" />
                 </div>
                 <p className="brand-tagline">Make Planet Your Market.</p>
               </div>
@@ -277,11 +277,16 @@ const Footer = () => {
                 <button 
                   className={`accordion-header ${openAccordion === section.id ? 'open' : ''}`}
                   onClick={() => toggleAccordion(section.id)}
+                  aria-expanded={openAccordion === section.id}
+                  aria-controls={`accordion-content-${section.id}`}
                 >
                   <span>{section.title}</span>
-                  <ChevronDown size={20} className="accordion-icon" />
+                  <ChevronDown size={20} className="accordion-icon" aria-hidden="true" />
                 </button>
-                <div className={`accordion-content ${openAccordion === section.id ? 'open' : ''}`}>
+                <div 
+                  id={`accordion-content-${section.id}`}
+                  className={`accordion-content ${openAccordion === section.id ? 'open' : ''}`}
+                >
                   <ul className="footer-links">
                     {section.links.map((link) => (
                       <li key={link.label}>

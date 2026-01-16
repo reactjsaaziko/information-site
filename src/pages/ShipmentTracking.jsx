@@ -1,14 +1,14 @@
 // Aaziko Shipment Tracking & Delivery Support Page
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import {
   MapPin, Package, Bell, Eye, Shield, Clock,
   CheckCircle, Globe, Zap, AlertTriangle, Users,
   MessageSquare, Headphones, Truck,
   Navigation, FileCheck, Search, Settings, Phone,
-  Mail, ArrowRight, RefreshCw, Lock, Target
+  Mail, ArrowRight, RefreshCw, Lock, Target, ChevronDown
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -91,9 +91,35 @@ const howToUseSteps = [
   { step: 4, title: 'Contact Support', description: "If there are any issues with the shipment, reach out to Aaziko's support team for quick resolution." }
 ]
 
+// SEO: FAQ Data
+const seoFaqs = [
+  { q: 'How do I track my shipment on Aaziko?', a: 'Enter your tracking ID in the search box on the Shipment Tracking page. You can also access tracking from your order dashboard by clicking on the specific order.' },
+  { q: 'What shipping methods does Aaziko support?', a: 'Aaziko supports sea freight, air freight, and express courier services. The available options depend on your shipment size, destination, and urgency.' },
+  { q: 'How often is tracking information updated?', a: 'Tracking updates depend on the logistics provider. Sea freight typically updates at major port milestones, while air freight and express services provide more frequent updates.' },
+  { q: 'What should I do if my shipment is delayed?', a: 'Contact Aaziko support with your tracking ID. Our team will investigate with the logistics partner and provide you with updated delivery estimates.' },
+  { q: 'Can I change the delivery address after shipment?', a: 'Address changes depend on the shipment stage and logistics provider. Contact support immediately if you need to modify delivery details.' },
+  { q: 'What happens if my shipment is stuck in customs?', a: 'Aaziko provides customs documentation support. If your shipment is held, our team will help identify the issue and guide you through the clearance process.' }
+]
+
+// SEO: Related internal links
+const seoRelatedLinks = [
+  { label: 'How We Work', to: '/how-we-work' },
+  { label: 'Customs Documentation', to: '/customs-documentation' },
+  { label: 'Export Documentation', to: '/export-documentation' },
+  { label: 'Dispute Resolution', to: '/dispute-resolution' },
+  { label: 'Contact Us', to: '/contact' }
+]
+
+// Related Guides for SEO
+const relatedGuides = [
+  { label: 'Shipment Tracking Milestones Guide', to: '/guides/shipment-tracking-milestones' },
+  { label: 'Sea vs Air Freight Guide', to: '/guides/sea-vs-air-freight' }
+]
+
 const ShipmentTracking = () => {
   const heroRef = useRef(null)
   const [trackingId, setTrackingId] = useState('')
+  const [expandedFaq, setExpandedFaq] = useState(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -125,7 +151,7 @@ const ShipmentTracking = () => {
             <span>Shipment Tracking & Delivery Support</span>
           </div>
           <h1 className="tracking-hero-title">
-            Track Your Shipment in Real-Time with <span className="tracking-gradient-text">Aaziko's Delivery Support</span>
+            Shipment Tracking & Delivery Support for <span className="tracking-gradient-text">International Trade</span>
           </h1>
           <p className="tracking-hero-subtitle">
             From your order to the final destination—Aaziko ensures transparency and timely updates every step of the way.
@@ -278,6 +304,77 @@ const ShipmentTracking = () => {
                   <p className="tracking-howto-desc">{item.description}</p>
                 </div>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO: FAQ Section */}
+      <section className="tracking-section tracking-section-alt">
+        <div className="tracking-container">
+          <div className="tracking-section-header">
+            <span className="tracking-section-badge">FAQ</span>
+            <h2 className="tracking-section-title">Frequently Asked Questions</h2>
+          </div>
+          
+          <div className="tracking-faq-container">
+            {seoFaqs.map((faq, index) => (
+              <div key={index} className={`tracking-faq-item ${expandedFaq === index ? 'open' : ''}`}>
+                <button
+                  className={`tracking-faq-question ${expandedFaq === index ? 'open' : ''}`}
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown size={18} className="tracking-faq-chevron" />
+                </button>
+                <AnimatePresence>
+                  {expandedFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="tracking-faq-answer"
+                    >
+                      <p>{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO: Related Pages */}
+      <section className="tracking-section">
+        <div className="tracking-container">
+          <div className="tracking-section-header">
+            <h2 className="tracking-section-title">Related Resources</h2>
+          </div>
+          <div className="tracking-related-links">
+            {seoRelatedLinks.map((link, index) => (
+              <Link key={index} to={link.to} className="tracking-related-link">
+                <ArrowRight size={16} />
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Related Guides Section */}
+      <section className="tracking-section tracking-section-alt">
+        <div className="tracking-container">
+          <div className="tracking-section-header">
+            <h2 className="tracking-section-title">Related Guides</h2>
+          </div>
+          <div className="tracking-related-links">
+            {relatedGuides.map((guide, index) => (
+              <Link key={index} to={guide.to} className="tracking-related-link">
+                <ArrowRight size={16} />
+                {guide.label}
+              </Link>
             ))}
           </div>
         </div>

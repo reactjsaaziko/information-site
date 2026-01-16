@@ -1,19 +1,38 @@
-// Verified Indian Suppliers Page - Aaziko Premium 3D Light Theme
-import { useEffect, useRef } from 'react'
+// Verified Indian Suppliers Page - Aaziko Premium 3D Light Theme + SEO
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import {
   ShieldCheck, BadgeCheck, Search, FileCheck, 
   Globe, Award,
   MessageSquare, CreditCard, Users,
   Lock, DollarSign, Zap, HeartHandshake, Building2,
-  FlaskConical, Activity, RefreshCw, Quote, Phone
+  FlaskConical, Activity, RefreshCw, Quote, Phone,
+  ChevronDown, ArrowRight
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import AnimatedBackground from '../components/ui/AnimatedBackground'
 import './VerifiedSuppliers.css'
+
+// SEO: FAQ Data
+const seoFaqs = [
+  { q: 'What does "verified" mean on Aaziko?', a: 'Verified means the supplier has passed Aaziko background checks including company registration, business licenses, product quality evaluation, and financial health assessment. Verified suppliers are monitored continuously.' },
+  { q: 'Does verification guarantee order quality?', a: 'Verification confirms supplier legitimacy and capability, but does not guarantee specific order outcomes. For individual orders, use clear contracts, sample approval, and pre-shipment inspection.' },
+  { q: 'How do I know if a supplier is verified?', a: 'Verified suppliers display a verification badge on their Aaziko profile. You can also filter search results to show only verified suppliers.' },
+  { q: 'Can a supplier lose verified status?', a: 'Yes. Verified status is monitored continuously. Suppliers can lose verification for non-compliance, poor order performance, or unresolved disputes.' },
+  { q: 'Should I still inspect orders from verified suppliers?', a: 'Yes, especially for first orders, high-value shipments, or custom products. Inspection provides order-specific quality evidence regardless of supplier verification status.' }
+]
+
+// SEO: Related internal links
+const seoRelatedLinks = [
+  { label: 'Submit RFQ', to: '/rfq' },
+  { label: 'How We Work', to: '/how-we-work' },
+  { label: 'Dispute Resolution', to: '/dispute-resolution' },
+  { label: 'Export Import Guides', to: '/guides' },
+  { label: 'Contact Us', to: '/contact' }
+]
 
 const trustStrip = [
   { icon: BadgeCheck, text: 'Verified Suppliers' },
@@ -139,6 +158,7 @@ const testimonials = [
 
 const VerifiedSuppliers = () => {
   const heroRef = useRef(null)
+  const [expandedFaq, setExpandedFaq] = useState(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -164,7 +184,7 @@ const VerifiedSuppliers = () => {
             <span>Verified Suppliers</span>
           </div>
           <h1 className="vs-hero-title">
-            Unlock Access to Verified Indian <span className="vs-gradient-text">Suppliers</span>
+            Verified Suppliers: How Aaziko Validates <span className="vs-gradient-text">Supplier Quality</span>
           </h1>
           <p className="vs-hero-subtitle">
             Reliable, Transparent, and Trustworthy — Find quality suppliers who meet your exact requirements with Aaziko's verification and compliance standards.
@@ -297,6 +317,59 @@ const VerifiedSuppliers = () => {
                 Need Help? Talk to an Expert
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SEO: FAQ Section */}
+      <section className="vs-section">
+        <div className="vs-container">
+          <div className="vs-section-header">
+            <span className="vs-section-badge">FAQ</span>
+            <h2 className="vs-section-title">Frequently Asked Questions</h2>
+          </div>
+          <div className="vs-faq-list">
+            {seoFaqs.map((faq, index) => (
+              <div key={index} className={`vs-faq-item ${expandedFaq === index ? 'open' : ''}`}>
+                <button 
+                  className="vs-faq-question"
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown size={20} className="vs-faq-chevron" />
+                </button>
+                <AnimatePresence>
+                  {expandedFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="vs-faq-answer"
+                    >
+                      <p>{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO: Related Pages */}
+      <section className="vs-section vs-section-alt">
+        <div className="vs-container">
+          <div className="vs-section-header">
+            <h2 className="vs-section-title">Related Resources</h2>
+          </div>
+          <div className="vs-related-links">
+            {seoRelatedLinks.map((link, index) => (
+              <Link key={index} to={link.to} className="vs-related-link">
+                <ArrowRight size={16} />
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </section>

@@ -1,14 +1,14 @@
 // Aaziko Dispute & Resolution Support Page - Premium 3D Light Theme
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import {
   Shield, Scale, FileText, CheckCircle, AlertTriangle,
   MessageSquare, Camera, Video, Package, Truck, ClipboardCheck,
   ChevronDown, Eye, FileCheck, Image, AlertCircle, ListChecks,
   ThumbsUp, ThumbsDown, Handshake, Globe, Factory, BadgeCheck,
-  Upload, Search, Gavel, RefreshCw, DollarSign, Ban
+  Upload, Search, Gavel, RefreshCw, DollarSign, Ban, ArrowRight
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -85,12 +85,23 @@ const importantLimits = [
   { icon: Handshake, text: 'Final outcomes depend on the order contract + proofs + partner policies (inspection/logistics/insurance if used)' }
 ]
 
-const faqs = [
-  { q: 'How do I raise a dispute?', a: 'Go to your order page, click "Raise Dispute", select the reason, and add a short note explaining the issue.' },
-  { q: 'What evidence do I need to submit?', a: 'Inspection reports, photos/videos, packing lists, commercial invoices, and shipping documents are the most important evidence types.' },
-  { q: 'How long does the resolution process take?', a: 'Resolution time depends on the complexity of the dispute and the evidence provided. Most disputes are resolved within 5-10 business days.' },
-  { q: 'Can I dispute after receiving the goods?', a: 'Yes, but you must raise the dispute within the agreed timeframe and provide evidence of the issue.' },
-  { q: 'What if I don\'t have inspection evidence?', a: 'Without evidence, it becomes difficult to verify claims. We strongly recommend using Aaziko\'s inspection service for all orders.' }
+// SEO: FAQ Data
+const seoFaqs = [
+  { q: 'How do I raise a dispute on Aaziko?', a: 'Go to your order page, click "Raise Dispute", select the reason, and add a short note explaining the issue. You will then be prompted to upload supporting evidence.' },
+  { q: 'What evidence do I need to submit for a dispute?', a: 'Inspection reports, photos/videos, packing lists, commercial invoices, and shipping documents are the most important evidence types. The more documentation you provide, the faster the resolution.' },
+  { q: 'How long does the dispute resolution process take?', a: 'Resolution time depends on the complexity of the dispute and the evidence provided. Most disputes are resolved within 5-10 business days after all evidence is submitted.' },
+  { q: 'Can I dispute after receiving the goods?', a: 'Yes, but you must raise the dispute within the agreed timeframe (typically 7-14 days after delivery) and provide evidence of the issue.' },
+  { q: 'What if I don\'t have inspection evidence?', a: 'Without evidence, it becomes difficult to verify claims. We strongly recommend using Aaziko\'s inspection service for all orders to protect yourself.' },
+  { q: 'What outcomes are possible from a dispute?', a: 'Possible outcomes include replacement/rework, price adjustment, or claim support with logistics partners. The outcome depends on the evidence and order contract terms.' }
+]
+
+// SEO: Related internal links
+const seoRelatedLinks = [
+  { label: 'How We Work', to: '/how-we-work' },
+  { label: 'Verified Suppliers', to: '/verified-suppliers' },
+  { label: 'Shipment Tracking', to: '/shipment-tracking' },
+  { label: 'Export Documentation', to: '/export-documentation' },
+  { label: 'Contact Us', to: '/contact' }
 ]
 
 const DisputeResolution = () => {
@@ -121,7 +132,7 @@ const DisputeResolution = () => {
             <span>Dispute & Resolution Support</span>
           </div>
           <h1 className="dispute-hero-title">
-            Clear, fair resolution — <span className="dispute-gradient-text">built on evidence</span>
+            Dispute Resolution for International Trade — <span className="dispute-gradient-text">Fair, Evidence-Based Process</span>
           </h1>
           <p className="dispute-hero-subtitle">
             Aaziko helps resolve issues with a structured process that keeps global trade 
@@ -340,7 +351,7 @@ const DisputeResolution = () => {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* SEO: FAQ Section */}
       <section className="dispute-section">
         <div className="dispute-container">
           <div className="dispute-section-header">
@@ -349,7 +360,7 @@ const DisputeResolution = () => {
           </div>
           
           <div className="dispute-faq-container">
-            {faqs.map((faq, index) => (
+            {seoFaqs.map((faq, index) => (
               <div key={index} className="dispute-faq-item">
                 <button
                   className={`dispute-faq-question ${expandedFaq === index ? 'open' : ''}`}
@@ -358,16 +369,37 @@ const DisputeResolution = () => {
                   <span>{faq.q}</span>
                   <ChevronDown size={18} />
                 </button>
-                {expandedFaq === index && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    className="dispute-faq-answer"
-                  >
-                    <p>{faq.a}</p>
-                  </motion.div>
-                )}
+                <AnimatePresence>
+                  {expandedFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="dispute-faq-answer"
+                    >
+                      <p>{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO: Related Pages */}
+      <section className="dispute-section dispute-section-alt">
+        <div className="dispute-container">
+          <div className="dispute-section-header">
+            <h2 className="dispute-section-title">Related Resources</h2>
+          </div>
+          <div className="dispute-related-links">
+            {seoRelatedLinks.map((link, index) => (
+              <Link key={index} to={link.to} className="dispute-related-link">
+                <ArrowRight size={16} />
+                {link.label}
+              </Link>
             ))}
           </div>
         </div>

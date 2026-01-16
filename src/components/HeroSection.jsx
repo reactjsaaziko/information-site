@@ -12,7 +12,6 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
   const isAutoScrollingRef = useRef(true);
   const globeCompleteCalledRef = useRef(false);
   const isMouseOverHeroRef = useRef(false); // Track if mouse is over hero section
-  const returnLockRef = useRef(false); // Lock to prevent animation until hero is fully visible
 
   const [scrollProgress, setScrollProgress] = useState(0);
   const [dotSize, setDotSize] = useState(8);
@@ -22,44 +21,21 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
   const [globeX, setGlobeX] = useState(40);
   const [scrollRotation, setScrollRotation] = useState(0);
   const [headlineOpacity, setHeadlineOpacity] = useState(0); // Start hidden, show when Earth is big
-  const [leftTextOpacity, setLeftTextOpacity] = useState(0); // Left text appears before main headline
-  const [leftTextY, setLeftTextY] = useState(20); // Y position for slide animation
-  const [headlineY, setHeadlineY] = useState(20); // Y position for slide animation
   const [showNav, setShowNav] = useState(false);
   const [navOpacity, setNavOpacity] = useState(0);
-  const [lightBeamsOpacity, setLightBeamsOpacity] = useState(1); // Show lights immediately on page load
+  const [lightBeamsOpacity, setLightBeamsOpacity] = useState(0);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
-  const [bgOpacity, setBgOpacity] = useState(1); // Show background immediately on page load
+  const [bgOpacity, setBgOpacity] = useState(0);
   const [showRings, setShowRings] = useState(false);
   const [ringProgress, setRingProgress] = useState(0);
   const [fullProgress, setFullProgress] = useState(0);
-  const [isReadyToAnimate, setIsReadyToAnimate] = useState(false); // Block animation until delay passes
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
-  const [isTablet, setIsTablet] = useState(typeof window !== 'undefined' ? window.innerWidth <= 900 && window.innerWidth > 768 : false);
-  const [isReturningFromBelow, setIsReturningFromBelow] = useState(false); // Track if user is returning from sections below
-
-  // Handle resize for responsive behavior
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      setIsMobile(width <= 768);
-      setIsTablet(width <= 900 && width > 768);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const handleWheel = (e) => {
-      // Block all animation control until delay passes
-      if (!isReadyToAnimate) {
-        return; // Don't allow any animation control yet
-      }
-      
-      const delta = e.deltaY * 0.0006; // Reduced for smoother scrolling
+      const delta = e.deltaY * 0.0008;
       const currentProgress = targetProgressRef.current;
       const newProgress = currentProgress + delta;
       
@@ -71,17 +47,6 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
         return; // Don't prevent default, let page scroll normally
       }
       
-      // Check if we're returning from sections below (scrolling up when hero was hidden)
-      // When returning, first show hero at full state, then allow animation on next scroll
-      if (isReturningFromBelow && returnLockRef.current) {
-        // Hero is now visible, wait for one more scroll up to start animation
-        if (delta < 0) {
-          e.preventDefault();
-          returnLockRef.current = false; // Unlock animation for next scroll
-          return;
-        }
-      }
-      
       // Only control animation if mouse is over the hero section
       if (!isMouseOverHeroRef.current) {
         return; // Let normal scroll happen
@@ -91,10 +56,6 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
       if (newProgress >= 0 && newProgress <= 2.0) {
         e.preventDefault();
         targetProgressRef.current = newProgress;
-        // Reset return state once animation starts
-        if (isReturningFromBelow && !returnLockRef.current) {
-          setIsReturningFromBelow(false);
-        }
       }
       // If scrolling up from progress 2.0, allow going back
       else if (delta < 0 && currentProgress > 0) {
@@ -118,14 +79,8 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
     };
 
     const handleTouchMove = (e) => {
-      // Block all animation control until delay passes
-      if (!isReadyToAnimate) {
-        touchStartY = e.touches[0].clientY;
-        return; // Don't allow any animation control yet
-      }
-      
       const touchY = e.touches[0].clientY;
-      const delta = (touchStartY - touchY) * 0.002; // Reduced for smoother touch scrolling
+      const delta = (touchStartY - touchY) * 0.003;
       const currentProgress = targetProgressRef.current;
       const newProgress = currentProgress + delta;
       
@@ -169,7 +124,7 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
       rafIdRef.current = requestAnimationFrame(animate);
 
       const diff = targetProgressRef.current - progressRef.current;
-      progressRef.current += diff * 0.12; // Increased for smoother response
+      progressRef.current += diff * 0.15;
       const progress = progressRef.current;
 
       setScrollProgress(Math.min(progress, 1));
@@ -195,51 +150,18 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
           const earthEased = earthProgress * earthProgress * (3 - 2 * earthProgress);
           setDotOpacity(0);
           setEarthOpacity(1);
-          // Limit max scale on mobile to prevent clipping
-          const maxScale = isMobile ? 0.35 : isTablet ? 0.45 : 0.6;
-          setGlobeScale(0.1 + earthEased * (maxScale - 0.1));
+          setGlobeScale(0.1 + earthEased * 0.5);
         }
 
         setGlobeX(40 - eased * 25);
         setScrollRotation(progress * Math.PI * 3);
 
-        // Show headline only when Earth is big (after zoom animation ~45% progress)
-        // Start slightly earlier for smoother crossfade
-        if (progress >= 0.45) {
-          const headlineProgress = (progress - 0.45) / 0.45; // 0.45 to 0.9 maps to 0 to 1 (slower)
-          // Use smoother easeOutQuart for gentle arrival
-          const t = Math.min(1, headlineProgress);
-          const easeOut = 1 - Math.pow(1 - t, 4);
-          setHeadlineOpacity(easeOut);
-          // Slide up from 40px to 0px (larger distance for smoother feel)
-          setHeadlineY(40 * (1 - easeOut));
+        // Show headline only when Earth is big (after zoom animation ~60% progress)
+        if (progress >= 0.6) {
+          const headlineProgress = (progress - 0.6) / 0.4; // 0.6 to 1.0 maps to 0 to 1
+          setHeadlineOpacity(Math.min(1, headlineProgress * 1.5)); // Fade in
         } else {
           setHeadlineOpacity(0); // Keep hidden until Earth is big
-          setHeadlineY(40);
-        }
-
-        // Show left text earlier (at ~15% progress) and fade out when main headline appears (at 45%)
-        // Smooth crossfade with overlapping timing
-        if (progress >= 0.15 && progress < 0.45) {
-          const leftTextProgress = (progress - 0.15) / 0.2; // 0.15 to 0.35 maps to 0 to 1 (slower fade in)
-          // Use smoother easeOutQuart for gentle arrival
-          const t = Math.min(1, leftTextProgress);
-          const easeOut = 1 - Math.pow(1 - t, 4);
-          setLeftTextOpacity(easeOut);
-          // Slide up from 40px to 0px (larger distance for smoother feel)
-          setLeftTextY(40 * (1 - easeOut));
-        } else if (progress >= 0.45) {
-          // Fade out quickly as headline fades in
-          const fadeOutProgress = (progress - 0.45) / 0.15; // 0.45 to 0.6 fade out
-          // Use easeInQuad for smooth fade out
-          const t = Math.min(1, fadeOutProgress);
-          const fadeAmount = t * t;
-          setLeftTextOpacity(Math.max(0, 1 - fadeAmount));
-          // Slide up from 0px to -40px as it fades out
-          setLeftTextY(-40 * fadeAmount);
-        } else {
-          setLeftTextOpacity(0); // Keep hidden initially
-          setLeftTextY(40);
         }
         
         setShowNav(progress > 0.2);
@@ -247,12 +169,15 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
 
         if (onThemeChange) onThemeChange(false);
 
-        // Show lights when progress is low (initial state or minor scroll)
-        if (progress <= 0.3) {
-          setLightBeamsOpacity(1);
+        if (!isAutoScrollingRef.current) {
+          if (progress <= 0.3) {
+            setLightBeamsOpacity(1);
+          } else {
+            const lightFade = Math.max(0, 1 - (progress - 0.3) / 0.5);
+            setLightBeamsOpacity(lightFade);
+          }
         } else {
-          const lightFade = Math.max(0, 1 - (progress - 0.3) / 0.5);
-          setLightBeamsOpacity(lightFade);
+          setLightBeamsOpacity(0);
         }
       } else {
         const phase2Progress = progress - 1;
@@ -260,16 +185,12 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
         const shrinkEased = shrinkProgress * shrinkProgress * (3 - 2 * shrinkProgress);
 
         setDotOpacity(0);
-        // Limit max scale on mobile to prevent clipping
-        const maxScale = isMobile ? 0.35 : isTablet ? 0.45 : 0.6;
-        const minScale = isMobile ? 0.15 : isTablet ? 0.2 : 0.2;
-        setGlobeScale(maxScale - shrinkEased * (maxScale - minScale));
+        setGlobeScale(0.6 - shrinkEased * 0.4);
         setGlobeX(15 - shrinkEased * 15);
         setScrollRotation(Math.PI * 3 + phase2Progress * Math.PI * 1.5);
 
         const headlineFade = 1 - Math.min(phase2Progress * 2, 1);
         setHeadlineOpacity(headlineFade * headlineFade);
-        setLeftTextOpacity(0); // Hide left text in phase 2
         setEarthOpacity(1);
         setNavOpacity(1);
         
@@ -319,11 +240,7 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
       }, 16);
     };
 
-    // 1.5-second delay before auto-animation starts after page refresh (70% reduction from 5s)
-    const autoScrollTimeout = setTimeout(() => {
-      setIsReadyToAnimate(true); // Now allow user scroll control too
-      startAutoScroll();
-    }, 1500);
+    const autoScrollTimeout = setTimeout(startAutoScroll, 500);
 
     const stopAutoScroll = () => {
       if (isAutoScrollingRef.current) {
@@ -339,26 +256,7 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
 
     // Handle scroll position for transitioning back from static sections
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      
-      // Detect when user is scrolling back to the top (returning from sections below)
-      // Only show hero and allow animation when page is scrolled to the very top
-      if (scrollY <= 5) {
-        // Page is at the top - hero should be fully visible
-        if (progressRef.current >= 1.9 && !isReturningFromBelow) {
-          setIsReturningFromBelow(true);
-          returnLockRef.current = true;
-          // Keep hero at end state initially - user needs to scroll up again to reverse animation
-          targetProgressRef.current = 2.0;
-          progressRef.current = 2.0;
-        }
-      } else if (scrollY > 50) {
-        // Page is scrolled down - hero should be hidden if animation was complete
-        if (progressRef.current >= 1.9) {
-          setIsReturningFromBelow(false);
-          returnLockRef.current = false;
-        }
-      }
+      // No special handling needed - mouse position controls animation
     };
 
     // Use window for scroll events so they work even when other sections are visible
@@ -386,18 +284,12 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
       container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [onThemeChange, onGlobeComplete, isReadyToAnimate, isReturningFromBelow, fullProgress]);
-
-  // Calculate if hero should be visible based on scroll position and progress
-  const shouldHideHero = fullProgress >= 2.0 && !isReturningFromBelow;
+  }, [onThemeChange, onGlobeComplete]);
 
   return (
     <div ref={containerRef} className="hero-container" style={{
-      pointerEvents: shouldHideHero ? 'none' : 'auto',
-      position: 'fixed',
-      opacity: shouldHideHero ? 0 : 1,
-      transition: 'opacity 0.3s ease-out',
-      zIndex: shouldHideHero ? -1 : 10
+      pointerEvents: 'auto',
+      position: 'fixed'
     }}>
       {/* Dark background */}
       <div 
@@ -412,81 +304,28 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
       
       {lightBeamsOpacity > 0 && <LightBeams opacity={lightBeamsOpacity} />}
 
-      {/* First text - "Let's make this dot united" - appears first */}
       <div
-        className="hero-section"
-        style={{
-          opacity: leftTextOpacity,
-          transform: `translateY(${leftTextY}px)`,
-          pointerEvents: 'none',
-          transition: 'opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)',
-          zIndex: 11,
-        }}
-      >
-        <div className="hero-content">
-          <h1 className="hero-headline">
-            Let's make this
-            <br />
-            <span style={{ color: '#67e8f9' }}>Dot united</span>
-          </h1>
-        </div>
-      </div>
-
-      <div
-        className="initial-dot-container"
+        className="initial-dot"
         style={{
           position: 'fixed',
           top: '50%',
-          left: isMobile ? 'auto' : '50%',
-          right: isMobile ? '12%' : 'auto',
-          transform: isMobile 
-            ? 'translateY(-50%)' 
-            : isTablet 
-              ? `translate(calc(-50% + ${globeX * 0.5}vw), -50%)`
-              : `translate(calc(-50% + ${globeX}vw), -50%)`,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          left: '50%',
+          transform: `translate(calc(-50% + ${globeX}vw), -50%)`,
+          width: `${dotSize}px`,
+          height: `${dotSize}px`,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(180,210,255,0.8) 40%, rgba(100,150,220,0.4) 70%, transparent 100%)',
+          boxShadow: `0 0 ${dotSize * 2}px rgba(150,180,255,0.6), 0 0 ${dotSize * 4}px rgba(100,150,220,0.3)`,
           opacity: dotOpacity,
           pointerEvents: 'none',
           zIndex: 5,
         }}
-      >
-        <div
-          className="initial-dot"
-          style={{
-            width: `${dotSize}px`,
-            height: `${dotSize}px`,
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(180,210,255,0.8) 40%, rgba(100,150,220,0.4) 70%, transparent 100%)',
-            boxShadow: `0 0 ${dotSize * 2}px rgba(150,180,255,0.6), 0 0 ${dotSize * 4}px rgba(100,150,220,0.3)`,
-          }}
-        />  
-        <span
-          className="initial-dot-label"
-          style={{
-            marginTop: '12px',
-            color: 'rgba(180, 210, 255, 0.9)',
-            fontSize: '12px',
-            fontWeight: '400',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            textShadow: '0 0 10px rgba(100, 150, 220, 0.5)',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          blue dot our home
-        </span>
-      </div>
+      />
 
       <div
         className="globe-wrapper"
         style={{
-          transform: isMobile 
-            ? `translateX(${globeX * 0.8}%)` 
-            : isTablet 
-              ? `translateX(${globeX * 0.5}%)`
-              : `translateX(${globeX}%)`,
+          transform: `translateX(${globeX}%)`,
           opacity: earthOpacity,
           pointerEvents: earthOpacity > 0.5 ? 'auto' : 'none',
           visibility: earthOpacity > 0 ? 'visible' : 'hidden',
@@ -501,27 +340,19 @@ export default function HeroSection({ quality, onThemeChange, onGlobeComplete })
         />
       </div>
 
-      {/* Second text - Stacked tagline - appears after first text fades */}
       <div
         className="hero-section"
         style={{
           opacity: headlineOpacity,
-          transform: `translateY(${headlineY}px)`,
           pointerEvents: headlineOpacity > 0.5 ? 'auto' : 'none',
-          transition: 'opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)',
-          zIndex: 10,
         }}
       >
         <div className="hero-content">
-          <h1 className="hero-headline hero-headline--stacked">
-            <span className="hero-headline__line hero-headline__line--small">by</span>
-            <span className="hero-headline__line">making one planet</span>
-            <span className="hero-headline__line hero-headline__line--highlight">one market</span>
-          </h1>
-          <p className="hero-subtext">To Grow Together</p>
+          <h1 className="hero-headline">Make Planet One Market.</h1>
+          <p className="hero-subtext">Buy and sell globally with ease, transparency, and trust.</p>
           <div className="hero-ctas">
-            <button className="btn btn--primary" onClick={() => window.open('https://vendor.aaziko.com', '_blank')}>Start Selling</button>
-            <button className="btn btn--secondary" onClick={() => window.open('https://buyer.aaziko.com', '_blank')}>Start Buying</button>
+            <button className="btn btn--primary">Start Selling</button>
+            <button className="btn btn--secondary">Start Buying</button>
           </div>
         </div>
       </div>

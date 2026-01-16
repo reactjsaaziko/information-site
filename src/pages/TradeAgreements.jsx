@@ -1,20 +1,38 @@
-// Trade Agreements (Basics) Page - Visual Design
-import { useEffect, useRef } from 'react'
+// Trade Agreements (Basics) Page - Visual Design + SEO
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import {
   Scale, Percent, FileText, Globe, XCircle, CheckCircle,
   Tag, FileCheck, AlertTriangle, ArrowRight, ArrowDown,
-  Shield, BookOpen, Package, HelpCircle
+  Shield, BookOpen, Package, HelpCircle, ChevronDown
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import AnimatedBackground from '../components/ui/AnimatedBackground'
 import './TradeAgreements.css'
 
+// SEO: FAQ Data for rich snippets
+const faqs = [
+  { q: 'What is a Free Trade Agreement (FTA)?', a: 'An FTA is a treaty between countries that reduces or eliminates customs duties on qualifying goods. When your product qualifies under an FTA, you pay lower or zero import duty compared to standard rates.' },
+  { q: 'How do I know if my product qualifies for FTA benefits?', a: 'Check three things: Is there an FTA between origin and destination countries? Is your HS code covered? Does the product meet Rules of Origin requirements (wholly obtained, substantial transformation, or value addition)?' },
+  { q: 'What is a Certificate of Origin (COO)?', a: 'A COO is an official document certifying where goods were manufactured. For FTA claims, you need a preferential COO issued by authorized agencies like chambers of commerce.' },
+  { q: 'What happens if customs rejects my FTA claim?', a: 'You pay the standard (MFN) duty rate instead of the preferential rate. Penalties may apply for incorrect claims. You can appeal with supporting documentation.' },
+  { q: 'Can I claim FTA benefits with imported components?', a: 'Yes, if the product meets Rules of Origin criteria—typically substantial transformation (HS code change) or minimum value addition (usually 35-40% local content).' }
+]
+
+// SEO: Related internal links
+const relatedLinks = [
+  { label: 'Customs Documentation', to: '/customs-documentation' },
+  { label: 'Export Documentation', to: '/export-documentation' },
+  { label: 'Export Import Guides', to: '/guides' },
+  { label: 'Verified Suppliers', to: '/verified-suppliers' }
+]
+
 const TradeAgreements = () => {
   const heroRef = useRef(null)
+  const [expandedFaq, setExpandedFaq] = useState(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -38,10 +56,11 @@ const TradeAgreements = () => {
             <span>Trade Agreements Basics</span>
           </div>
           <h1 className="ta-hero-title">
-            Lower Duty. <span className="ta-gradient-text">Smarter Trade.</span>
+            Trade Agreements: How FTAs Reduce <span className="ta-gradient-text">Import Duties</span>
           </h1>
           <p className="ta-hero-subtitle">
-            How FTAs & PTAs can reduce your import costs
+            Free Trade Agreements and Preferential Trade Agreements can significantly reduce your import costs. 
+            Learn how to qualify for duty benefits with proper documentation and origin compliance.
           </p>
         </div>
       </section>
@@ -334,7 +353,53 @@ const TradeAgreements = () => {
         </div>
       </section>
 
-     
+      {/* SEO: FAQ Section */}
+      <section className="ta-section">
+        <div className="ta-container">
+          <h2 className="ta-visual-title">Frequently Asked Questions</h2>
+          <div className="ta-faq-list">
+            {faqs.map((faq, index) => (
+              <div key={index} className={`ta-faq-item ${expandedFaq === index ? 'open' : ''}`}>
+                <button 
+                  className="ta-faq-question"
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown size={20} className="ta-faq-chevron" />
+                </button>
+                <AnimatePresence>
+                  {expandedFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="ta-faq-answer"
+                    >
+                      <p>{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO: Related Pages */}
+      <section className="ta-section ta-section-alt">
+        <div className="ta-container">
+          <h2 className="ta-visual-title">Related Resources</h2>
+          <div className="ta-related-links">
+            {relatedLinks.map((link, index) => (
+              <Link key={index} to={link.to} className="ta-related-link">
+                <ArrowRight size={16} />
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

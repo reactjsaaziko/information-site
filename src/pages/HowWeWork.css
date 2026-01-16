@@ -2194,3 +2194,121 @@
     max-width: 260px;
   }
 }
+
+
+/* SEO: FAQ Section Styles */
+.hww-faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hww-faq-item {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.hww-faq-item.open {
+  border-color: var(--primary);
+}
+
+.hww-faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.hww-faq-question:hover {
+  background: var(--gray-50);
+}
+
+.hww-faq-chevron {
+  color: var(--text-muted);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.hww-faq-item.open .hww-faq-chevron {
+  transform: rotate(180deg);
+}
+
+.hww-faq-answer {
+  padding: 0 24px 20px;
+  background: white;
+  overflow: hidden;
+}
+
+.hww-faq-answer p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* SEO: Related Links Styles */
+.hww-related-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.hww-related-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.hww-related-link:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.hww-related-link svg {
+  color: var(--primary);
+}
+
+@media (max-width: 767px) {
+  .hww-faq-question {
+    padding: 16px 18px;
+    font-size: 14px;
+  }
+
+  .hww-faq-answer {
+    padding: 0 18px 16px;
+  }
+
+  .hww-related-links {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hww-related-link {
+    justify-content: center;
+  }
+}

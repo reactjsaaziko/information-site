@@ -1,7 +1,7 @@
-// Aaziko Customs & Compliance Page
+// Aaziko Customs & Compliance Page + SEO
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import {
   FileText, Shield, CheckCircle,
@@ -10,12 +10,39 @@ import {
   Package, Building2, BookOpen,
   FileSpreadsheet, Award, Tag,
   Box, FileCheck, AlertCircle, Layers,
-  ListChecks
+  ListChecks, ArrowRight
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import AnimatedBackground from '../components/ui/AnimatedBackground'
 import './CustomsDocumentation.css'
+
+// SEO: FAQ Data
+const seoFaqs = [
+  { q: 'What documents do I need for customs clearance?', a: 'At minimum: Commercial Invoice, Packing List, and Bill of Lading (or Airway Bill). Depending on your product and destination, you may also need Certificate of Origin, test reports, product certifications, and special permits.' },
+  { q: 'What happens if my documents have errors?', a: 'Document errors cause customs holds and delays. Minor errors may require amendments (additional fees and time). Major errors can result in detailed inspections, duty disputes, or shipment rejection.' },
+  { q: 'How do I know the labeling requirements for my destination?', a: 'Labeling requirements vary by country and product category. Check with your customs broker, destination country trade ministry, or use Aaziko guidance for corridor-specific requirements.' },
+  { q: 'Does Aaziko handle customs clearance directly?', a: 'Aaziko provides compliance guidance, checklists, and coordination support. Final customs decisions are made by customs authorities. We help you be clearance-ready.' },
+  { q: 'How often do customs rules change?', a: 'Customs rules can change based on trade policies, safety regulations, and international agreements. Requirements vary by product and destination. Verify current requirements before each shipment.' }
+]
+
+// SEO: Related internal links
+const seoRelatedLinks = [
+  { label: 'Export Documentation', to: '/export-documentation' },
+  { label: 'Trade Agreements', to: '/trade-agreements' },
+  { label: 'Export Import Guides', to: '/guides' },
+  { label: 'Shipment Tracking', to: '/shipment-tracking' },
+  { label: 'How We Work', to: '/how-we-work' }
+]
+
+// Related Guides for SEO
+const relatedGuides = [
+  { label: 'Customs Clearance Basics', to: '/guides/customs-clearance-basics' },
+  { label: 'Export Packaging & Labeling', to: '/guides/export-packaging-labeling' },
+  { label: 'Import Documents Checklist', to: '/guides/import-documents-checklist' },
+  { label: 'How to Find HS Code', to: '/guides/how-to-find-hs-code' },
+  { label: 'Import Process Step by Step', to: '/guides/import-process-step-by-step' }
+]
 
 const trustStrip = [
   { icon: Shield, text: 'Compliance Guidance' },
@@ -154,7 +181,7 @@ const CustomsDocumentation = () => {
             <span>Customs</span>
           </div>
           <h1 className="customs-hero-title">
-            Customs & Compliance—<span className="customs-gradient-text">Aaziko handles the complexity, you focus on the product</span>
+            Customs Documentation: <span className="customs-gradient-text">Complete Guide to Import Compliance</span>
           </h1>
           <p className="customs-hero-subtitle">
             Export documentation and customs rules can slow down or even block shipments if one detail is missed. With Aaziko, you don't need to become a customs expert. You manufacture and pack as agreed—Aaziko guides and coordinates the customs + compliance steps for smooth export.
@@ -261,11 +288,75 @@ const CustomsDocumentation = () => {
         </div>
       </section>
 
-     
+      {/* SEO: FAQ Section */}
+      <section className="customs-section customs-section-alt">
+        <div className="customs-container">
+          <div className="customs-section-header">
+            <span className="customs-section-badge">FAQ</span>
+            <h2 className="customs-section-title">Frequently Asked Questions</h2>
+          </div>
+          <div className="customs-faq-list">
+            {seoFaqs.map((faq, index) => (
+              <div key={index} className={`customs-faq-item ${expandedFaq === index ? 'open' : ''}`}>
+                <button 
+                  className="customs-faq-question"
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown size={20} className="customs-faq-chevron" />
+                </button>
+                <AnimatePresence>
+                  {expandedFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="customs-faq-answer"
+                    >
+                      <p>{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-     
+      {/* SEO: Related Pages */}
+      <section className="customs-section">
+        <div className="customs-container">
+          <div className="customs-section-header">
+            <h2 className="customs-section-title">Related Resources</h2>
+          </div>
+          <div className="customs-related-links">
+            {seoRelatedLinks.map((link, index) => (
+              <Link key={index} to={link.to} className="customs-related-link">
+                <ArrowRight size={16} />
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
-   
+      {/* Related Guides Section */}
+      <section className="customs-section customs-section-alt">
+        <div className="customs-container">
+          <div className="customs-section-header">
+            <h2 className="customs-section-title">Related Guides</h2>
+          </div>
+          <div className="customs-related-links">
+            {relatedGuides.map((guide, index) => (
+              <Link key={index} to={guide.to} className="customs-related-link">
+                <ArrowRight size={16} />
+                {guide.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>
