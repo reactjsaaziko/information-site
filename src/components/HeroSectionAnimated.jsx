@@ -166,20 +166,29 @@ const HeroSectionAnimated = forwardRef(function HeroSectionAnimated({
     }
   }, [isMobile, isTablet, onThemeChange]);
 
-  // Expose animation controls
+  // Expose animation controls - supports both scrub mode and auto-play mode
   useImperativeHandle(ref, () => ({
+    // Scrub mode: Set progress directly (0 to 1)
+    setProgress: (progress) => {
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      // Scale 0-1 input to 0-2 internal progress
+      const scaledProgress = Math.max(0, Math.min(1, progress)) * 2;
+      updateVisuals(scaledProgress);
+    },
+
+    getProgress: () => progressRef.current / 2, // Scale 0-2 to 0-1
+
+    // Auto-play mode: Play forward animation
     playForward: () => {
       return new Promise((resolve) => {
         const startProgress = progressRef.current;
         const endProgress = 2.0;
-        // Use configurable duration for consistent, cinematic playback
         const duration = SCROLL_CONFIG.SECTION_DURATION_MS;
         const startTime = performance.now();
 
         const animate = (currentTime) => {
           const elapsed = currentTime - startTime;
           const t = Math.min(elapsed / duration, 1);
-          // Ease out cubic for smooth deceleration
           const eased = 1 - Math.pow(1 - t, 3);
           const currentProgress = startProgress + (endProgress - startProgress) * eased;
           
@@ -198,18 +207,17 @@ const HeroSectionAnimated = forwardRef(function HeroSectionAnimated({
       });
     },
 
+    // Auto-play mode: Play reverse animation
     playReverse: () => {
       return new Promise((resolve) => {
         const startProgress = progressRef.current;
         const endProgress = 0;
-        // Use configurable duration for consistent, cinematic playback
         const duration = SCROLL_CONFIG.SECTION_REVERSE_DURATION_MS;
         const startTime = performance.now();
 
         const animate = (currentTime) => {
           const elapsed = currentTime - startTime;
           const t = Math.min(elapsed / duration, 1);
-          // Ease out cubic for smooth deceleration
           const eased = 1 - Math.pow(1 - t, 3);
           const currentProgress = startProgress + (endProgress - startProgress) * eased;
           
@@ -227,13 +235,6 @@ const HeroSectionAnimated = forwardRef(function HeroSectionAnimated({
         rafIdRef.current = requestAnimationFrame(animate);
       });
     },
-
-    setProgress: (progress) => {
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-      updateVisuals(progress * 2); // Scale 0-1 to 0-2
-    },
-
-    getProgress: () => progressRef.current / 2, // Scale 0-2 to 0-1
   }), [updateVisuals]);
 
   // Initialize with starting state

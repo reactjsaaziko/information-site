@@ -263,7 +263,21 @@ function HomePage() {
 
   return (
     <>
-      {/* Smooth Background Transition Layer */}
+      {/* Dark background base layer - always present to prevent any content showing through */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#080c14',
+          zIndex: -3,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Smooth Background Transition Layer - only shows after animation complete */}
       <div
         ref={bgRef}
         className="smooth-bg-transition"
@@ -273,31 +287,33 @@ function HomePage() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: interpolateColor(bgTransitionProgress),
+          background: showStaticContent ? interpolateColor(bgTransitionProgress) : '#080c14',
           zIndex: -2,
           pointerEvents: 'none',
           transition: 'background 0.05s linear',
         }}
       />
 
-      {/* Gradient overlay for smoother blending */}
-      <div
-        className="smooth-gradient-blend"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: `radial-gradient(ellipse at center top, 
-            rgba(247, 250, 255, ${bgTransitionProgress * 0.4}) 0%,
-            transparent 70%
-          )`,
-          zIndex: -1,
-          pointerEvents: 'none',
-          opacity: bgTransitionProgress,
-        }}
-      />
+      {/* Gradient overlay for smoother blending - only shows after animation complete */}
+      {showStaticContent && (
+        <div
+          className="smooth-gradient-blend"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: `radial-gradient(ellipse at center top, 
+              rgba(247, 250, 255, ${bgTransitionProgress * 0.4}) 0%,
+              transparent 70%
+            )`,
+            zIndex: -1,
+            pointerEvents: 'none',
+            opacity: bgTransitionProgress,
+          }}
+        />
+      )}
 
       {/* Navigation */}
       <Navbar darkMode={headerDarkMode} />
@@ -319,17 +335,18 @@ function HomePage() {
           reducedMotion={reducedMotion}
         />
 
-        {/* Static content sections - appear after Three.js animations complete */}
-        <AnimatePresence mode="wait">
-          {showStaticContent && (
+        {/* Static content sections - ONLY render after Three.js animations complete */}
+        {showStaticContent && (
+          <AnimatePresence mode="wait">
             <motion.div
               className="static-sections-wrapper"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
               transition={{
                 duration: 0.8,
-                ease: [0.25, 0.46, 0.45, 0.94]
+                ease: [0.25, 0.46, 0.45, 0.94],
+                y: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
               }}
               style={{
                 position: 'relative',
@@ -359,8 +376,8 @@ function HomePage() {
                 </SectionTransition>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
+          </AnimatePresence>
+        )}
       </ErrorBoundary>
     </>
   );

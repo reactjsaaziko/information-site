@@ -14,9 +14,9 @@ import { useRef, useCallback, useEffect } from 'react';
 // Configuration constants
 export const SCROLL_CONFIG = {
   // Maximum delta per event (clamps trackpad spikes)
-  MAX_WHEEL_DELTA: 100,
+  MAX_WHEEL_DELTA: 150,
   
-  // Threshold to trigger a scroll action
+  // Threshold to trigger a scroll action (for auto-play mode)
   TRIGGER_THRESHOLD: 120,
   
   // Minimum time between scroll triggers (ms)
@@ -25,22 +25,25 @@ export const SCROLL_CONFIG = {
   // Time to reset accumulated delta (ms)
   DELTA_RESET_TIME: 150,
   
-  // Smoothing factor for lerp (0-1, lower = smoother)
-  SMOOTHING_FACTOR: 0.08,
+  // Smoothing factor for lerp (0-1, lower = smoother but more lag)
+  SMOOTHING_FACTOR: 0.12,
   
   // Maximum progress change per frame (for scrub mode)
   MAX_PROGRESS_STEP_PER_FRAME: 0.02,
   
-  // Animation durations (ms)
-  SECTION_DURATION_MS: 2500,
-  SECTION_REVERSE_DURATION_MS: 2000,
-  TRANSITION_DURATION_MS: 700,
+  // Animation durations (ms) - for auto-play mode
+  SECTION_DURATION_MS: 4000,
+  SECTION_REVERSE_DURATION_MS: 3200,
+  TRANSITION_DURATION_MS: 1200,
   
   // Touch swipe threshold (px)
   TOUCH_THRESHOLD: 60,
   
   // Velocity threshold for touch (px/ms)
   TOUCH_VELOCITY_THRESHOLD: 0.3,
+  
+  // Scrub mode settings
+  SCRUB_SENSITIVITY: 0.0004, // How much scroll delta maps to progress (lower = slower)
 };
 
 /**

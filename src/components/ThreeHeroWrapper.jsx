@@ -2,51 +2,37 @@ import { useEffect, useRef, useState, useCallback, forwardRef, useImperativeHand
 import { gsap } from 'gsap';
 import HeroSectionAnimated from './HeroSectionAnimated';
 import TradeAnimation3DAnimated from './TradeAnimation3DAnimated';
-import { useScrollNormalizer, SCROLL_CONFIG } from '../hooks/useScrollNormalizer';
+import { normalizeWheelDelta, lerp, clamp, SCROLL_CONFIG } from '../hooks/useScrollNormalizer';
 
 /**
- * ThreeHeroWrapper - Manages the scroll sequence for two fullscreen Three.js sections
- * with smooth transitions between sections.
+ * ThreeHeroWrapper - Manages scroll-driven animation for two fullscreen Three.js sections
  * 
- * SCROLL BEHAVIOR:
- * - Uses timeline-based playback (not tied to raw scroll delta)
- * - Scroll triggers a "step advance" (S1 forward, then S2 forward)
- * - Each step plays at a controlled duration (configurable)
- * - While timeline playing, scroll input is ignored (no skipping)
- * - Wheel delta is normalized across trackpad/mouse/touch
+ * SCROLL BEHAVIOR (SCRUB MODE):
+ * - Animation progress is directly tied to scroll input
+ * - When user scrolls, animation progresses
+ * - When user stops scrolling, animation stops
+ * - Smooth interpolation for fluid feel
+ * - Works with trackpad, mouse wheel, and touch
  * 
- * State Machine:
- * - S1_IDLE: Initial state, Section 1 visible
- * - S1_ANIMATING_FORWARD: Section 1 animation playing forward
- * - S1_TRANSITION_TO_S2: Smooth transition from S1 to S2
- * - S2_ANIMATING_FORWARD: Section 2 animation playing forward
- * - S2_TRANSITION_TO_STATIC: Transition to static content
- * - S2_COMPLETE: Static content unlocked
- * - STATIC_TRANSITION_TO_S2: Returning from static to S2
- * - S2_ANIMATING_REVERSE: Section 2 animation playing reverse
- * - S2_TRANSITION_TO_S1: Smooth transition from S2 to S1
- * - S1_ANIMATING_REVERSE: Section 1 animation playing reverse
+ * Progress ranges:
+ * - 0.0 to 0.5: Section 1 animation (Hero with Globe)
+ * - 0.5: Transition point between sections
+ * - 0.5 to 1.0: Section 2 animation (Trade Animation)
+ * - 1.0: Complete, unlock static content
  */
 
-const SCROLL_STATES = {
-  S1_IDLE: 'S1_IDLE',
-  S1_ANIMATING_FORWARD: 'S1_ANIMATING_FORWARD',
-  S1_TRANSITION_TO_S2: 'S1_TRANSITION_TO_S2',
-  S2_ANIMATING_FORWARD: 'S2_ANIMATING_FORWARD',
-  S2_TRANSITION_TO_STATIC: 'S2_TRANSITION_TO_STATIC',
-  S2_COMPLETE: 'S2_COMPLETE',
-  STATIC_TRANSITION_TO_S2: 'STATIC_TRANSITION_TO_S2',
-  S2_ANIMATING_REVERSE: 'S2_ANIMATING_REVERSE',
-  S2_TRANSITION_TO_S1: 'S2_TRANSITION_TO_S1',
-  S1_ANIMATING_REVERSE: 'S1_ANIMATING_REVERSE',
-};
-
-// Transition configuration - controlled durations for cinematic feel
-const TRANSITION_CONFIG = {
-  duration: SCROLL_CONFIG.TRANSITION_DURATION_MS / 1000, // Convert to seconds for GSAP
-  ease: 'power2.inOut',
-  scale: { from: 0.98, to: 1 },
-  blur: { from: 6, to: 0 },
+// Scrub configuration
+const SCRUB_CONFIG = {
+  // How much scroll delta maps to progress change (lower = slower animation)
+  SCROLL_SENSITIVITY: SCROLL_CONFIG.SCRUB_SENSITIVITY || 0.0004,
+  // Smoothing factor for lerp (lower = smoother but more lag)
+  SMOOTHING: SCROLL_CONFIG.SMOOTHING_FACTOR || 0.12,
+  // Minimum progress change to trigger update
+  MIN_DELTA: 0.0001,
+  // Progress threshold to trigger section transition
+  SECTION_TRANSITION_POINT: 0.5,
+  // Progress threshold to complete and unlock static content
+  COMPLETION_THRESHOLD: 0.98,
 };
 
 const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({ 
@@ -60,233 +46,216 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
   const section2Ref = useRef(null);
   const section1ContainerRef = useRef(null);
   const section2ContainerRef = useRef(null);
-  const transitionTimelineRef = useRef(null);
   
-  const [state, setState] = useState(SCROLL_STATES.S1_IDLE);
+  // Progress state (0 to 1)
+  const targetProgressRef = useRef(0);
+  const currentProgressRef = useRef(0);
+  const rafIdRef = useRef(null);
+  
   const [activeSection, setActiveSection] = useState(1);
   const [isLocked, setIsLocked] = useState(true);
   const [showSection2, setShowSection2] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const [displayProgress, setDisplayProgress] = useState(0);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   
-  const stateRef = useRef(state);
-  const scrollQueueRef = useRef([]);
-
-  useEffect(() => {
-    stateRef.current = state;
-  }, [state]);
+  // Touch tracking
+  const touchStartRef = useRef({ y: 0, time: 0 });
+  const lastTouchYRef = useRef(0);
 
   useImperativeHandle(ref, () => ({
-    getState: () => stateRef.current,
+    getProgress: () => currentProgressRef.current,
     isLocked: () => isLocked,
-    isTransitioning: () => isTransitioning,
-    isAnimating: () => isAnimating,
-  }), [isLocked, isTransitioning, isAnimating]);
+    isComplete: () => isComplete,
+  }), [isLocked, isComplete]);
 
+  // Handle reduced motion preference
   useEffect(() => {
     if (reducedMotion) {
-      setState(SCROLL_STATES.S2_COMPLETE);
       setActiveSection(2);
       setIsLocked(false);
       setShowSection2(true);
+      setIsComplete(true);
       if (onComplete) onComplete();
     }
   }, [reducedMotion, onComplete]);
 
-
-  const runTransition = useCallback(async (fromRef, toRef, direction = 'forward') => {
-    if (reducedMotion) {
-      return Promise.resolve();
+  // Update section visuals based on progress
+  const updateSectionProgress = useCallback((progress) => {
+    const clampedProgress = clamp(progress, 0, 1);
+    
+    // Section 1: 0 to 0.5 progress
+    if (clampedProgress <= SCRUB_CONFIG.SECTION_TRANSITION_POINT) {
+      const section1Progress = clampedProgress / SCRUB_CONFIG.SECTION_TRANSITION_POINT;
+      if (section1Ref.current?.setProgress) {
+        section1Ref.current.setProgress(section1Progress);
+      }
+      
+      // Handle section transition
+      if (activeSection !== 1) {
+        setActiveSection(1);
+      }
+      
+      // Fade out section 1 near transition point
+      if (section1ContainerRef.current) {
+        const fadeStart = 0.4;
+        if (clampedProgress > fadeStart) {
+          const fadeProgress = (clampedProgress - fadeStart) / (SCRUB_CONFIG.SECTION_TRANSITION_POINT - fadeStart);
+          section1ContainerRef.current.style.opacity = 1 - fadeProgress * 0.3;
+        } else {
+          section1ContainerRef.current.style.opacity = 1;
+        }
+      }
     }
-
-    setIsTransitioning(true);
-
-    return new Promise((resolve) => {
-      if (transitionTimelineRef.current) {
-        transitionTimelineRef.current.kill();
+    
+    // Section 2: 0.5 to 1.0 progress
+    if (clampedProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT * 0.9) {
+      // Show section 2 slightly before transition point
+      if (!showSection2 && clampedProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT * 0.95) {
+        setShowSection2(true);
       }
-
-      const duration = TRANSITION_CONFIG.duration;
-      const tl = gsap.timeline({
-        onComplete: () => {
-          setIsTransitioning(false);
-          resolve();
-        },
-      });
-      transitionTimelineRef.current = tl;
-
-      const fromEl = fromRef?.current;
-      const toEl = toRef?.current;
-
-      if (fromEl) {
-        tl.to(fromEl, {
-          opacity: 0,
-          scale: TRANSITION_CONFIG.scale.from,
-          filter: `blur(${TRANSITION_CONFIG.blur.from}px)`,
-          duration: duration * 0.5,
-          ease: 'power2.in',
-        }, 0);
+      
+      if (clampedProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT) {
+        const section2Progress = (clampedProgress - SCRUB_CONFIG.SECTION_TRANSITION_POINT) / (1 - SCRUB_CONFIG.SECTION_TRANSITION_POINT);
+        if (section2Ref.current?.setProgress) {
+          section2Ref.current.setProgress(section2Progress);
+        }
+        
+        // Handle section transition
+        if (activeSection !== 2 && clampedProgress > SCRUB_CONFIG.SECTION_TRANSITION_POINT + 0.02) {
+          setActiveSection(2);
+        }
+        
+        // Fade in section 2
+        if (section2ContainerRef.current) {
+          const fadeInProgress = Math.min(1, (clampedProgress - SCRUB_CONFIG.SECTION_TRANSITION_POINT) / 0.1);
+          section2ContainerRef.current.style.opacity = fadeInProgress;
+        }
       }
+    }
+    
+    // Check for completion - start fade out animation before unlocking
+    if (clampedProgress >= SCRUB_CONFIG.COMPLETION_THRESHOLD && !isComplete && !isFadingOut) {
+      // Start fade out animation
+      setIsFadingOut(true);
+      
+      // Delay the actual completion to allow fade animation
+      setTimeout(() => {
+        setIsComplete(true);
+        setIsLocked(false);
+        if (onComplete) onComplete();
+      }, 600); // 600ms fade out duration
+    } else if (clampedProgress < SCRUB_CONFIG.COMPLETION_THRESHOLD - 0.05 && (isComplete || isFadingOut)) {
+      // Reset if user scrolls back up significantly
+      setIsComplete(false);
+      setIsFadingOut(false);
+      setIsLocked(true);
+    }
+    
+    setDisplayProgress(clampedProgress);
+  }, [activeSection, showSection2, isComplete, isFadingOut, onComplete]);
 
-      if (toEl) {
-        gsap.set(toEl, {
-          opacity: 0,
-          scale: TRANSITION_CONFIG.scale.from,
-          filter: `blur(${TRANSITION_CONFIG.blur.from}px)`,
-          visibility: 'visible',
-        });
-
-        tl.to(toEl, {
-          opacity: 1,
-          scale: TRANSITION_CONFIG.scale.to,
-          filter: `blur(${TRANSITION_CONFIG.blur.to}px)`,
-          duration: duration * 0.5,
-          ease: 'power2.out',
-        }, duration * 0.35);
+  // Animation loop for smooth interpolation
+  useEffect(() => {
+    if (reducedMotion) return;
+    
+    const animate = () => {
+      const current = currentProgressRef.current;
+      const target = targetProgressRef.current;
+      
+      // Lerp towards target
+      const newProgress = lerp(current, target, SCRUB_CONFIG.SMOOTHING);
+      
+      // Only update if there's meaningful change
+      if (Math.abs(newProgress - current) > SCRUB_CONFIG.MIN_DELTA) {
+        currentProgressRef.current = newProgress;
+        updateSectionProgress(newProgress);
       }
-    });
+      
+      rafIdRef.current = requestAnimationFrame(animate);
+    };
+    
+    rafIdRef.current = requestAnimationFrame(animate);
+    
+    return () => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
+  }, [reducedMotion, updateSectionProgress]);
+
+  // Handle wheel scroll
+  const handleWheel = useCallback((e) => {
+    if (reducedMotion) return;
+    
+    // If complete and scrolling down, allow normal page scroll
+    if (isComplete && e.deltaY > 0) {
+      return;
+    }
+    
+    // If at top of page and scrolling up while complete, re-lock
+    if (isComplete && e.deltaY < 0 && window.scrollY <= 5) {
+      e.preventDefault();
+      // Allow scrolling back up through the animation
+      const normalizedDelta = normalizeWheelDelta(e.deltaY, e.deltaMode);
+      const progressDelta = normalizedDelta * SCRUB_CONFIG.SCROLL_SENSITIVITY;
+      targetProgressRef.current = clamp(targetProgressRef.current + progressDelta, 0, 1);
+      return;
+    }
+    
+    // If locked, handle scroll-driven animation
+    if (isLocked) {
+      e.preventDefault();
+      
+      const normalizedDelta = normalizeWheelDelta(e.deltaY, e.deltaMode);
+      const progressDelta = normalizedDelta * SCRUB_CONFIG.SCROLL_SENSITIVITY;
+      
+      targetProgressRef.current = clamp(targetProgressRef.current + progressDelta, 0, 1);
+    }
+  }, [reducedMotion, isComplete, isLocked]);
+
+  // Handle touch start
+  const handleTouchStart = useCallback((e) => {
+    if (reducedMotion) return;
+    
+    touchStartRef.current = {
+      y: e.touches[0].clientY,
+      time: Date.now(),
+    };
+    lastTouchYRef.current = e.touches[0].clientY;
   }, [reducedMotion]);
 
-  const playSection1Forward = useCallback(async () => {
-    if (isAnimating) return; // Prevent double-triggering
+  // Handle touch move
+  const handleTouchMove = useCallback((e) => {
+    if (reducedMotion) return;
     
-    setIsAnimating(true);
-    setState(SCROLL_STATES.S1_ANIMATING_FORWARD);
+    const touchY = e.touches[0].clientY;
+    const deltaY = lastTouchYRef.current - touchY; // Inverted for natural scroll feel
+    lastTouchYRef.current = touchY;
     
-    try {
-      if (section1Ref.current?.playForward) {
-        await section1Ref.current.playForward();
-      }
-      
-      setState(SCROLL_STATES.S1_TRANSITION_TO_S2);
-      setShowSection2(true);
-      
-      await new Promise(r => requestAnimationFrame(r));
-      await new Promise(r => setTimeout(r, 50));
-      
-      await runTransition(section1ContainerRef, section2ContainerRef, 'forward');
-      
-      setActiveSection(2);
-      
-      setState(SCROLL_STATES.S2_ANIMATING_FORWARD);
-      if (section2Ref.current?.playForward) {
-        await section2Ref.current.playForward();
-      }
-      
-      setState(SCROLL_STATES.S2_TRANSITION_TO_STATIC);
-      await new Promise(r => setTimeout(r, reducedMotion ? 0 : 400));
-      
-      setState(SCROLL_STATES.S2_COMPLETE);
-      setIsLocked(false);
-      setIsAnimating(false);
-      if (onComplete) onComplete();
-      
-    } catch (err) {
-      console.error('Animation sequence failed:', err);
-      setState(SCROLL_STATES.S2_COMPLETE);
-      setIsLocked(false);
-      setIsAnimating(false);
-      if (onComplete) onComplete();
-    }
-  }, [onComplete, runTransition, reducedMotion, isAnimating]);
-
-  const handleReturnFromStatic = useCallback(async () => {
-    if (isAnimating) return; // Prevent double-triggering
-    
-    setIsAnimating(true);
-    setState(SCROLL_STATES.STATIC_TRANSITION_TO_S2);
-    setIsLocked(true);
-    
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    
-    await new Promise(r => setTimeout(r, reducedMotion ? 0 : 150));
-    
-    setState(SCROLL_STATES.S2_ANIMATING_REVERSE);
-    try {
-      if (section2Ref.current?.playReverse) {
-        await section2Ref.current.playReverse();
-      }
-      
-      setState(SCROLL_STATES.S2_TRANSITION_TO_S1);
-      await runTransition(section2ContainerRef, section1ContainerRef, 'reverse');
-      
-      setActiveSection(1);
-      
-      setState(SCROLL_STATES.S1_ANIMATING_REVERSE);
-      if (section1Ref.current?.playReverse) {
-        await section1Ref.current.playReverse();
-      }
-      
-      setState(SCROLL_STATES.S1_IDLE);
-      setShowSection2(false);
-      setIsAnimating(false);
-      
-    } catch (err) {
-      console.error('Reverse animation failed:', err);
-      setState(SCROLL_STATES.S1_IDLE);
-      setShowSection2(false);
-      setIsAnimating(false);
-    }
-  }, [runTransition, reducedMotion, isAnimating]);
-
-  const isBusy = useCallback(() => {
-    const s = stateRef.current;
-    return s.includes('TRANSITION') || s.includes('ANIMATING') || isTransitioning || isAnimating;
-  }, [isTransitioning, isAnimating]);
-
-  // Scroll intent handlers for the normalizer
-  const handleScrollDown = useCallback(() => {
-    if (isBusy()) {
-      scrollQueueRef.current.push('down');
+    // If complete and scrolling down, allow normal page scroll
+    if (isComplete && deltaY > 0) {
       return;
     }
     
-    const currentState = stateRef.current;
-    
-    if (currentState === SCROLL_STATES.S1_IDLE) {
-      playSection1Forward();
-    }
-  }, [isBusy, playSection1Forward]);
-
-  const handleScrollUp = useCallback(() => {
-    if (isBusy()) {
-      scrollQueueRef.current.push('up');
+    // If at top of page and scrolling up while complete
+    if (isComplete && deltaY < 0 && window.scrollY <= 5) {
+      e.preventDefault();
+      const progressDelta = deltaY * SCRUB_CONFIG.SCROLL_SENSITIVITY * 2; // Touch needs more sensitivity
+      targetProgressRef.current = clamp(targetProgressRef.current + progressDelta, 0, 1);
       return;
     }
     
-    const currentState = stateRef.current;
-    
-    if (currentState === SCROLL_STATES.S2_COMPLETE) {
-      const scrollY = window.scrollY;
-      if (scrollY <= 5) {
-        handleReturnFromStatic();
-      }
+    // If locked, handle scroll-driven animation
+    if (isLocked) {
+      e.preventDefault();
+      
+      const progressDelta = deltaY * SCRUB_CONFIG.SCROLL_SENSITIVITY * 2;
+      targetProgressRef.current = clamp(targetProgressRef.current + progressDelta, 0, 1);
     }
-  }, [isBusy, handleReturnFromStatic]);
+  }, [reducedMotion, isComplete, isLocked]);
 
-  // Use the scroll normalizer hook
-  const { handleWheel, handleTouchStart, handleTouchMove } = useScrollNormalizer({
-    onScrollDown: handleScrollDown,
-    onScrollUp: handleScrollUp,
-    isLocked: isLocked && stateRef.current !== SCROLL_STATES.S2_COMPLETE,
-    isAnimating: isAnimating || isTransitioning,
-    enabled: !reducedMotion,
-    reducedMotion,
-  });
-
-  // Process queued scroll intents when animation completes
-  useEffect(() => {
-    if (!isBusy() && scrollQueueRef.current.length > 0) {
-      const nextIntent = scrollQueueRef.current.shift();
-      if (nextIntent === 'down') {
-        handleScrollDown();
-      } else if (nextIntent === 'up') {
-        handleScrollUp();
-      }
-    }
-  }, [state, isTransitioning, isAnimating, isBusy, handleScrollDown, handleScrollUp]);
-
-  // Attach scroll event listeners
+  // Attach event listeners
   useEffect(() => {
     if (reducedMotion) return;
 
@@ -301,17 +270,9 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
     };
   }, [handleWheel, handleTouchStart, handleTouchMove, reducedMotion]);
 
-  useEffect(() => {
-    return () => {
-      if (transitionTimelineRef.current) {
-        transitionTimelineRef.current.kill();
-      }
-    };
-  }, []);
-
   const getSection1Style = () => {
     const isActive = activeSection === 1;
-    const isVisible = isActive || state === SCROLL_STATES.S1_TRANSITION_TO_S2 || state === SCROLL_STATES.S2_TRANSITION_TO_S1;
+    const isVisible = isActive || displayProgress < SCRUB_CONFIG.SECTION_TRANSITION_POINT + 0.1;
     
     return {
       position: 'absolute',
@@ -319,11 +280,10 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       left: 0,
       width: '100%',
       height: '100vh',
-      opacity: isActive ? 1 : 0,
       visibility: isVisible ? 'visible' : 'hidden',
       pointerEvents: isActive ? 'auto' : 'none',
       zIndex: isActive ? 2 : 1,
-      willChange: 'opacity, transform, filter',
+      willChange: 'opacity, transform',
       backfaceVisibility: 'hidden',
       transform: 'translateZ(0)',
     };
@@ -331,7 +291,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
 
   const getSection2Style = () => {
     const isActive = activeSection === 2;
-    const isVisible = showSection2 && (isActive || state === SCROLL_STATES.S1_TRANSITION_TO_S2 || state === SCROLL_STATES.S2_TRANSITION_TO_S1);
+    const isVisible = showSection2;
     
     return {
       position: 'absolute',
@@ -339,21 +299,20 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       left: 0,
       width: '100%',
       height: '100vh',
-      opacity: isActive ? 1 : 0,
+      opacity: 0,
       visibility: isVisible ? 'visible' : 'hidden',
       pointerEvents: isActive ? 'auto' : 'none',
       zIndex: isActive ? 2 : 1,
-      willChange: 'opacity, transform, filter',
+      willChange: 'opacity, transform',
       backfaceVisibility: 'hidden',
       transform: 'translateZ(0)',
     };
   };
 
-
   return (
     <div 
       ref={wrapperRef}
-      className="three-hero-wrapper"
+      className={`three-hero-wrapper ${isFadingOut ? 'fading-out' : ''}`}
       style={{
         position: isLocked ? 'fixed' : 'relative',
         top: 0,
@@ -362,8 +321,26 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
         height: isLocked ? '100vh' : 'auto',
         zIndex: isLocked ? 100 : 1,
         overflow: 'hidden',
+        // IMPORTANT: Solid dark background to prevent static content from showing through
+        backgroundColor: '#080c14',
+        // Fade out animation when completing
+        opacity: isFadingOut ? 0 : 1,
+        transition: isFadingOut ? 'opacity 0.6s ease-out' : 'none',
       }}
     >
+      {/* Dark background overlay - ensures no content shows through during transitions */}
+      <div 
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#080c14',
+          zIndex: 0,
+        }}
+      />
+
       {/* Section 1: Hero with Globe */}
       <div 
         ref={section1ContainerRef}
@@ -391,7 +368,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       )}
 
       {/* Scroll indicator */}
-      {isLocked && !isBusy() && state === SCROLL_STATES.S1_IDLE && (
+      {isLocked && displayProgress < 0.1 && (
         <div 
           className="scroll-indicator-wrapper"
           style={{
@@ -400,7 +377,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 10,
-            opacity: 0.8,
+            opacity: 0.8 - displayProgress * 8,
             animation: 'bounce 2s infinite',
           }}
         >
@@ -409,56 +386,43 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
             fontSize: '14px',
             textAlign: 'center',
           }}>
-            <span>Scroll to continue</span>
+            <span>Scroll to explore</span>
             <div style={{ marginTop: '8px', fontSize: '20px' }}>↓</div>
           </div>
         </div>
       )}
 
-      {/* Animation in progress indicator (optional, for debugging) */}
-      {isAnimating && (
+      {/* Progress indicator */}
+      {isLocked && (
         <div 
-          className="animation-progress-indicator"
+          className="progress-indicator"
           style={{
             position: 'absolute',
-            bottom: '40px',
+            bottom: '20px',
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 10,
-            opacity: 0.6,
-            pointerEvents: 'none',
+            opacity: 0.5,
           }}
         >
           <div style={{
-            width: '40px',
-            height: '4px',
+            width: '100px',
+            height: '3px',
             background: 'rgba(255, 255, 255, 0.2)',
             borderRadius: '2px',
             overflow: 'hidden',
           }}>
             <div 
               style={{
-                width: '100%',
+                width: `${displayProgress * 100}%`,
                 height: '100%',
                 background: 'rgba(103, 232, 249, 0.8)',
-                animation: 'progressPulse 1.5s ease-in-out infinite',
+                borderRadius: '2px',
+                transition: 'width 0.1s ease-out',
               }}
             />
           </div>
         </div>
-      )}
-
-      {/* Transition overlay for extra smoothness */}
-      {isTransitioning && (
-        <div 
-          className="transition-overlay"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            pointerEvents: 'none',
-            zIndex: 5,
-          }}
-        />
       )}
 
       <style>{`
@@ -468,29 +432,17 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
           60% { transform: translateX(-50%) translateY(-5px); }
         }
         
-        @keyframes progressPulse {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        
         .three-section {
           transition: visibility 0s;
         }
         
-        /* Reduced motion support */
         @media (prefers-reduced-motion: reduce) {
           .three-section {
             transition: opacity 0.15s ease !important;
-            filter: none !important;
-            transform: none !important;
           }
           
           .scroll-indicator-wrapper {
             animation: none !important;
-          }
-          
-          .animation-progress-indicator {
-            display: none !important;
           }
         }
       `}</style>
