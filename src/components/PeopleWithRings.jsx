@@ -90,6 +90,50 @@ const createHumanSprite = (texture, isFemale = false) => {
 	"origin": "extHost1"
 }]
 
+// Create revolving ring with 9 dots around person (vertical ellipse orbit)
+const createRevolvingDotRing = () => {
+  const ringGroup = new THREE.Group();
+  const radiusX = 0.7; // Horizontal radius (width around person)
+  const radiusY = 1.0; // Vertical radius (height of orbit)
+  const dotCount = 9;
+  const dots = [];
+  const dotMaterials = [];
+
+  // Create 9 dots evenly spaced around the elliptical ring
+  for (let i = 0; i < dotCount; i++) {
+    const angle = (i / dotCount) * Math.PI * 2;
+    
+    // Create glowing dot with glow effect
+    const dotGeo = new THREE.SphereGeometry(0.045, 16, 16);
+    const dotMat = new THREE.MeshBasicMaterial({
+      color: 0x88ccff, // Light blue color
+      transparent: true,
+      opacity: 0,
+    });
+    const dot = new THREE.Mesh(dotGeo, dotMat);
+    
+    // Position dot on the elliptical ring (vertical plane)
+    dot.position.z = Math.cos(angle) * radiusX;
+    dot.position.y = Math.sin(angle) * radiusY;
+    dot.position.x = 0;
+    
+    // Store initial angle for animation
+    dot.userData.initialAngle = angle;
+    
+    ringGroup.add(dot);
+    dots.push(dot);
+    dotMaterials.push(dotMat);
+  }
+
+  return {
+    group: ringGroup,
+    dots,
+    dotMaterials,
+    radiusX,
+    radiusY,
+  };
+};
+
 // Create chrome metallic ring - EXACT match to reference
 const createMetallicRing = () => {
   const ringGroup = new THREE.Group();
@@ -306,6 +350,23 @@ export default function PeopleWithRings({ opacity = 0, progress = 0, ringTransfe
     leftRing.group.scale.setScalar(ringScale);
     rightRing.group.scale.setScalar(ringScale);
 
+    // Create revolving dot rings around each person
+    const leftDotRing = createRevolvingDotRing();
+    const rightDotRing = createRevolvingDotRing();
+    
+    // Position dot rings at person center
+    const dotRingY = 0.25; // Center height of person
+    leftDotRing.group.position.set(-1.1, dotRingY, 0);
+    rightDotRing.group.position.set(1.1, dotRingY, 0);
+    
+    // Add to person groups so they move together
+    leftPersonGroup.add(leftDotRing.group);
+    rightPersonGroup.add(rightDotRing.group);
+    
+    // Adjust local position within person group
+    leftDotRing.group.position.set(0, 0.9, 0);
+    rightDotRing.group.position.set(0, 0.9, 0);
+
     // Resize
     const resize = () => {
       const width = window.innerWidth;
@@ -345,9 +406,35 @@ export default function PeopleWithRings({ opacity = 0, progress = 0, ringTransfe
       rightRing.group.scale.setScalar(currentScale);
 
       // Subtle breathing movement for rings (follows body)
-      const breathe = Math.sin(time * 0.7) * 0.003;
-      leftRing.group.position.y = waistY + breathe;
-      rightRing.group.position.y = waistY + breathe;
+      const breatheAnim = Math.sin(time * 0.7) * 0.003;
+      leftRing.group.position.y = waistY + breatheAnim;
+      rightRing.group.position.y = waistY + breatheAnim;
+
+      // Animate revolving dot rings
+      const rotationSpeed = 0.8; // Speed of revolution
+      
+      // Rotate each dot around the person (vertical ellipse)
+      leftDotRing.dots.forEach((dot, i) => {
+        const angle = dot.userData.initialAngle + time * rotationSpeed;
+        dot.position.z = Math.cos(angle) * leftDotRing.radiusX;
+        dot.position.y = Math.sin(angle) * leftDotRing.radiusY;
+      });
+      
+      // Right ring rotates in opposite direction
+      rightDotRing.dots.forEach((dot, i) => {
+        const angle = dot.userData.initialAngle - time * rotationSpeed;
+        dot.position.z = Math.cos(angle) * rightDotRing.radiusX;
+        dot.position.y = Math.sin(angle) * rightDotRing.radiusY;
+      });
+      
+      // Dot ring opacity based on progress
+      const dotOpacity = Math.min(progress * 2.5, 1) * 0.85;
+      leftDotRing.dotMaterials.forEach((mat, i) => {
+        mat.opacity = dotOpacity;
+      });
+      rightDotRing.dotMaterials.forEach((mat, i) => {
+        mat.opacity = dotOpacity;
+      });
 
       // Opacity
       const baseOpacity = Math.min(progress * 3, 1);

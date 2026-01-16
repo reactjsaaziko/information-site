@@ -255,6 +255,36 @@
   filter: blur(12px);
 }
 
+/* Person label */
+.trade-anim-person-label {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 24px;
+  border-radius: 30px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.trade-anim-person-label-buyer {
+  color: #67e8f9;
+  background: rgba(10, 25, 50, 0.9);
+  border: 2px solid rgba(103, 232, 249, 0.5);
+  box-shadow: 0 4px 20px rgba(103, 232, 249, 0.3);
+}
+
+.trade-anim-person-label-seller {
+  color: #6ee7b7;
+  background: rgba(10, 25, 50, 0.9);
+  border: 2px solid rgba(110, 231, 183, 0.5);
+  box-shadow: 0 4px 20px rgba(110, 231, 183, 0.3);
+}
+
 /* Cards - Positioned from center like 3d_page project */
 /* Cards are placed on the OUTER sides of the people, not covering them */
 .trade-anim-card {
@@ -473,11 +503,11 @@
 }
 
 .trade-anim-amount-seller-head {
-  transform: translate(-50%, -50%) translateX(500px) translateY(-120px);
+  transform: translate(-50%, -50%) translateX(500px) translateY(-200px);
 }
 
 .trade-anim-amount-buyer-head {
-  transform: translate(-50%, -50%) translateX(-500px) translateY(-120px);
+  transform: translate(-50%, -50%) translateX(-500px) translateY(-200px);
 }
 
 .trade-anim-amount-inner {
@@ -675,11 +705,11 @@
   }
 
   .trade-anim-amount-seller-head {
-    transform: translate(-50%, -50%) translateX(400px) translateY(-120px);
+    transform: translate(-50%, -50%) translateX(400px) translateY(-200px);
   }
 
   .trade-anim-amount-buyer-head {
-    transform: translate(-50%, -50%) translateX(-400px) translateY(-120px);
+    transform: translate(-50%, -50%) translateX(-400px) translateY(-200px);
   }
 }
 
@@ -825,11 +855,11 @@
   }
 
   .trade-anim-amount-seller-head {
-    transform: translate(-50%, -50%) translateX(220px) translateY(-100px);
+    transform: translate(-50%, -50%) translateX(220px) translateY(-160px);
   }
 
   .trade-anim-amount-buyer-head {
-    transform: translate(-50%, -50%) translateX(-220px) translateY(-100px);
+    transform: translate(-50%, -50%) translateX(-220px) translateY(-160px);
   }
 
   .trade-anim-amount-inner {
@@ -1219,4 +1249,371 @@
     width: 30px;
     height: 30px;
   }
+}
+
+
+/* Revolving Ring with 9 Dots around Person - rotating on its own tilted axis */
+.trade-anim-revolving-ring-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.trade-anim-revolving-ring-wrapper-left {
+  transform: translate(-50%, -50%) translateX(-500px) translateY(80px);
+}
+
+.trade-anim-revolving-ring-wrapper-right {
+  transform: translate(-50%, -50%) translateX(500px) translateY(80px);
+}
+
+.trade-anim-revolving-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  transform: translate(-50%, -50%) rotateX(-45deg);
+  transform-style: preserve-3d;
+  animation: revolveRingY 10s linear infinite;
+  pointer-events: none;
+}
+
+.trade-anim-revolving-ring-reverse {
+  animation: revolveRingYReverse 10s linear infinite;
+}
+
+.trade-anim-ring-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, #67e8f9 0%, #22d3ee 50%, rgba(34, 211, 238, 0.3) 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 10px rgba(103, 232, 249, 0.8),
+    0 0 20px rgba(103, 232, 249, 0.5),
+    0 0 30px rgba(103, 232, 249, 0.3);
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  transition: opacity 0.5s ease;
+}
+
+/* Flying dot styles - for dots transitioning from person to Aaziko */
+.trade-anim-flying-dot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, #ff6b6b 0%, #ff4444 50%, rgba(255, 68, 68, 0.3) 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 15px rgba(255, 68, 68, 0.9),
+    0 0 30px rgba(255, 68, 68, 0.6),
+    0 0 45px rgba(255, 68, 68, 0.3);
+  z-index: 200;
+}
+
+.trade-anim-flying-dot-label {
+  position: absolute;
+  left: 50%;
+  bottom: 25px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ff4444;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+  border: 2px solid rgba(255, 68, 68, 0.5);
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+}
+
+/* Aaziko revolving ring - where problems go after being handled */
+.trade-anim-aaziko-ring-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 400px;
+  height: 400px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.5s ease;
+}
+
+.trade-anim-aaziko-revolving-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  transform: translate(-50%, -50%) rotateX(-45deg);
+  transform-style: preserve-3d;
+  animation: revolveAazikoRing 12s linear infinite;
+}
+
+@keyframes revolveAazikoRing {
+  0% { transform: translate(-50%, -50%) rotateX(-45deg) rotateZ(0deg); }
+  100% { transform: translate(-50%, -50%) rotateX(-45deg) rotateZ(360deg); }
+}
+
+.trade-anim-aaziko-ring-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, #6ee7b7 0%, #34d399 50%, rgba(52, 211, 153, 0.3) 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 10px rgba(110, 231, 183, 0.8),
+    0 0 20px rgba(110, 231, 183, 0.5);
+  top: 50%;
+  left: 50%;
+  /* Use CSS custom property for angle, inherit parent rotation */
+  transform: translate(-50%, -50%) rotateZ(var(--dot-angle, 0deg)) translateY(-180px);
+  transform-style: preserve-3d;
+}
+
+.trade-anim-aaziko-dot-label {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6ee7b7;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 1), 0 0 15px rgba(0, 0, 0, 0.8);
+  padding: 3px 10px;
+  border-radius: 15px;
+  transform-style: flat;
+  backface-visibility: visible;
+  background: rgba(110, 231, 183, 0.15);
+  border: 1px solid rgba(110, 231, 183, 0.3);
+}
+
+/* Label for each dot - stays flat and readable with magnifier zoom effect */
+.trade-anim-dot-label {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%) scale(1);
+  transform-origin: center bottom;
+  white-space: nowrap;
+  font-size: 18px;
+  font-weight: 800;
+  color: #ff4444;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 1);
+  pointer-events: none;
+  transform-style: flat;
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+  /* Magnifier effect base styles */
+  padding: 4px 12px;
+  border-radius: 20px;
+  transition: background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+}
+
+/* Each dot label gets its own zoom animation, offset by its position */
+.trade-anim-revolving-ring .trade-anim-ring-dot:nth-child(1) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: 0s; }
+.trade-anim-revolving-ring .trade-anim-ring-dot:nth-child(2) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -1.111s; }
+.trade-anim-revolving-ring .trade-anim-ring-dot:nth-child(3) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -2.222s; }
+.trade-anim-revolving-ring .trade-anim-ring-dot:nth-child(4) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -3.333s; }
+.trade-anim-revolving-ring .trade-anim-ring-dot:nth-child(5) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -4.444s; }
+.trade-anim-revolving-ring .trade-anim-ring-dot:nth-child(6) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -5.555s; }
+.trade-anim-revolving-ring .trade-anim-ring-dot:nth-child(7) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -6.666s; }
+.trade-anim-revolving-ring .trade-anim-ring-dot:nth-child(8) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -7.777s; }
+.trade-anim-revolving-ring .trade-anim-ring-dot:nth-child(9) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -8.888s; }
+
+/* Reverse ring - opposite timing */
+.trade-anim-revolving-ring-reverse .trade-anim-ring-dot:nth-child(1) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: 0s; }
+.trade-anim-revolving-ring-reverse .trade-anim-ring-dot:nth-child(2) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -8.888s; }
+.trade-anim-revolving-ring-reverse .trade-anim-ring-dot:nth-child(3) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -7.777s; }
+.trade-anim-revolving-ring-reverse .trade-anim-ring-dot:nth-child(4) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -6.666s; }
+.trade-anim-revolving-ring-reverse .trade-anim-ring-dot:nth-child(5) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -5.555s; }
+.trade-anim-revolving-ring-reverse .trade-anim-ring-dot:nth-child(6) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -4.444s; }
+.trade-anim-revolving-ring-reverse .trade-anim-ring-dot:nth-child(7) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -3.333s; }
+.trade-anim-revolving-ring-reverse .trade-anim-ring-dot:nth-child(8) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -2.222s; }
+.trade-anim-revolving-ring-reverse .trade-anim-ring-dot:nth-child(9) .trade-anim-dot-label { animation: labelZoom 10s linear infinite; animation-delay: -1.111s; }
+
+/* Magnifier zoom animation - peaks at 0% (top position) with lens effect */
+@keyframes labelZoom {
+  0% { 
+    transform: translateX(-50%) scale(1.8); 
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 70%);
+    box-shadow: 
+      0 0 20px rgba(255, 68, 68, 0.6),
+      0 0 40px rgba(255, 68, 68, 0.3),
+      inset 0 0 15px rgba(255, 255, 255, 0.2),
+      0 4px 15px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 15px rgba(255, 68, 68, 1), 0 0 30px rgba(255, 68, 68, 0.8), 0 2px 8px rgba(0, 0, 0, 1);
+  }
+  8% { 
+    transform: translateX(-50%) scale(1.5); 
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 40%, transparent 70%);
+    box-shadow: 
+      0 0 12px rgba(255, 68, 68, 0.4),
+      0 0 25px rgba(255, 68, 68, 0.2),
+      inset 0 0 10px rgba(255, 255, 255, 0.1),
+      0 3px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  15% { 
+    transform: translateX(-50%) scale(1.1); 
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 1);
+  }
+  85% { 
+    transform: translateX(-50%) scale(1); 
+    background: transparent;
+    box-shadow: none;
+    border: none;
+  }
+  92% { 
+    transform: translateX(-50%) scale(1.5); 
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 40%, transparent 70%);
+    box-shadow: 
+      0 0 12px rgba(255, 68, 68, 0.4),
+      0 0 25px rgba(255, 68, 68, 0.2),
+      inset 0 0 10px rgba(255, 255, 255, 0.1),
+      0 3px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  100% { 
+    transform: translateX(-50%) scale(1.8); 
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 70%);
+    box-shadow: 
+      0 0 20px rgba(255, 68, 68, 0.6),
+      0 0 40px rgba(255, 68, 68, 0.3),
+      inset 0 0 15px rgba(255, 255, 255, 0.2),
+      0 4px 15px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 15px rgba(255, 68, 68, 1), 0 0 30px rgba(255, 68, 68, 0.8), 0 2px 8px rgba(0, 0, 0, 1);
+  }
+}
+
+/* Position 9 dots in a circle - larger radius for more gap between labels */
+.trade-anim-ring-dot:nth-child(1) { transform: translate(-50%, -50%) rotateZ(0deg) translateY(-260px); }
+.trade-anim-ring-dot:nth-child(2) { transform: translate(-50%, -50%) rotateZ(40deg) translateY(-260px); }
+.trade-anim-ring-dot:nth-child(3) { transform: translate(-50%, -50%) rotateZ(80deg) translateY(-260px); }
+.trade-anim-ring-dot:nth-child(4) { transform: translate(-50%, -50%) rotateZ(120deg) translateY(-260px); }
+.trade-anim-ring-dot:nth-child(5) { transform: translate(-50%, -50%) rotateZ(160deg) translateY(-260px); }
+.trade-anim-ring-dot:nth-child(6) { transform: translate(-50%, -50%) rotateZ(200deg) translateY(-260px); }
+.trade-anim-ring-dot:nth-child(7) { transform: translate(-50%, -50%) rotateZ(240deg) translateY(-260px); }
+.trade-anim-ring-dot:nth-child(8) { transform: translate(-50%, -50%) rotateZ(280deg) translateY(-260px); }
+.trade-anim-ring-dot:nth-child(9) { transform: translate(-50%, -50%) rotateZ(320deg) translateY(-260px); }
+
+@keyframes revolveRingY {
+  0% {
+    transform: translate(-50%, -50%) rotateX(-45deg) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateX(-45deg) rotateZ(360deg);
+  }
+}
+
+@keyframes revolveRingYReverse {
+  0% {
+    transform: translate(-50%, -50%) rotateX(-45deg) rotateZ(360deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateX(-45deg) rotateZ(0deg);
+  }
+}
+
+/* Responsive adjustments for revolving ring */
+@media (max-width: 1400px) {
+  .trade-anim-revolving-ring-wrapper-left {
+    transform: translate(-50%, -50%) translateX(-400px) translateY(80px);
+  }
+  
+  .trade-anim-revolving-ring-wrapper-right {
+    transform: translate(-50%, -50%) translateX(400px) translateY(80px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .trade-anim-revolving-ring {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .trade-anim-revolving-ring-wrapper {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .trade-anim-revolving-ring-wrapper-left {
+    transform: translate(-50%, -50%) translateX(-300px) translateY(60px);
+  }
+  
+  .trade-anim-revolving-ring-wrapper-right {
+    transform: translate(-50%, -50%) translateX(300px) translateY(60px);
+  }
+  
+  .trade-anim-ring-dot {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .trade-anim-dot-label {
+    font-size: 14px;
+  }
+  
+  .trade-anim-ring-dot:nth-child(1) { transform: translate(-50%, -50%) rotateZ(0deg) translateY(-200px); }
+  .trade-anim-ring-dot:nth-child(2) { transform: translate(-50%, -50%) rotateZ(40deg) translateY(-200px); }
+  .trade-anim-ring-dot:nth-child(3) { transform: translate(-50%, -50%) rotateZ(80deg) translateY(-200px); }
+  .trade-anim-ring-dot:nth-child(4) { transform: translate(-50%, -50%) rotateZ(120deg) translateY(-200px); }
+  .trade-anim-ring-dot:nth-child(5) { transform: translate(-50%, -50%) rotateZ(160deg) translateY(-200px); }
+  .trade-anim-ring-dot:nth-child(6) { transform: translate(-50%, -50%) rotateZ(200deg) translateY(-200px); }
+  .trade-anim-ring-dot:nth-child(7) { transform: translate(-50%, -50%) rotateZ(240deg) translateY(-200px); }
+  .trade-anim-ring-dot:nth-child(8) { transform: translate(-50%, -50%) rotateZ(280deg) translateY(-200px); }
+  .trade-anim-ring-dot:nth-child(9) { transform: translate(-50%, -50%) rotateZ(320deg) translateY(-200px); }
+}
+
+@media (max-width: 768px) {
+  .trade-anim-revolving-ring {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .trade-anim-revolving-ring-wrapper {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .trade-anim-revolving-ring-wrapper-left {
+    transform: translate(-50%, -50%) translateX(-220px) translateY(50px);
+  }
+  
+  .trade-anim-revolving-ring-wrapper-right {
+    transform: translate(-50%, -50%) translateX(220px) translateY(50px);
+  }
+  
+  .trade-anim-ring-dot {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .trade-anim-dot-label {
+    font-size: 12px;
+  }
+  
+  .trade-anim-ring-dot:nth-child(1) { transform: translate(-50%, -50%) rotateZ(0deg) translateY(-170px); }
+  .trade-anim-ring-dot:nth-child(2) { transform: translate(-50%, -50%) rotateZ(40deg) translateY(-170px); }
+  .trade-anim-ring-dot:nth-child(3) { transform: translate(-50%, -50%) rotateZ(80deg) translateY(-170px); }
+  .trade-anim-ring-dot:nth-child(4) { transform: translate(-50%, -50%) rotateZ(120deg) translateY(-170px); }
+  .trade-anim-ring-dot:nth-child(5) { transform: translate(-50%, -50%) rotateZ(160deg) translateY(-170px); }
+  .trade-anim-ring-dot:nth-child(6) { transform: translate(-50%, -50%) rotateZ(200deg) translateY(-170px); }
+  .trade-anim-ring-dot:nth-child(7) { transform: translate(-50%, -50%) rotateZ(240deg) translateY(-170px); }
+  .trade-anim-ring-dot:nth-child(8) { transform: translate(-50%, -50%) rotateZ(280deg) translateY(-170px); }
+  .trade-anim-ring-dot:nth-child(9) { transform: translate(-50%, -50%) rotateZ(320deg) translateY(-170px); }
 }

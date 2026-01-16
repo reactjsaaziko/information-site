@@ -39,6 +39,12 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
   const sceneContainerRef = useRef(null);
   const earthContainerRef = useRef(null);
   const earthSceneRef = useRef(null);
+  const leftRevolvingRingRef = useRef(null);
+  const rightRevolvingRingRef = useRef(null);
+  const aazikoRevolvingRingRef = useRef(null);
+  const labelZoomRafRef = useRef(null);
+  const flyingDotsRef = useRef([]);
+  const dotMigrationStartedRef = useRef(false);
 
   const [buttonTextIndex, setButtonTextIndex] = useState(0);
   const [earthContainerReady, setEarthContainerReady] = useState(false);
@@ -277,6 +283,8 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
     }
     if (personLeftRef.current) personLeftRef.current.style.opacity = personOpacityRef.current;
     if (personRightRef.current) personRightRef.current.style.opacity = personOpacityRef.current;
+    if (leftRevolvingRingRef.current) leftRevolvingRingRef.current.style.opacity = personOpacityRef.current;
+    if (rightRevolvingRingRef.current) rightRevolvingRingRef.current.style.opacity = personOpacityRef.current;
     if (sceneContainerRef.current && !rv.isMobile) {
       sceneContainerRef.current.style.transform = `scale(${sceneScaleRef.current})`;
     }
@@ -418,6 +426,211 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Dot migration animation - dots fly one by one from person to Aaziko
+  useEffect(() => {
+    const buyerLabels = ['Sourcing', 'Communication', 'Trust', 'Transparency', 'Transport', 'Customs', 'Inspection', 'Finance', 'Dispute'];
+    const sellerLabels = ['Marketing', 'Communication', 'Trust', 'Manufacture', 'Transport', 'Banking Charge', 'Customs', 'Finance', 'Dispute'];
+    
+    // Track which labels are already at Aaziko (for merging duplicates)
+    const aazikoLabelsMap = new Map(); // label -> { element, count }
+    
+    let migrationTimeout;
+    let dotIndex = 0;
+    const totalDots = 18; // 9 from each side
+    
+    const getAazikoPosition = () => {
+      const width = window.innerWidth;
+      if (width <= 768) return { x: 0, y: -200 };
+      if (width <= 1100) return { x: 0, y: -210 };
+      if (width <= 1400) return { x: 0, y: -230 };
+      return { x: 0, y: -260 };
+    };
+    
+    const getPersonPosition = (side) => {
+      const width = window.innerWidth;
+      if (width <= 768) return { x: side === 'left' ? -220 : 220, y: 50 };
+      if (width <= 1100) return { x: side === 'left' ? -300 : 300, y: 60 };
+      if (width <= 1400) return { x: side === 'left' ? -400 : 400, y: 80 };
+      return { x: side === 'left' ? -500 : 500, y: 80 };
+    };
+    
+    const createFlyingDot = (label, fromSide, dotIdx) => {
+      const sceneContainer = sceneContainerRef.current;
+      if (!sceneContainer) return;
+      
+      const personPos = getPersonPosition(fromSide);
+      const aazikoPos = getAazikoPosition();
+      
+      // Create flying dot element
+      const flyingDot = document.createElement('div');
+      flyingDot.className = 'trade-anim-flying-dot';
+      flyingDot.innerHTML = `<span class="trade-anim-flying-dot-label">${label}</span>`;
+      
+      // Starting position (at person)
+      const startX = personPos.x;
+      const startY = personPos.y - 100; // Above person's head
+      
+      flyingDot.style.cssText = `
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) translate(${startX}px, ${startY}px);
+        z-index: 200;
+        pointer-events: none;
+        opacity: 0;
+      `;
+      
+      sceneContainer.appendChild(flyingDot);
+      flyingDotsRef.current.push(flyingDot);
+      
+      // Animate: fade in, fly to Aaziko, then join the Aaziko ring
+      const duration = 1500;
+      const startTime = performance.now();
+      
+      const animate = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function
+        const eased = 1 - Math.pow(1 - progress, 3);
+        
+        // Calculate current position
+        const currentX = startX + (aazikoPos.x - startX) * eased;
+        const currentY = startY + (aazikoPos.y - startY) * eased;
+        
+        // Scale up slightly during flight, then back to normal
+        const scale = 1 + Math.sin(progress * Math.PI) * 0.3;
+        
+        // Opacity: fade in quickly, stay visible
+        const opacity = Math.min(progress * 3, 1);
+        
+        flyingDot.style.transform = `translate(-50%, -50%) translate(${currentX}px, ${currentY}px) scale(${scale})`;
+        flyingDot.style.opacity = opacity;
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          // Animation complete - add dot to Aaziko ring (or merge if duplicate)
+          addDotToAazikoRing(label, fromSide, dotIdx);
+          // Remove flying dot
+          setTimeout(() => {
+            if (flyingDot.parentNode) {
+              flyingDot.parentNode.removeChild(flyingDot);
+            }
+          }, 100);
+        }
+      };
+      
+      requestAnimationFrame(animate);
+    };
+    
+    const addDotToAazikoRing = (label, side, idx) => {
+      const aazikoRing = aazikoRevolvingRingRef.current;
+      if (!aazikoRing) return;
+      
+      // Make sure the ring is visible
+      aazikoRing.style.opacity = '1';
+      
+      const ringInner = aazikoRing.querySelector('.trade-anim-aaziko-revolving-ring');
+      if (!ringInner) return;
+      
+      // Check if this label already exists (merge duplicates)
+      if (aazikoLabelsMap.has(label)) {
+        // Label already exists - just pulse the existing one to show merge
+        const existingData = aazikoLabelsMap.get(label);
+        existingData.count++;
+        const existingDot = existingData.element;
+        
+        // Pulse animation to show merge
+        existingDot.style.transition = 'transform 0.3s ease';
+        existingDot.style.transform = existingDot.style.transform.replace('scale(1)', 'scale(1.3)');
+        setTimeout(() => {
+          existingDot.style.transform = existingDot.style.transform.replace('scale(1.3)', 'scale(1)');
+        }, 300);
+        
+        return;
+      }
+      
+      // New unique label - add to ring
+      const existingDots = ringInner.querySelectorAll('.trade-anim-aaziko-ring-dot').length;
+      const angle = existingDots * 30; // 30 degrees apart (fewer dots now due to merging)
+      
+      const dot = document.createElement('div');
+      dot.className = 'trade-anim-aaziko-ring-dot';
+      dot.style.setProperty('--dot-angle', `${angle}deg`);
+      dot.innerHTML = `<span class="trade-anim-aaziko-dot-label">${label}</span>`;
+      
+      // Add with animation
+      dot.style.opacity = '0';
+      ringInner.appendChild(dot);
+      
+      // Track this label
+      aazikoLabelsMap.set(label, { element: dot, count: 1 });
+      
+      // Trigger reflow and animate in
+      requestAnimationFrame(() => {
+        dot.style.transition = 'opacity 0.3s ease';
+        dot.style.opacity = '1';
+      });
+    };
+    
+    const hideDotFromPersonRing = (side, dotIdx) => {
+      const ringRef = side === 'left' ? leftRevolvingRingRef : rightRevolvingRingRef;
+      if (!ringRef.current) return;
+      
+      const dots = ringRef.current.querySelectorAll('.trade-anim-ring-dot');
+      if (dots[dotIdx]) {
+        dots[dotIdx].style.opacity = '0';
+        dots[dotIdx].style.transition = 'opacity 0.3s ease';
+      }
+    };
+    
+    const startDotMigration = () => {
+      if (dotMigrationStartedRef.current) return;
+      dotMigrationStartedRef.current = true;
+      
+      // Show Aaziko ring
+      if (aazikoRevolvingRingRef.current) {
+        aazikoRevolvingRingRef.current.style.opacity = '1';
+      }
+      
+      const migrateNextDot = () => {
+        if (dotIndex >= totalDots) {
+          // All dots migrated - STOP here, no loop
+          return;
+        }
+        
+        const side = dotIndex % 2 === 0 ? 'left' : 'right';
+        const sideIndex = Math.floor(dotIndex / 2);
+        const labels = side === 'left' ? buyerLabels : sellerLabels;
+        
+        if (sideIndex < labels.length) {
+          // Hide dot from person ring
+          hideDotFromPersonRing(side, sideIndex);
+          
+          // Create flying dot
+          setTimeout(() => {
+            createFlyingDot(labels[sideIndex], side, sideIndex);
+          }, 200);
+        }
+        
+        dotIndex++;
+        migrationTimeout = setTimeout(migrateNextDot, 800); // 800ms between each dot
+      };
+      
+      // Start migration after one full rotation (10s)
+      migrationTimeout = setTimeout(migrateNextDot, 10000);
+    };
+    
+    // Start the migration cycle when component mounts (no reset/loop)
+    const initTimeout = setTimeout(startDotMigration, 1000);
+    
+    return () => {
+      clearTimeout(initTimeout);
+      clearTimeout(migrationTimeout);
+    };
+  }, []);
+
 
   // Initialize Earth 3D scene
   useEffect(() => {
@@ -524,13 +737,45 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
           </div>
 
           <div ref={personLeftRef} className="trade-anim-person trade-anim-person-left" style={{ opacity: 0 }}>
+            <div className="trade-anim-person-label trade-anim-person-label-buyer">Buyer</div>
             <img src="/female.png" alt="Buyer" className="trade-anim-person-img" />
             <div className="trade-anim-person-shadow" />
           </div>
 
           <div ref={personRightRef} className="trade-anim-person trade-anim-person-right" style={{ opacity: 0 }}>
+            <div className="trade-anim-person-label trade-anim-person-label-seller">Seller</div>
             <img src="/male.png" alt="Seller" className="trade-anim-person-img" />
             <div className="trade-anim-person-shadow" />
+          </div>
+
+          {/* Revolving ring with 9 dots - Buyer - positioned independently for animation */}
+          <div ref={leftRevolvingRingRef} className="trade-anim-revolving-ring-wrapper trade-anim-revolving-ring-wrapper-left" style={{ opacity: 0 }}>
+            <div className="trade-anim-revolving-ring">
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Sourcing</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Communication</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Trust</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Transparency</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Transport</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Customs</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Inspection</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Finance</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Dispute</span></div>
+            </div>
+          </div>
+
+          {/* Revolving ring with 9 dots - Seller - positioned independently for animation */}
+          <div ref={rightRevolvingRingRef} className="trade-anim-revolving-ring-wrapper trade-anim-revolving-ring-wrapper-right" style={{ opacity: 0 }}>
+            <div className="trade-anim-revolving-ring trade-anim-revolving-ring-reverse">
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Marketing Research</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Communication</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Trust</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Manufacture</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Transport</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Banking Charge</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Customs</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Finance</span></div>
+              <div className="trade-anim-ring-dot"><span className="trade-anim-dot-label">Dispute</span></div>
+            </div>
           </div>
 
           <div ref={arrowRef} className="trade-anim-arrow" style={{ opacity: 0 }}>
@@ -575,6 +820,10 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
 
           <div ref={aazikoSolutionRef} className="trade-anim-aaziko" style={{ opacity: 0 }}>
             <div className="trade-anim-aaziko-logo"><img src="/aaziko.png" alt="Aaziko" /></div>
+            {/* Revolving ring around Aaziko - dots will be added here dynamically */}
+            <div ref={aazikoRevolvingRingRef} className="trade-anim-aaziko-ring-wrapper" style={{ opacity: 0 }}>
+              <div className="trade-anim-aaziko-revolving-ring"></div>
+            </div>
             <svg className="trade-anim-aaziko-arrow-svg trade-anim-aaziko-arrow-right-svg" viewBox="0 0 300 80" preserveAspectRatio="none">
               <path d="M 300 70 Q 150 0, 0 40" stroke="rgba(100, 200, 150, 0.7)" strokeWidth="3" fill="none" strokeDasharray="8 4" />
               <path d="M 0 40 L 15 33 L 15 47 Z" fill="rgba(100, 200, 150, 0.7)" />
@@ -598,60 +847,6 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
       </div>
 
       <div className="trade-anim-bottom-gradient" />
-
-
-      {/* Cards */}
-      <div ref={solutionCardLeftRef} className="trade-anim-card trade-anim-solution-left" style={{ opacity: 0 }}>
-        <div className="trade-anim-card-inner">
-          <div className="trade-anim-card-header">
-            <span className="trade-anim-card-title" style={{ color: '#67e8f9' }}>Aaziko Solutions for Buyers</span>
-          </div>
-          <div className="trade-anim-card-body">
-            {['✓ Verified supplier profiles', '✓ Quality assurance guarantee', '✓ Document verification', '✓ Transparent pricing', '✓ Clear accountability'].map((solution, i) => (
-              <div key={i} className="trade-anim-card-item trade-anim-solution-item-buyer">{solution}</div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div ref={videoCardLeftRef} className="trade-anim-card trade-anim-card-left" style={{ opacity: 0 }}>
-        <div className="trade-anim-card-inner">
-          <div className="trade-anim-card-header">
-            <span className="trade-anim-card-title" style={{ color: '#67e8f9' }}>Buyer Problems</span>
-          </div>
-          <div className="trade-anim-card-body">
-            {['"Is this supplier real?"', '"Will quality match what I ordered?"', '"Will documents be correct?"', '"Will shipping costs change later?"', '"If something goes wrong — who is responsible?"'].map((fear, i) => (
-              <div key={i} className="trade-anim-card-item">{fear}</div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div ref={solutionCardRightRef} className="trade-anim-card trade-anim-solution-right" style={{ opacity: 0 }}>
-        <div className="trade-anim-card-inner">
-          <div className="trade-anim-card-header">
-            <span className="trade-anim-card-title" style={{ color: '#6ee7b7' }}>Aaziko Solutions for Sellers</span>
-          </div>
-          <div className="trade-anim-card-body">
-            {['✓ Guided documentation support', '✓ Optimized payment solutions', '✓ Direct buyer connections', '✓ Trust-building verification', '✓ Expert guidance at every step'].map((solution, i) => (
-              <div key={i} className="trade-anim-card-item trade-anim-solution-item-seller">{solution}</div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div ref={videoCardRightRef} className="trade-anim-card trade-anim-card-right" style={{ opacity: 0 }}>
-        <div className="trade-anim-card-inner">
-          <div className="trade-anim-card-header">
-            <span className="trade-anim-card-title" style={{ color: '#6ee7b7' }}>Seller Problems</span>
-          </div>
-          <div className="trade-anim-card-body">
-            {['"Export documentation is confusing."', '"Payments and currency conversion reduce my profit."', '"Too many middlemen and delays."', '"Buyers don\'t trust new suppliers."', '"One mistake can block future orders."'].map((fear, i) => (
-              <div key={i} className="trade-anim-card-item">{fear}</div>
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 });

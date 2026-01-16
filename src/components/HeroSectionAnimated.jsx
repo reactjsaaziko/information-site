@@ -172,14 +172,12 @@ const HeroSectionAnimated = forwardRef(function HeroSectionAnimated({
       return new Promise((resolve) => {
         const startProgress = progressRef.current;
         const endProgress = 2.0;
-        // Use configurable duration for consistent, cinematic playback
         const duration = SCROLL_CONFIG.SECTION_DURATION_MS;
         const startTime = performance.now();
 
         const animate = (currentTime) => {
           const elapsed = currentTime - startTime;
           const t = Math.min(elapsed / duration, 1);
-          // Ease out cubic for smooth deceleration
           const eased = 1 - Math.pow(1 - t, 3);
           const currentProgress = startProgress + (endProgress - startProgress) * eased;
           
@@ -202,14 +200,12 @@ const HeroSectionAnimated = forwardRef(function HeroSectionAnimated({
       return new Promise((resolve) => {
         const startProgress = progressRef.current;
         const endProgress = 0;
-        // Use configurable duration for consistent, cinematic playback
         const duration = SCROLL_CONFIG.SECTION_REVERSE_DURATION_MS;
         const startTime = performance.now();
 
         const animate = (currentTime) => {
           const elapsed = currentTime - startTime;
           const t = Math.min(elapsed / duration, 1);
-          // Ease out cubic for smooth deceleration
           const eased = 1 - Math.pow(1 - t, 3);
           const currentProgress = startProgress + (endProgress - startProgress) * eased;
           
@@ -229,11 +225,14 @@ const HeroSectionAnimated = forwardRef(function HeroSectionAnimated({
     },
 
     setProgress: (progress) => {
+      // Cancel any ongoing animation
       if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-      updateVisuals(progress * 2); // Scale 0-1 to 0-2
+      // Scale 0-1 to 0-2 for internal progress
+      const scaledProgress = progress * 2;
+      updateVisuals(scaledProgress);
     },
 
-    getProgress: () => progressRef.current / 2, // Scale 0-2 to 0-1
+    getProgress: () => progressRef.current / 2,
   }), [updateVisuals]);
 
   // Initialize with starting state

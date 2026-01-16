@@ -286,7 +286,24 @@ function HomePage() {
   const [isInHeroSection, setIsInHeroSection] = useState(true);
   const [tradeAnimationComplete, setTradeAnimationComplete] = useState(false);
 
+<<<<<<< HEAD
   // Track scroll position to detect if user is in hero section or trade animation
+=======
+  // Handle completion of Three.js sections
+  const handleThreeHeroComplete = useCallback(() => {
+    setShowStaticContent(true);
+    setIsInHeroSection(false);
+  }, []);
+
+  // Handle return from static content to animation
+  const handleThreeHeroReturn = useCallback(() => {
+    setShowStaticContent(false);
+    setIsInHeroSection(true);
+    setBgTransitionProgress(0);
+  }, []);
+
+  // Smooth background color transition based on scroll
+>>>>>>> 7964ee4 (changed animation)
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -317,10 +334,21 @@ function HomePage() {
       )}
 
       <ErrorBoundary>
+<<<<<<< HEAD
         {/* Hero with Globe - scroll animated */}
         <HeroSection 
           quality={quality} 
           onGlobeComplete={() => setShowStaticContent(true)}
+=======
+        {/* Three.js Hero Sections (Section 1 + Section 2) with scroll lock */}
+        <ThreeHeroWrapper
+          ref={threeHeroRef}
+          quality={quality}
+          onThemeChange={setIsLightTheme}
+          onComplete={handleThreeHeroComplete}
+          onReturn={handleThreeHeroReturn}
+          reducedMotion={reducedMotion}
+>>>>>>> 7964ee4 (changed animation)
         />
         
         {/* Static content sections - appear after globe animation completes */}
