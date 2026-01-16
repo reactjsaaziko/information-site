@@ -1,0 +1,820 @@
+/* Inspection Partners Page - Visual-First Design */
+
+.ip-page {
+  --ip-navy: #0B1F3B;
+  --ip-blue: #2563EB;
+  --ip-sky: #EAF2FF;
+  --ip-bg: #F7FAFF;
+  --ip-surface: #FFFFFF;
+  --ip-border: #E3ECFA;
+  --ip-text: #0B1220;
+  --ip-text-muted: #64748B;
+  --ip-green: #10B981;
+  --ip-orange: #F59E0B;
+  --ip-purple: #8B5CF6;
+  --ip-cyan: #06B6D4;
+  
+  background: var(--ip-bg);
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.ip-hero {
+  padding: 140px 24px 80px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.ip-hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ip-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--ip-sky);
+  border-radius: 100px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ip-navy);
+}
+
+.ip-hero-title {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--ip-navy);
+  margin: 0 0 32px;
+}
+
+.ip-gradient-text {
+  background: linear-gradient(135deg, var(--ip-blue) 0%, var(--ip-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hero Visual */
+.ip-hero-visual {
+  margin-bottom: 40px;
+}
+
+.ip-inspect-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 24px;
+}
+
+.ip-inspect-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--ip-blue), var(--ip-cyan));
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 12px 40px rgba(37, 99, 235, 0.3);
+  z-index: 2;
+}
+
+.ip-inspect-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+  border: 2px dashed var(--ip-blue);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: ipRotate 20s linear infinite;
+}
+
+@keyframes ipRotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.ip-orbit {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  background: var(--ip-surface);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+  z-index: 1;
+}
+
+.ip-orbit-icon {
+  color: var(--ip-blue);
+}
+
+.ip-orbit-1 { top: 0; left: 50%; transform: translateX(-50%); animation: ipFloat 3s ease-in-out infinite; }
+.ip-orbit-2 { right: 0; top: 50%; transform: translateY(-50%); animation: ipFloatX 3s ease-in-out infinite 0.5s; }
+.ip-orbit-3 { bottom: 0; left: 50%; transform: translateX(-50%); animation: ipFloat 3s ease-in-out infinite 1s; }
+.ip-orbit-4 { left: 0; top: 50%; transform: translateY(-50%); animation: ipFloatX 3s ease-in-out infinite 1.5s; }
+
+@keyframes ipFloat {
+  0%, 100% { transform: translateY(0) translateX(-50%); }
+  50% { transform: translateY(-8px) translateX(-50%); }
+}
+
+@keyframes ipFloatX {
+  0%, 100% { transform: translateX(0) translateY(-50%); }
+  50% { transform: translateX(8px) translateY(-50%); }
+}
+
+.ip-hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.ip-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--ip-surface);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.ip-stat-item svg {
+  color: var(--ip-blue);
+}
+
+.ip-stat-item span {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ip-navy);
+}
+
+.ip-hero-cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Buttons */
+.ip-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: var(--ip-blue);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.ip-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
+}
+
+.ip-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ip-text);
+  background: var(--ip-surface);
+  border: 2px solid var(--ip-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.ip-btn-secondary:hover {
+  border-color: var(--ip-blue);
+  color: var(--ip-blue);
+}
+
+.ip-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.ip-btn-outline:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: white;
+}
+
+.ip-btn-lg {
+  padding: 16px 32px;
+  font-size: 16px;
+}
+
+/* Container & Sections */
+.ip-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ip-section {
+  padding: 80px 0;
+}
+
+.ip-section-alt {
+  background: var(--ip-surface);
+}
+
+.ip-section-dark {
+  background: linear-gradient(135deg, var(--ip-navy) 0%, #1a365d 100%);
+}
+
+.ip-section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.ip-section-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--ip-sky);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ip-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.ip-badge-light {
+  background: rgba(255,255,255,0.15);
+  color: white;
+}
+
+.ip-badge-warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--ip-orange);
+}
+
+.ip-section-header h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--ip-navy);
+  margin: 0;
+}
+
+.ip-header-light h2 {
+  color: white;
+}
+
+/* Icon Grid */
+.ip-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.ip-icon-card {
+  text-align: center;
+  padding: 32px 20px;
+  background: var(--ip-surface);
+  border-radius: 20px;
+  border: 1px solid var(--ip-border);
+  transition: all 0.3s;
+}
+
+.ip-icon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+}
+
+.ip-icon-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  transition: transform 0.3s;
+}
+
+.ip-icon-card:hover .ip-icon-circle {
+  transform: scale(1.1);
+}
+
+.ip-icon-blue { background: rgba(37, 99, 235, 0.1); color: var(--ip-blue); }
+.ip-icon-green { background: rgba(16, 185, 129, 0.1); color: var(--ip-green); }
+.ip-icon-orange { background: rgba(245, 158, 11, 0.1); color: var(--ip-orange); }
+.ip-icon-purple { background: rgba(139, 92, 246, 0.1); color: var(--ip-purple); }
+
+.ip-icon-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ip-navy);
+  margin: 0 0 8px;
+}
+
+.ip-icon-card p {
+  font-size: 14px;
+  color: var(--ip-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Benefits Visual */
+.ip-benefits-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.ip-benefit-block {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 32px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.ip-benefit-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(37, 99, 235, 0.2);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.ip-benefit-icon.ip-icon-success {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.ip-benefit-icon.ip-icon-info {
+  background: rgba(6, 182, 212, 0.2);
+}
+
+.ip-benefit-content h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 12px;
+}
+
+.ip-benefit-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ip-benefit-tags span {
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 100px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+}
+
+/* Join Visual */
+.ip-join-visual {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.ip-join-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 28px;
+  background: var(--ip-surface);
+  border-radius: 16px;
+  border: 1px solid var(--ip-border);
+  transition: all 0.3s;
+}
+
+.ip-join-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  border-color: var(--ip-green);
+}
+
+.ip-join-item svg {
+  color: var(--ip-green);
+}
+
+.ip-join-item span {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ip-navy);
+}
+
+/* Flow Visual */
+.ip-flow-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ip-flow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  position: relative;
+}
+
+.ip-flow-number {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: var(--ip-sky);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ip-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ip-flow-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  transition: transform 0.3s;
+}
+
+.ip-flow-step:hover .ip-flow-icon {
+  transform: scale(1.1);
+}
+
+.ip-flow-blue { background: rgba(37, 99, 235, 0.1); color: var(--ip-blue); }
+.ip-flow-cyan { background: rgba(6, 182, 212, 0.1); color: var(--ip-cyan); }
+.ip-flow-orange { background: rgba(245, 158, 11, 0.1); color: var(--ip-orange); }
+.ip-flow-green { background: rgba(16, 185, 129, 0.1); color: var(--ip-green); }
+
+.ip-flow-step h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ip-navy);
+  margin: 0 0 4px;
+}
+
+.ip-flow-step p {
+  font-size: 13px;
+  color: var(--ip-text-muted);
+  margin: 0;
+}
+
+.ip-flow-arrow {
+  width: 60px;
+  height: 20px;
+}
+
+.ip-flow-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ip-flow-arrow path {
+  fill: none;
+  stroke: var(--ip-border);
+  stroke-width: 2;
+}
+
+/* Receive Visual */
+.ip-receive-visual {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.ip-receive-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 40px;
+  background: var(--ip-surface);
+  border-radius: 20px;
+  border: 1px solid var(--ip-border);
+  transition: all 0.3s;
+}
+
+.ip-receive-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+}
+
+.ip-receive-icon {
+  width: 72px;
+  height: 72px;
+  background: rgba(6, 182, 212, 0.1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ip-cyan);
+}
+
+.ip-receive-item span {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ip-navy);
+}
+
+/* Limits Visual */
+.ip-limits-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.ip-limit-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: rgba(245, 158, 11, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.ip-limit-item svg {
+  color: var(--ip-orange);
+  flex-shrink: 0;
+}
+
+.ip-limit-item span {
+  font-size: 15px;
+  color: var(--ip-text);
+}
+
+/* CTA Section */
+.ip-cta-section {
+  padding: 80px 0;
+}
+
+.ip-cta-card {
+  background: linear-gradient(135deg, var(--ip-blue) 0%, var(--ip-navy) 100%);
+  border-radius: 24px;
+  padding: 60px 40px;
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.ip-cta-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.ip-cta-visual {
+  margin-bottom: 24px;
+}
+
+.ip-cta-circle {
+  width: 100px;
+  height: 100px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: ipPulse 2s ease-in-out infinite;
+}
+
+@keyframes ipPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.ip-cta-card h3 {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.ip-cta-card p {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0 0 32px;
+}
+
+.ip-cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ip-cta-card .ip-btn-primary {
+  background: white;
+  color: var(--ip-blue);
+}
+
+.ip-cta-card .ip-btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .ip-icon-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .ip-hero {
+    padding: 120px 24px 60px;
+  }
+  
+  .ip-hero-title {
+    font-size: 36px;
+  }
+  
+  .ip-inspect-container {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .ip-inspect-center {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+  }
+  
+  .ip-inspect-center svg {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .ip-inspect-container::before {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .ip-orbit {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+  
+  .ip-hero-stats {
+    gap: 12px;
+  }
+  
+  .ip-stat-item {
+    padding: 10px 16px;
+  }
+  
+  .ip-stat-item span {
+    font-size: 12px;
+  }
+  
+  .ip-section {
+    padding: 60px 0;
+  }
+  
+  .ip-section-header h2 {
+    font-size: 28px;
+  }
+  
+  .ip-icon-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .ip-benefit-block {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+  }
+  
+  .ip-benefit-content h3 {
+    font-size: 18px;
+  }
+  
+  .ip-benefit-tags {
+    justify-content: center;
+  }
+  
+  .ip-join-visual {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .ip-join-item {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+  
+  .ip-flow-visual {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .ip-flow-arrow {
+    transform: rotate(90deg);
+    width: 40px;
+  }
+  
+  .ip-receive-visual {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .ip-receive-item {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .ip-cta-card {
+    padding: 40px 24px;
+  }
+  
+  .ip-cta-card h3 {
+    font-size: 24px;
+  }
+  
+  .ip-cta-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .ip-hero-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .ip-btn-primary,
+  .ip-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

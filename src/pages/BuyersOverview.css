@@ -1,0 +1,962 @@
+/* Buyers Overview Page Styles - Aaziko Premium 3D Light Theme */
+
+.buyers-page {
+  background: var(--bg);
+  min-height: 100vh;
+  position: relative;
+}
+
+.buyers-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  z-index: -1;
+}
+
+/* Hero Section */
+.buyers-hero {
+  padding: 140px 24px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.buyers-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.buyers-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.buyers-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--primary-bg);
+  border-radius: var(--radius-full);
+  margin-bottom: 24px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.buyers-hero-title {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+
+.buyers-gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.buyers-hero-subtitle {
+  font-size: 20px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 36px;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buyers-hero-cta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+/* Trust Strip */
+.buyers-trust-strip {
+  display: inline-flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+  margin: 0 auto;
+}
+
+.buyers-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.buyers-trust-item svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.buyers-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: var(--primary);
+  border: none;
+  border-bottom: 4px solid var(--primary-dark);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.buyers-btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.buyers-btn-primary:active {
+  transform: translateY(1px);
+  border-bottom-width: 2px;
+}
+
+.buyers-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.buyers-btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.buyers-btn-lg {
+  padding: 16px 32px;
+  font-size: 16px;
+}
+
+/* Stats Bar */
+.buyers-stats {
+  padding: 0 24px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
+}
+
+.buyers-stats-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 24px 32px;
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-xl);
+  position: relative;
+  z-index: 1;
+}
+
+.buyers-stat-item {
+  text-align: center;
+  padding: 12px;
+}
+
+.buyers-stat-icon {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sky);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  transition: transform 0.3s ease;
+}
+
+.buyers-stat-item:hover .buyers-stat-icon {
+  animation: buyersIconWiggle 0.5s ease-in-out;
+}
+
+@keyframes buyersIconWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-12deg); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-8deg); }
+  80% { transform: rotate(5deg); }
+}
+
+.buyers-stat-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.buyers-stat-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Container & Sections */
+.buyers-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.buyers-section {
+  padding: 80px 0;
+}
+
+.buyers-section-alt {
+  background: var(--gray-50);
+}
+
+.buyers-section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.buyers-section-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--primary-bg);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.buyers-section-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+
+.buyers-section-desc {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Benefits Grid */
+.buyers-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.buyers-benefit-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.buyers-benefit-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  border-bottom-color: var(--primary-dark);
+}
+
+.buyers-benefit-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sky);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  margin-bottom: 16px;
+  transition: transform 0.3s ease;
+}
+
+.buyers-benefit-card:hover .buyers-benefit-icon {
+  animation: buyersIconWiggle 0.5s ease-in-out;
+}
+
+.buyers-benefit-highlight {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 4px 10px;
+  background: rgba(22, 163, 74, 0.1);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--success);
+  text-transform: uppercase;
+}
+
+.buyers-benefit-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.buyers-benefit-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Trust Grid */
+.buyers-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.buyers-trust-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-align: center;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.buyers-trust-card:hover {
+  transform: translateY(-4px);
+}
+
+.buyers-trust-primary {
+  border-bottom-color: var(--primary);
+}
+.buyers-trust-primary:hover {
+  border-color: var(--primary);
+}
+.buyers-trust-primary .buyers-trust-icon {
+  background: var(--sky);
+  color: var(--primary);
+}
+
+.buyers-trust-success {
+  border-bottom-color: var(--success);
+}
+.buyers-trust-success:hover {
+  border-color: var(--success);
+}
+.buyers-trust-success .buyers-trust-icon {
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--success);
+}
+
+.buyers-trust-warning {
+  border-bottom-color: var(--warning);
+}
+.buyers-trust-warning:hover {
+  border-color: var(--warning);
+}
+.buyers-trust-warning .buyers-trust-icon {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}
+
+.buyers-trust-info {
+  border-bottom-color: var(--info);
+}
+.buyers-trust-info:hover {
+  border-color: var(--info);
+}
+.buyers-trust-info .buyers-trust-icon {
+  background: rgba(6, 182, 212, 0.1);
+  color: var(--info);
+}
+
+.buyers-trust-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  transition: transform 0.3s ease;
+}
+
+.buyers-trust-card:hover .buyers-trust-icon {
+  animation: buyersIconWiggle 0.5s ease-in-out;
+}
+
+.buyers-trust-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.buyers-trust-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Steps Container */
+.buyers-steps-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  position: relative;
+}
+
+.buyers-step-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-lg);
+  padding: 24px 16px;
+  text-align: center;
+  position: relative;
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.buyers-step-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  border-bottom-color: var(--primary-dark);
+}
+
+.buyers-step-number {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.buyers-step-icon {
+  width: 48px;
+  height: 48px;
+  margin: 12px auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sky);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  transition: transform 0.3s ease;
+}
+
+.buyers-step-card:hover .buyers-step-icon {
+  animation: buyersIconWiggle 0.5s ease-in-out;
+}
+
+.buyers-step-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.buyers-step-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.buyers-step-connector {
+  position: absolute;
+  top: 50%;
+  right: -16px;
+  width: 16px;
+  height: 2px;
+  background: var(--border);
+  z-index: 1;
+}
+
+/* CTA Section */
+.buyers-cta-section {
+  padding: 60px 0 80px;
+}
+
+.buyers-cta-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 40px 48px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: var(--radius-xl);
+  color: white;
+}
+
+.buyers-cta-content h3 {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.buyers-cta-content p {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.buyers-cta-card .buyers-btn-primary {
+  background: white;
+  color: var(--primary);
+  border-bottom-color: var(--gray-300);
+  flex-shrink: 0;
+}
+
+.buyers-cta-card .buyers-btn-primary:hover {
+  background: var(--gray-50);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .buyers-hero-title {
+    font-size: 44px;
+  }
+
+  .buyers-benefits-grid {
+    gap: 20px;
+  }
+
+  .buyers-trust-grid {
+    gap: 20px;
+  }
+
+  .buyers-steps-container {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .buyers-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .buyers-trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .buyers-steps-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .buyers-step-connector {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .buyers-hero {
+    padding: 130px 20px 70px;
+  }
+
+  .buyers-hero-title {
+    font-size: 38px;
+  }
+
+  .buyers-hero-subtitle {
+    font-size: 18px;
+  }
+
+  .buyers-section-title {
+    font-size: 32px;
+  }
+
+  .buyers-benefit-card,
+  .buyers-trust-card {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .buyers-hero {
+    padding: 120px 16px 60px;
+  }
+
+  .buyers-hero-title {
+    font-size: 32px;
+  }
+
+  .buyers-hero-subtitle {
+    font-size: 16px;
+  }
+
+  .buyers-hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buyers-btn-primary,
+  .buyers-btn-secondary {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+
+  .buyers-trust-strip {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .buyers-trust-item {
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .buyers-stats-container {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+  }
+
+  .buyers-stat-value {
+    font-size: 24px;
+  }
+
+  .buyers-section {
+    padding: 60px 0;
+  }
+
+  .buyers-section-title {
+    font-size: 28px;
+  }
+
+  .buyers-benefits-grid,
+  .buyers-trust-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .buyers-steps-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .buyers-cta-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 32px 24px;
+  }
+
+  .buyers-cta-content h3 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .buyers-hero {
+    padding: 110px 16px 50px;
+  }
+
+  .buyers-hero::before {
+    width: 600px;
+    height: 500px;
+  }
+
+  .buyers-hero-badge {
+    padding: 8px 14px;
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .buyers-hero-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .buyers-hero-subtitle {
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+
+  .buyers-hero-cta {
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .buyers-btn-primary,
+  .buyers-btn-secondary {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .buyers-trust-strip {
+    gap: 8px;
+  }
+
+  .buyers-trust-item {
+    padding: 10px 14px;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .buyers-trust-item svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .buyers-section {
+    padding: 50px 0;
+  }
+
+  .buyers-container {
+    padding: 0 16px;
+  }
+
+  .buyers-section-header {
+    margin-bottom: 36px;
+  }
+
+  .buyers-section-badge {
+    padding: 5px 12px;
+    font-size: 11px;
+    margin-bottom: 12px;
+  }
+
+  .buyers-section-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .buyers-section-desc {
+    font-size: 15px;
+  }
+
+  .buyers-benefit-card {
+    padding: 20px;
+  }
+
+  .buyers-benefit-icon {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 14px;
+  }
+
+  .buyers-benefit-highlight {
+    top: 16px;
+    right: 16px;
+    padding: 3px 8px;
+    font-size: 10px;
+  }
+
+  .buyers-benefit-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .buyers-benefit-desc {
+    font-size: 13px;
+  }
+
+  .buyers-trust-card {
+    padding: 24px 20px;
+  }
+
+  .buyers-trust-icon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 14px;
+  }
+
+  .buyers-trust-title {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .buyers-trust-desc {
+    font-size: 13px;
+  }
+
+  .buyers-steps-container {
+    gap: 16px;
+  }
+
+  .buyers-step-card {
+    padding: 20px 14px;
+  }
+
+  .buyers-step-number {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    top: -10px;
+  }
+
+  .buyers-step-icon {
+    width: 42px;
+    height: 42px;
+    margin: 10px auto 12px;
+  }
+
+  .buyers-step-title {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .buyers-step-desc {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .buyers-hero {
+    padding: 100px 12px 40px;
+  }
+
+  .buyers-hero-badge {
+    padding: 6px 12px;
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .buyers-hero-title {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .buyers-hero-subtitle {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .buyers-btn-primary,
+  .buyers-btn-secondary {
+    padding: 11px 20px;
+    font-size: 13px;
+    max-width: 260px;
+  }
+
+  .buyers-trust-item {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  .buyers-section {
+    padding: 40px 0;
+  }
+
+  .buyers-container {
+    padding: 0 12px;
+  }
+
+  .buyers-section-title {
+    font-size: 22px;
+  }
+
+  .buyers-section-desc {
+    font-size: 14px;
+  }
+
+  .buyers-steps-container {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .buyers-step-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    text-align: left;
+  }
+
+  .buyers-step-number {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    flex-shrink: 0;
+  }
+
+  .buyers-step-icon {
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .buyers-step-content {
+    flex: 1;
+  }
+
+  .buyers-cta-card {
+    padding: 24px 16px;
+  }
+
+  .buyers-cta-content h3 {
+    font-size: 20px;
+  }
+
+  .buyers-cta-content p {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,1222 @@
+/* Trade Animation 3D Section - Matching original 3d_page exactly */
+/* Combined Hero + Trade Animation Container */
+.hero-trade-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #030014;
+  z-index: 10;
+}
+
+.trade-animation-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #030014;
+  /* Smooth transition for opacity changes */
+  transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  z-index: 5;
+}
+
+.trade-animation-section.active {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.trade-animation-section.complete {
+  position: relative;
+  z-index: 5;
+}
+
+/* Background - matching original */
+.trade-anim-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: #030014;
+}
+
+.trade-anim-bg-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 30% 20%, rgba(30, 60, 100, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(20, 50, 80, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(15, 30, 60, 0.5) 0%, transparent 70%);
+}
+
+/* Ambient Glow - matching original exactly */
+.trade-anim-ambient {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.trade-anim-glow {
+  position: absolute;
+  border-radius: 9999px;
+  animation: tradeAnimPulse 4s ease-in-out infinite;
+}
+
+.trade-anim-glow-1 {
+  top: 80px;
+  left: 80px;
+  width: 160px;
+  height: 160px;
+  background: rgba(34, 211, 238, 0.15);
+  filter: blur(48px);
+}
+
+.trade-anim-glow-2 {
+  bottom: 128px;
+  right: 128px;
+  width: 192px;
+  height: 192px;
+  background: rgba(59, 130, 246, 0.15);
+  filter: blur(48px);
+  animation-delay: 1s;
+}
+
+.trade-anim-glow-3 {
+  top: 50%;
+  left: 25%;
+  width: 128px;
+  height: 128px;
+  background: rgba(168, 85, 247, 0.1);
+  filter: blur(32px);
+  animation-delay: 2s;
+}
+
+.trade-anim-glow-4 {
+  top: 33.333%;
+  right: 25%;
+  width: 96px;
+  height: 96px;
+  background: rgba(244, 114, 182, 0.1);
+  filter: blur(32px);
+  animation-delay: 0.5s;
+}
+
+@keyframes tradeAnimPulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Scene - matching original */
+.trade-anim-scene {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trade-anim-scene-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+}
+
+/* Shadow - matching original */
+.trade-anim-shadow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.1) 60%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(15px);
+  transform-origin: center center;
+}
+
+/* Caustics - matching original */
+.trade-anim-caustics {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: radial-gradient(ellipse at 30% 30%, rgba(150, 220, 255, 0.4) 0%, transparent 20%),
+    radial-gradient(ellipse at 70% 40%, rgba(200, 240, 255, 0.3) 0%, transparent 15%),
+    radial-gradient(ellipse at 50% 70%, rgba(180, 230, 255, 0.35) 0%, transparent 18%),
+    radial-gradient(ellipse at 25% 60%, rgba(160, 210, 255, 0.25) 0%, transparent 12%),
+    radial-gradient(ellipse at 75% 65%, rgba(140, 200, 255, 0.3) 0%, transparent 14%);
+  border-radius: 50%;
+  filter: blur(8px);
+  mix-blend-mode: screen;
+  transform-origin: center center;
+}
+
+/* Rings Container */
+.trade-anim-rings-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+  /* Smoother opacity transitions */
+  transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.trade-anim-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  /* Smoother transform and opacity transitions */
+  transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+    opacity 0.6s ease-out;
+}
+
+.trade-anim-ring-segment {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.trade-anim-ring-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.trade-anim-ring-face-front {
+  background: rgba(180, 200, 220, 0.35);
+}
+
+.trade-anim-ring-face-back {
+  background: rgba(150, 175, 200, 0.25);
+}
+
+.trade-anim-ring-face-top {
+  width: 100%;
+  background: rgba(200, 220, 240, 0.4);
+  transform: rotateX(90deg);
+  transform-origin: top center;
+}
+
+.trade-anim-ring-face-bottom {
+  width: 100%;
+  bottom: 0;
+  background: rgba(140, 165, 190, 0.3);
+  transform: rotateX(-90deg);
+  transform-origin: bottom center;
+}
+
+/* Person - matching original exactly */
+.trade-anim-person {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  /* Smooth opacity transition for fade in */
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.trade-anim-person-left {
+  transform: translate(-50%, -50%) translateX(-500px) translateY(80px) translateZ(0px);
+}
+
+.trade-anim-person-right {
+  transform: translate(-50%, -50%) translateX(500px) translateY(80px) translateZ(0px);
+}
+
+.trade-anim-person-img {
+  height: 70vh;
+  max-height: 600px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 30px rgba(100, 200, 255, 0.3));
+}
+
+.trade-anim-person-shadow {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 15px;
+  background: radial-gradient(ellipse, rgba(150, 200, 220, 0.5) 0%, rgba(180, 220, 240, 0.3) 50%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(12px);
+}
+
+/* Cards - Positioned from center like 3d_page project */
+/* Cards are placed on the OUTER sides of the people, not covering them */
+.trade-anim-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 100;
+  pointer-events: auto;
+  will-change: transform, opacity, filter;
+  /* Smooth blur reveal animation */
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease-out,
+    filter 0.6s ease-out;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Buyer cards on LEFT side - positioned to the left of the woman */
+/* Problem card at bottom left */
+.trade-anim-card-left {
+  transform: translate(-50%, -50%) translateX(-680px) translateY(220px);
+}
+
+/* Solution card at top left */
+.trade-anim-solution-left {
+  transform: translate(-50%, -50%) translateX(-680px) translateY(-220px);
+}
+
+/* Seller cards on RIGHT side - positioned to the right of the man */
+/* Problem card at bottom right */
+.trade-anim-card-right {
+  transform: translate(-50%, -50%) translateX(680px) translateY(220px);
+}
+
+/* Solution card at top right */
+.trade-anim-solution-right {
+  transform: translate(-50%, -50%) translateX(680px) translateY(-220px);
+}
+
+.trade-anim-card-inner {
+  width: 280px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(100, 200, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, rgb(15, 35, 65) 0%, rgb(10, 25, 50) 100%);
+  cursor: pointer;
+}
+
+.trade-anim-card-header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.trade-anim-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.trade-anim-card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trade-anim-card-item {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-height: 40px;
+  color: white;
+  font-size: 14px;
+  line-height: 1.625;
+}
+
+.trade-anim-solution-item-buyer {
+  background: rgba(100, 200, 255, 0.15);
+  color: #67e8f9;
+  font-weight: 600;
+}
+
+.trade-anim-solution-item-seller {
+  background: rgba(100, 200, 150, 0.15);
+  color: #6ee7b7;
+  font-weight: 600;
+}
+
+/* Arrow - matching original exactly */
+.trade-anim-arrow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) translateY(180px);
+  width: 1000px;
+  z-index: 90;
+  pointer-events: none;
+}
+
+.trade-anim-arrow-path {
+  animation: tradeAnimArrowFlow 1s linear infinite;
+}
+
+.trade-anim-arrow-head {
+  animation: tradeAnimArrowPulse 2s ease-in-out infinite;
+}
+
+@keyframes tradeAnimArrowFlow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes tradeAnimArrowPulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Goods Container - matching original exactly */
+.trade-anim-goods-container {
+  position: absolute;
+  left: 50%;
+  top: 65%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: tradeAnimMoveAlongCurve 10s linear infinite;
+}
+
+@keyframes tradeAnimMoveAlongCurve {
+  0% {
+    left: 90%;
+    top: 35%;
+  }
+
+  25% {
+    left: 70%;
+    top: 55%;
+  }
+
+  50% {
+    left: 50%;
+    top: 65%;
+  }
+
+  75% {
+    left: 30%;
+    top: 55%;
+  }
+
+  100% {
+    left: 10%;
+    top: 35%;
+  }
+}
+
+.trade-anim-price-tag {
+  background: rgba(15, 35, 65, 0.95);
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 2px solid rgba(100, 200, 255, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  color: #67e8f9;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.trade-anim-goods-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.trade-anim-charges-tag {
+  background: rgba(15, 35, 65, 0.9);
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(100, 200, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: #67e8f9;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Amount Badges - matching original exactly */
+.trade-anim-amount {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 101;
+  pointer-events: none;
+}
+
+.trade-anim-amount-buyer {
+  transform: translate(-50%, -50%) translateX(-500px) translateY(200px);
+}
+
+.trade-anim-amount-seller {
+  transform: translate(-50%, -50%) translateX(500px) translateY(200px);
+}
+
+.trade-anim-amount-seller-head {
+  transform: translate(-50%, -50%) translateX(500px) translateY(-120px);
+}
+
+.trade-anim-amount-buyer-head {
+  transform: translate(-50%, -50%) translateX(-500px) translateY(-120px);
+}
+
+.trade-anim-amount-inner {
+  background: rgba(15, 35, 65, 0.95);
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: 2px solid rgba(100, 200, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(100, 200, 255, 0.3);
+  text-align: center;
+}
+
+.trade-anim-amount-seller-inner {
+  border-color: rgba(100, 200, 150, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(100, 200, 150, 0.3);
+  padding: 12px 20px;
+  border-radius: 20px;
+}
+
+.trade-anim-amount-seller-head-inner {
+  border-color: rgba(100, 200, 150, 0.5);
+  padding: 12px 24px;
+  border-radius: 25px;
+}
+
+.trade-anim-amount-buyer-head-inner {
+  border-color: rgba(100, 200, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(100, 200, 255, 0.3);
+  padding: 12px 20px;
+  border-radius: 20px;
+}
+
+.trade-anim-amount-label {
+  color: #a7f3d0;
+  font-size: 12px;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.trade-anim-amount-value {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.trade-anim-amount-inr {
+  color: #a7f3d0;
+  font-size: 14px;
+  margin-top: 4px;
+  text-align: center;
+}
+
+/* Aaziko Solution - Top arrows: Seller → Aaziko → Buyer */
+.trade-anim-aaziko {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) translateY(-180px);
+  width: 1000px;
+  height: 100px;
+  z-index: 92;
+  pointer-events: none;
+  /* Smooth fade in */
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.trade-anim-aaziko-logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(15, 35, 65, 0.95);
+  padding: 16px 32px;
+  border-radius: 20px;
+  border: 2px solid rgba(100, 200, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 30px rgba(100, 200, 255, 0.4);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  z-index: 10;
+}
+
+.trade-anim-aaziko-logo img {
+  height: 40px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Aaziko Arrow SVGs - Top arrows: Seller → Aaziko → Buyer */
+.trade-anim-aaziko-arrow-svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 350px;
+  height: 80px;
+}
+
+/* Arrow from Aaziko (center) to Buyer (left) - starts from center, curves down to left person */
+.trade-anim-aaziko-arrow-left-svg {
+  left: 80px;
+}
+
+/* Arrow from Seller (right) to Aaziko (center) - starts from right person, curves up to center */
+.trade-anim-aaziko-arrow-right-svg {
+  right: 80px;
+}
+
+.trade-anim-aaziko-discount {
+  position: absolute;
+  left: -100px;
+  top: 75px;
+  background: rgba(15, 35, 65, 0.95);
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 2px solid rgba(100, 200, 255, 0.5);
+  text-align: center;
+}
+
+/* 3D Earth - replacing the glass cube */
+.trade-anim-earth {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  /* Smooth transitions for changes */
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.trade-anim-earth canvas {
+  display: block;
+  border-radius: 50%;
+}
+
+/* Bottom Gradient - matching original (fixed position) */
+.trade-anim-bottom-gradient {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 160px;
+  background: linear-gradient(to top, rgba(100, 150, 200, 0.05) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Scroll Hint - matching original (fixed position) */
+.trade-anim-scroll-hint {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(103, 232, 249, 0.5);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+}
+
+/* Responsive - matching original 3d_page behavior */
+/* Cards positioned from center with translateX to stay on outer sides of people */
+@media (max-width: 1400px) {
+
+  /* Buyer cards - LEFT side (reduced translateX) */
+  .trade-anim-card-left {
+    transform: translate(-50%, -50%) translateX(-620px) translateY(250px);
+  }
+
+  .trade-anim-solution-left {
+    transform: translate(-50%, -50%) translateX(-620px) translateY(-250px);
+  }
+
+  /* Seller cards - RIGHT side (reduced translateX) */
+  .trade-anim-card-right {
+    transform: translate(-50%, -50%) translateX(620px) translateY(250px);
+  }
+
+  .trade-anim-solution-right {
+    transform: translate(-50%, -50%) translateX(620px) translateY(-250px);
+  }
+
+  /* People */
+  .trade-anim-person-left {
+    transform: translate(-50%, -50%) translateX(-400px) translateY(80px) translateZ(0px);
+  }
+
+  .trade-anim-person-right {
+    transform: translate(-50%, -50%) translateX(400px) translateY(80px) translateZ(0px);
+  }
+
+  /* Amounts */
+  .trade-anim-amount-buyer {
+    transform: translate(-50%, -50%) translateX(-400px) translateY(200px);
+  }
+
+  .trade-anim-amount-seller {
+    transform: translate(-50%, -50%) translateX(400px) translateY(200px);
+  }
+
+  .trade-anim-amount-seller-head {
+    transform: translate(-50%, -50%) translateX(400px) translateY(-120px);
+  }
+
+  .trade-anim-amount-buyer-head {
+    transform: translate(-50%, -50%) translateX(-400px) translateY(-120px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .trade-anim-card-inner {
+    width: 220px;
+  }
+
+  .trade-anim-card-item {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  /* Buyer cards - LEFT side */
+  .trade-anim-card-left {
+    transform: translate(-50%, -50%) translateX(-480px) translateY(200px);
+  }
+
+  .trade-anim-solution-left {
+    transform: translate(-50%, -50%) translateX(-480px) translateY(-200px);
+  }
+
+  /* Seller cards - RIGHT side */
+  .trade-anim-card-right {
+    transform: translate(-50%, -50%) translateX(480px) translateY(200px);
+  }
+
+  .trade-anim-solution-right {
+    transform: translate(-50%, -50%) translateX(480px) translateY(-200px);
+  }
+
+  /* People */
+  .trade-anim-person-left {
+    transform: translate(-50%, -50%) translateX(-300px) translateY(60px) translateZ(0px);
+  }
+
+  .trade-anim-person-right {
+    transform: translate(-50%, -50%) translateX(300px) translateY(60px) translateZ(0px);
+  }
+
+  .trade-anim-person-img {
+    max-height: 400px;
+  }
+
+  .trade-anim-arrow {
+    width: 700px;
+    transform: translate(-50%, -50%) translateY(150px);
+  }
+}
+
+@media (max-width: 900px) {
+  .trade-anim-card-inner {
+    width: 180px;
+  }
+
+  .trade-anim-card-header {
+    padding: 12px;
+  }
+
+  .trade-anim-card-title {
+    font-size: 14px;
+  }
+
+  .trade-anim-card-body {
+    padding: 12px;
+    gap: 6px;
+  }
+
+  .trade-anim-card-item {
+    font-size: 11px;
+    padding: 6px 8px;
+    min-height: 32px;
+  }
+
+  /* Buyer cards - LEFT side */
+  .trade-anim-card-left {
+    transform: translate(-50%, -50%) translateX(-380px) translateY(180px);
+  }
+
+  .trade-anim-solution-left {
+    transform: translate(-50%, -50%) translateX(-380px) translateY(-180px);
+  }
+
+  /* Seller cards - RIGHT side */
+  .trade-anim-card-right {
+    transform: translate(-50%, -50%) translateX(380px) translateY(180px);
+  }
+
+  .trade-anim-solution-right {
+    transform: translate(-50%, -50%) translateX(380px) translateY(-180px);
+  }
+
+  /* People */
+  .trade-anim-person-left {
+    transform: translate(-50%, -50%) translateX(-220px) translateY(50px) translateZ(0px);
+  }
+
+  .trade-anim-person-right {
+    transform: translate(-50%, -50%) translateX(220px) translateY(50px) translateZ(0px);
+  }
+
+  .trade-anim-person-img {
+    max-height: 350px;
+  }
+
+  .trade-anim-arrow {
+    width: 550px;
+    transform: translate(-50%, -50%) translateY(150px);
+  }
+
+  .trade-anim-aaziko {
+    width: 900px;
+    transform: translate(-50%, -50%) translateY(-150px);
+  }
+
+  .trade-anim-aaziko-logo {
+    padding: 12px 24px;
+  }
+
+  .trade-anim-aaziko-logo img {
+    height: 32px;
+  }
+
+  .trade-anim-aaziko-arrow-svg {
+    width: 300px;
+    height: 70px;
+  }
+  
+  .trade-anim-aaziko-arrow-left-svg {
+    left: 70px;
+  }
+  
+  .trade-anim-aaziko-arrow-right-svg {
+    right: 70px;
+  }
+
+  .trade-anim-amount-buyer {
+    transform: translate(-50%, -50%) translateX(-220px) translateY(180px);
+  }
+
+  .trade-anim-amount-seller {
+    transform: translate(-50%, -50%) translateX(220px) translateY(180px);
+  }
+
+  .trade-anim-amount-seller-head {
+    transform: translate(-50%, -50%) translateX(220px) translateY(-100px);
+  }
+
+  .trade-anim-amount-buyer-head {
+    transform: translate(-50%, -50%) translateX(-220px) translateY(-100px);
+  }
+
+  .trade-anim-amount-inner {
+    padding: 10px 20px;
+  }
+
+  .trade-anim-amount-value {
+    font-size: 20px;
+  }
+
+  .trade-anim-amount-label,
+  .trade-anim-amount-inr {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Scale entire scene for tablet/mobile - larger for clear text */
+  .trade-anim-scene-container {
+    transform: scale(0.85) !important;
+  }
+
+  .trade-anim-person-img {
+    max-height: 500px;
+  }
+
+  /* Aaziko section - responsive arrows - fixed width to maintain curve shape */
+  .trade-anim-aaziko {
+    width: 800px;
+    transform: translate(-50%, -50%) translateY(-150px);
+  }
+  
+  .trade-anim-aaziko svg {
+    display: block !important;
+  }
+  
+  .trade-anim-aaziko-arrow-svg {
+    width: 280px;
+    height: 70px;
+  }
+  
+  .trade-anim-aaziko-arrow-left-svg {
+    left: 60px;
+  }
+  
+  .trade-anim-aaziko-arrow-right-svg {
+    right: 60px;
+  }
+
+  .trade-anim-aaziko-discount {
+    left: 80px;
+    top: 20px;
+    transform: none;
+  }
+  
+  /* Bottom arrow - responsive */
+  .trade-anim-arrow {
+    width: 800px;
+    transform: translate(-50%, -50%) translateY(180px);
+  }
+  
+  .trade-anim-arrow svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .trade-anim-scroll-hint {
+    font-size: 11px;
+    bottom: 25px;
+  }
+  
+  .trade-anim-glow-1 {
+    width: 100px;
+    height: 100px;
+    top: 40px;
+    left: 40px;
+  }
+
+  .trade-anim-glow-2 {
+    width: 120px;
+    height: 120px;
+    bottom: 60px;
+    right: 60px;
+  }
+
+  .trade-anim-glow-3 {
+    width: 80px;
+    height: 80px;
+  }
+
+  .trade-anim-glow-4 {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Scale entire scene for small mobile - larger for clear text */
+  .trade-anim-scene-container {
+    transform: scale(0.72) !important;
+  }
+
+  /* Aaziko section - responsive arrows - fixed width */
+  .trade-anim-aaziko {
+    width: 700px;
+    transform: translate(-50%, -50%) translateY(-130px);
+  }
+  
+  .trade-anim-aaziko svg {
+    display: block !important;
+  }
+  
+  .trade-anim-aaziko-arrow-svg {
+    width: 240px;
+    height: 60px;
+  }
+  
+  .trade-anim-aaziko-arrow-left-svg {
+    left: 50px;
+  }
+  
+  .trade-anim-aaziko-arrow-right-svg {
+    right: 50px;
+  }
+  
+  .trade-anim-aaziko-logo {
+    padding: 10px 18px;
+  }
+  
+  .trade-anim-aaziko-logo img {
+    height: 28px;
+  }
+  
+  .trade-anim-aaziko-discount {
+    left: 60px;
+    top: 15px;
+    transform: none;
+    padding: 8px 14px;
+    font-size: 11px;
+  }
+  
+  .trade-anim-aaziko-discount .trade-anim-amount-value {
+    font-size: 16px !important;
+  }
+  
+  /* Bottom arrow - responsive */
+  .trade-anim-arrow {
+    width: 700px;
+    transform: translate(-50%, -50%) translateY(160px);
+  }
+  
+  .trade-anim-arrow svg {
+    width: 100%;
+    height: auto;
+  }
+  
+  .trade-anim-goods-container {
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+  
+  .trade-anim-price-tag {
+    font-size: 14px;
+    padding: 5px 12px;
+  }
+  
+  .trade-anim-goods-img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .trade-anim-charges-tag {
+    font-size: 11px;
+    padding: 6px 14px;
+  }
+
+  .trade-anim-scroll-hint {
+    font-size: 10px;
+    bottom: 20px;
+  }
+  
+  .trade-anim-glow-1,
+  .trade-anim-glow-2 {
+    width: 80px;
+    height: 80px;
+  }
+
+  .trade-anim-glow-3,
+  .trade-anim-glow-4 {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Scale entire scene for extra small mobile - larger for clear text */
+  .trade-anim-scene-container {
+    transform: scale(0.6) !important;
+  }
+
+  /* Aaziko section - responsive arrows - fixed width */
+  .trade-anim-aaziko {
+    width: 600px;
+    transform: translate(-50%, -50%) translateY(-110px);
+  }
+  
+  .trade-anim-aaziko svg {
+    display: block !important;
+  }
+  
+  .trade-anim-aaziko-arrow-svg {
+    width: 200px;
+    height: 50px;
+  }
+  
+  .trade-anim-aaziko-arrow-left-svg {
+    left: 40px;
+  }
+  
+  .trade-anim-aaziko-arrow-right-svg {
+    right: 40px;
+  }
+  
+  .trade-anim-aaziko-logo {
+    padding: 8px 14px;
+  }
+  
+  .trade-anim-aaziko-logo img {
+    height: 24px;
+  }
+  
+  .trade-anim-aaziko-discount {
+    left: 40px;
+    top: 10px;
+    transform: none;
+    padding: 6px 12px;
+    font-size: 10px;
+    border-radius: 18px;
+  }
+  
+  .trade-anim-aaziko-discount .trade-anim-amount-value {
+    font-size: 14px !important;
+  }
+  
+  /* Bottom arrow - responsive */
+  .trade-anim-arrow {
+    width: 600px;
+    transform: translate(-50%, -50%) translateY(140px);
+  }
+  
+  .trade-anim-arrow svg {
+    width: 100%;
+    height: auto;
+  }
+  
+  .trade-anim-goods-container {
+    transform: translate(-50%, -50%) scale(0.75);
+  }
+  
+  .trade-anim-price-tag {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+  
+  .trade-anim-goods-img {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .trade-anim-charges-tag {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+
+  .trade-anim-scroll-hint {
+    font-size: 9px;
+    bottom: 15px;
+  }
+
+  .trade-anim-glow-1,
+  .trade-anim-glow-2 {
+    width: 60px;
+    height: 60px;
+  }
+
+  .trade-anim-glow-3,
+  .trade-anim-glow-4 {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  /* Scale entire scene for smallest screens - larger for clear text */
+  .trade-anim-scene-container {
+    transform: scale(0.5) !important;
+  }
+
+  /* Aaziko section - responsive arrows - fixed width */
+  .trade-anim-aaziko {
+    width: 500px;
+    transform: translate(-50%, -50%) translateY(-100px);
+  }
+  
+  .trade-anim-aaziko svg {
+    display: block !important;
+  }
+  
+  .trade-anim-aaziko-arrow-svg {
+    width: 160px;
+    height: 45px;
+  }
+  
+  .trade-anim-aaziko-arrow-left-svg {
+    left: 30px;
+  }
+  
+  .trade-anim-aaziko-arrow-right-svg {
+    right: 30px;
+  }
+  
+  .trade-anim-aaziko-logo {
+    padding: 6px 12px;
+  }
+  
+  .trade-anim-aaziko-logo img {
+    height: 20px;
+  }
+  
+  .trade-anim-aaziko-discount {
+    left: 30px;
+    top: 5px;
+    transform: none;
+    padding: 5px 10px;
+    font-size: 9px;
+    border-radius: 15px;
+  }
+  
+  .trade-anim-aaziko-discount .trade-anim-amount-value {
+    font-size: 12px !important;
+  }
+  
+  /* Bottom arrow - responsive */
+  .trade-anim-arrow {
+    width: 500px;
+    transform: translate(-50%, -50%) translateY(120px);
+  }
+  
+  .trade-anim-arrow svg {
+    width: 100%;
+    height: auto;
+  }
+  
+  .trade-anim-goods-container {
+    transform: translate(-50%, -50%) scale(0.65);
+  }
+  
+  .trade-anim-price-tag {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+  
+  .trade-anim-goods-img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .trade-anim-charges-tag {
+    font-size: 9px;
+    padding: 4px 10px;
+  }
+
+  .trade-anim-scroll-hint {
+    font-size: 8px;
+    bottom: 12px;
+  }
+  
+  .trade-anim-glow-1,
+  .trade-anim-glow-2 {
+    width: 50px;
+    height: 50px;
+  }
+
+  .trade-anim-glow-3,
+  .trade-anim-glow-4 {
+    width: 30px;
+    height: 30px;
+  }
+}

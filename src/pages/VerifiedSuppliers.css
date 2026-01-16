@@ -1,0 +1,802 @@
+/* Verified Suppliers Page Styles - Aaziko Premium 3D Light Theme */
+
+.vs-page {
+  background: var(--bg);
+  min-height: 100vh;
+  position: relative;
+}
+
+.vs-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  z-index: -1;
+}
+
+/* Hero Section */
+.vs-hero {
+  padding: 140px 24px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.vs-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.vs-hero-content {
+  max-width: 850px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.vs-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--primary-bg);
+  border-radius: var(--radius-full);
+  margin-bottom: 24px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.vs-hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+
+.vs-gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vs-hero-subtitle {
+  font-size: 18px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 36px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vs-hero-cta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+/* Trust Strip */
+.vs-trust-strip {
+  display: inline-flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 16px;
+}
+
+.vs-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.vs-trust-item svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.vs-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: var(--primary);
+  border: none;
+  border-bottom: 4px solid var(--primary-dark);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.vs-btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.vs-btn-primary:active {
+  transform: translateY(1px);
+  border-bottom-width: 2px;
+}
+
+.vs-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.vs-btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.vs-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.vs-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+.vs-btn-lg {
+  padding: 16px 32px;
+  font-size: 16px;
+}
+
+/* Container & Sections */
+.vs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.vs-section {
+  padding: 80px 0;
+}
+
+.vs-section-alt {
+  background: var(--gray-50);
+}
+
+.vs-section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.vs-section-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--primary-bg);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.vs-section-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+
+.vs-section-desc {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Why Grid */
+.vs-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.vs-why-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.vs-why-card:hover {
+  transform: translateY(-4px);
+}
+
+.vs-why-primary { border-bottom-color: var(--primary); }
+.vs-why-primary:hover { border-color: var(--primary); }
+.vs-why-primary .vs-why-icon { background: var(--sky); color: var(--primary); }
+
+.vs-why-success { border-bottom-color: var(--success); }
+.vs-why-success:hover { border-color: var(--success); }
+.vs-why-success .vs-why-icon { background: rgba(22, 163, 74, 0.1); color: var(--success); }
+
+.vs-why-warning { border-bottom-color: var(--warning); }
+.vs-why-warning:hover { border-color: var(--warning); }
+.vs-why-warning .vs-why-icon { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+
+.vs-why-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  transition: transform 0.3s ease;
+}
+
+.vs-why-card:hover .vs-why-icon {
+  animation: vsIconWiggle 0.5s ease-in-out;
+}
+
+@keyframes vsIconWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-12deg); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-8deg); }
+  80% { transform: rotate(5deg); }
+}
+
+.vs-why-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.vs-why-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Steps Simple - Clean Visual Design */
+.vs-steps-simple {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.vs-step-card-simple {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  text-align: center;
+  width: 200px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.vs-step-card-simple:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  border-bottom-color: var(--primary-dark);
+}
+
+.vs-step-card-simple .vs-step-number {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+}
+
+.vs-step-card-simple .vs-step-icon {
+  width: 60px;
+  height: 60px;
+  margin: 8px auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sky);
+  border-radius: var(--radius-lg);
+  color: var(--primary);
+}
+
+.vs-step-card-simple:hover .vs-step-icon {
+  animation: vsIconWiggle 0.5s ease-in-out;
+}
+
+.vs-step-card-simple .vs-step-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.vs-step-card-simple .vs-step-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.vs-step-arrow {
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: var(--primary);
+  font-weight: 700;
+  z-index: 2;
+}
+
+/* Steps Grid - Old style kept for reference */
+.vs-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.vs-step-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  transition: all 0.2s ease;
+}
+
+.vs-step-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  border-bottom-color: var(--primary-dark);
+}
+
+.vs-step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.vs-step-number {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+}
+
+.vs-step-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sky);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+}
+
+.vs-step-card:hover .vs-step-icon {
+  animation: vsIconWiggle 0.5s ease-in-out;
+}
+
+.vs-step-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 14px;
+}
+
+.vs-step-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vs-step-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.vs-step-points li:last-child {
+  margin-bottom: 0;
+}
+
+.vs-step-points li svg {
+  color: var(--success);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* Benefits Grid */
+.vs-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.vs-benefit-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.vs-benefit-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  border-bottom-color: var(--primary-dark);
+}
+
+.vs-benefit-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sky);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+}
+
+.vs-benefit-card:hover .vs-benefit-icon {
+  animation: vsIconWiggle 0.5s ease-in-out;
+}
+
+.vs-benefit-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.vs-benefit-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Verification Grid */
+.vs-verification-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.vs-verification-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.vs-verification-card:hover {
+  transform: translateY(-4px);
+}
+
+.vs-verification-primary { border-bottom-color: var(--primary); }
+.vs-verification-primary:hover { border-color: var(--primary); }
+.vs-verification-primary .vs-verification-icon { background: var(--sky); color: var(--primary); }
+
+.vs-verification-success { border-bottom-color: var(--success); }
+.vs-verification-success:hover { border-color: var(--success); }
+.vs-verification-success .vs-verification-icon { background: rgba(22, 163, 74, 0.1); color: var(--success); }
+
+.vs-verification-warning { border-bottom-color: var(--warning); }
+.vs-verification-warning:hover { border-color: var(--warning); }
+.vs-verification-warning .vs-verification-icon { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+
+.vs-verification-info { border-bottom-color: var(--info); }
+.vs-verification-info:hover { border-color: var(--info); }
+.vs-verification-info .vs-verification-icon { background: rgba(6, 182, 212, 0.1); color: var(--info); }
+
+.vs-verification-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.vs-verification-card:hover .vs-verification-icon {
+  animation: vsIconWiggle 0.5s ease-in-out;
+}
+
+.vs-verification-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.vs-verification-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Testimonials Grid */
+.vs-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.vs-testimonial-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--primary);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.vs-testimonial-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+}
+
+.vs-testimonial-quote-icon {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: var(--primary);
+  opacity: 0.3;
+}
+
+.vs-testimonial-quote {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 24px;
+  font-style: italic;
+}
+
+.vs-testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vs-testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
+.vs-testimonial-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.vs-testimonial-role {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* CTA Section */
+.vs-cta-section {
+  padding: 60px 0 80px;
+}
+
+.vs-cta-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px 56px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: var(--radius-xl);
+  color: white;
+}
+
+.vs-cta-content h3 {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.vs-cta-content p {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.vs-cta-buttons {
+  display: flex;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.vs-cta-card .vs-btn-primary {
+  background: white;
+  color: var(--primary);
+  border-bottom-color: var(--gray-300);
+}
+
+.vs-cta-card .vs-btn-primary:hover {
+  background: var(--gray-50);
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .vs-why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vs-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vs-benefits-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .vs-verification-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vs-cta-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 32px;
+  }
+
+  .vs-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .vs-hero {
+    padding: 120px 16px 60px;
+  }
+
+  .vs-hero-title {
+    font-size: 32px;
+  }
+
+  .vs-hero-subtitle {
+    font-size: 16px;
+  }
+
+  .vs-hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vs-trust-strip {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .vs-trust-item {
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .vs-section {
+    padding: 60px 0;
+  }
+
+  .vs-section-title {
+    font-size: 28px;
+  }
+
+  .vs-steps-grid,
+  .vs-benefits-grid,
+  .vs-verification-grid,
+  .vs-testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}

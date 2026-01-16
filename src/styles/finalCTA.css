@@ -1,0 +1,554 @@
+/* Final CTA Section Styles */
+.final-cta-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+  padding: 40px 20px 60px;
+  overflow: hidden;
+}
+
+/* Background Effects */
+.final-cta-bg-effects {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.final-cta-gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.4;
+  animation: finalCtaOrbFloat 25s ease-in-out infinite;
+}
+
+.final-cta-gradient-orb--1 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, transparent 70%);
+  top: -250px;
+  right: -200px;
+  animation-delay: 0s;
+}
+
+.final-cta-gradient-orb--2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%);
+  bottom: -200px;
+  left: -150px;
+  animation-delay: -12s;
+}
+
+@keyframes finalCtaOrbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+.final-cta-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(#E3ECFA 1px, transparent 1px),
+    linear-gradient(90deg, #E3ECFA 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent);
+}
+
+/* Container */
+.final-cta-container {
+  max-width: 800px;
+  width: 100%;
+  padding: 0 20px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* CTA Card */
+.final-cta-card {
+  position: relative;
+  width: 100%;
+  padding: 60px 50px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFF 100%);
+  border-radius: 24px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.final-cta-card-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.final-cta-card-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  border: 1px solid #E3ECFA;
+  pointer-events: none;
+}
+
+.final-cta-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: 0 8px 40px rgba(11, 18, 32, 0.08), 0 2px 12px rgba(11, 18, 32, 0.04);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+/* Decorative Icons */
+.final-cta-decorative-icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.final-cta-icon-float {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #EAF2FF 0%, #E0EAFF 100%);
+  border: 1px solid #D1DBE8;
+  border-radius: 12px;
+  color: #2563EB;
+  opacity: 0.6;
+  animation: iconFloat 6s ease-in-out infinite;
+}
+
+.final-cta-icon-float--1 {
+  top: 30px;
+  left: 30px;
+  animation-delay: 0s;
+}
+
+.final-cta-icon-float--2 {
+  bottom: 30px;
+  right: 30px;
+  animation-delay: -3s;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Content */
+.final-cta-content {
+  position: relative;
+  z-index: 1;
+}
+
+.final-cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #EAF2FF 0%, #E0EAFF 100%);
+  border: 1px solid #D1DBE8;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2563EB;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+
+.final-cta-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #2563EB;
+  border-radius: 50%;
+  animation: finalCtaPulse 2s ease-in-out infinite;
+}
+
+@keyframes finalCtaPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+.final-cta-title {
+  font-size: clamp(26px, 4.5vw, 40px);
+  font-weight: 700;
+  color: #0B1220;
+  margin: 0 0 20px 0;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.final-cta-title-highlight {
+  background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.final-cta-subtext {
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: #475569;
+  max-width: 560px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+}
+
+/* CTA Buttons */
+.final-cta-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.final-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.final-cta-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+  opacity: 0.9;
+}
+
+.final-cta-btn-tag {
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-left: 4px;
+}
+
+.final-cta-btn-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+/* Buyer Button */
+.final-cta-btn--buyer {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+}
+
+.final-cta-btn--buyer .final-cta-btn-tag {
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+}
+
+.final-cta-btn--buyer:hover {
+  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.45);
+}
+
+/* Seller Button */
+.final-cta-btn--seller {
+  background: linear-gradient(135deg, #0B1F3B 0%, #1E3A5F 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(11, 31, 59, 0.35);
+}
+
+.final-cta-btn--seller .final-cta-btn-tag {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+
+.final-cta-btn--seller:hover {
+  box-shadow: 0 6px 24px rgba(11, 31, 59, 0.45);
+}
+
+/* Shine Effect */
+.final-cta-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .final-cta-section {
+    padding: 35px 20px 50px;
+  }
+
+  .final-cta-card {
+    padding: 50px 40px;
+  }
+
+  .final-cta-icon-float {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 900px) {
+  .final-cta-section {
+    padding: 32px 18px 45px;
+  }
+
+  .final-cta-card {
+    padding: 45px 35px;
+    border-radius: 20px;
+  }
+
+  .final-cta-icon-float--1 {
+    top: 25px;
+    left: 25px;
+  }
+
+  .final-cta-icon-float--2 {
+    bottom: 25px;
+    right: 25px;
+  }
+
+  .final-cta-badge {
+    padding: 7px 14px;
+    font-size: 11px;
+    margin-bottom: 20px;
+  }
+
+  .final-cta-subtext {
+    margin-bottom: 32px;
+  }
+
+  .final-cta-buttons {
+    gap: 14px;
+  }
+
+  .final-cta-btn {
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .final-cta-section {
+    padding: 30px 16px 30px;
+  }
+
+  .final-cta-card {
+    padding: 40px 28px;
+  }
+
+  .final-cta-icon-float {
+    width: 40px;
+    height: 40px;
+  }
+
+  .final-cta-icon-float--1 {
+    top: 20px;
+    left: 20px;
+  }
+
+  .final-cta-icon-float--2 {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .final-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .final-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .final-cta-section {
+    padding: 25px 14px 25px;
+  }
+
+  .final-cta-card {
+    padding: 36px 24px;
+    border-radius: 18px;
+  }
+
+  .final-cta-card-border {
+    border-radius: 18px;
+  }
+
+  .final-cta-icon-float {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .final-cta-icon-float--1 {
+    top: 16px;
+    left: 16px;
+  }
+
+  .final-cta-icon-float--2 {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .final-cta-badge {
+    padding: 6px 12px;
+    font-size: 10px;
+    margin-bottom: 18px;
+  }
+
+  .final-cta-badge-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .final-cta-subtext {
+    margin-bottom: 28px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .final-cta-buttons {
+    gap: 12px;
+  }
+
+  .final-cta-btn {
+    padding: 13px 20px;
+    font-size: 13px;
+    border-radius: 10px;
+    gap: 8px;
+  }
+
+  .final-cta-btn-tag {
+    padding: 3px 8px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .final-cta-section {
+    padding: 20px 12px 20px;
+  }
+
+  .final-cta-card {
+    padding: 32px 18px;
+    border-radius: 16px;
+  }
+
+  .final-cta-card-border {
+    border-radius: 16px;
+  }
+
+  .final-cta-badge {
+    padding: 5px 10px;
+    font-size: 9px;
+    margin-bottom: 16px;
+  }
+
+  .final-cta-subtext {
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+
+  .final-cta-btn {
+    padding: 12px 18px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .final-cta-btn-tag {
+    padding: 2px 6px;
+    font-size: 9px;
+  }
+
+  .final-cta-icon-float {
+    display: none;
+  }
+
+  .final-cta-gradient-orb--1 {
+    width: 400px;
+    height: 400px;
+  }
+
+  .final-cta-gradient-orb--2 {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .final-cta-gradient-orb {
+    animation: none;
+  }
+
+  .final-cta-badge-dot {
+    animation: none;
+  }
+
+  .final-cta-icon-float {
+    animation: none;
+  }
+
+  .final-cta-shine {
+    animation: none;
+    display: none;
+  }
+}
+
+
+/* CTA Graphics Styles */
+.final-cta-graphics-row {
+  width: 100%;
+}
+
+.improved-cta-graphic {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .final-cta-graphics-row {
+    flex-direction: column !important;
+  }
+  
+  .final-cta-graphics-row > div {
+    max-width: 100% !important;
+  }
+}

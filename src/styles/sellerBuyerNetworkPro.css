@@ -1,0 +1,470 @@
+/* ========================================
+   Seller-Buyer Network Pro Section
+   Premium, Professional Design
+   ======================================== */
+
+.seller-buyer-pro {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1.5rem;
+  overflow: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Background */
+.seller-buyer-pro__bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    165deg,
+    #0a0f1a 0%,
+    #0f172a 25%,
+    #1e1b4b 60%,
+    #0f172a 85%,
+    #0a0f1a 100%
+  );
+  z-index: 0;
+}
+
+/* Subtle starfield */
+.seller-buyer-pro__stars {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 20%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 50%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 10% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 10%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 90%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 15% 15%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 85%, rgba(255,255,255,0.25) 0%, transparent 100%);
+  animation: starsDrift 60s linear infinite;
+}
+
+@keyframes starsDrift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-20px); }
+}
+
+/* Header */
+.seller-buyer-pro__header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.seller-buyer-pro__title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.seller-buyer-pro__subtitle {
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Main content */
+.seller-buyer-pro__content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  flex: 1;
+  gap: 1rem;
+}
+
+/* Network SVG */
+.network-svg-pro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.network-label-pro {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  fill: rgba(255, 255, 255, 0.7);
+  transition: opacity 0.5s ease;
+}
+
+.network-label-pro--direct {
+  fill: rgba(96, 165, 250, 0.9);
+}
+
+.network-label-pro--routed {
+  fill: rgba(34, 211, 238, 0.9);
+}
+
+/* Sides */
+.seller-buyer-pro__side {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex: 1;
+  max-width: 420px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Seller: Card LEFT, Character RIGHT */
+.seller-buyer-pro__side--seller {
+  flex-direction: row;
+}
+
+/* Buyer: Character LEFT, Card RIGHT */
+.seller-buyer-pro__side--buyer {
+  flex-direction: row;
+}
+
+/* Character wrapper */
+.seller-buyer-pro__character-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Illustrated Character */
+.illustrated-character {
+  width: 120px;
+  height: 200px;
+}
+
+.character-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3));
+}
+
+/* Platform */
+.platform {
+  width: 140px;
+  height: 40px;
+  margin-top: -15px;
+}
+
+.platform-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Problem Card Pro */
+.problem-card-pro {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1.25rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.problem-card-pro--seller {
+  border-color: rgba(96, 165, 250, 0.15);
+}
+
+.problem-card-pro--buyer {
+  border-color: rgba(34, 211, 238, 0.15);
+}
+
+.problem-card-pro__header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.problem-card-pro__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 0.25rem 0;
+}
+
+.problem-card-pro__subtitle {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+  font-weight: 400;
+}
+
+.problem-card-pro__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.problem-card-pro__item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0;
+  opacity: 0;
+  transform: translateX(-12px) translateZ(0);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.problem-card-pro__item--visible {
+  opacity: 1;
+  transform: translateX(0) translateZ(0);
+}
+
+.problem-card-pro__icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.problem-card-pro__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.problem-card-pro__text {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+}
+
+/* Aaziko Bridge Pro */
+.aaziko-bridge-pro {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%) translateZ(0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 15;
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+  backface-visibility: hidden;
+}
+
+.aaziko-bridge-pro--visible {
+  opacity: 1;
+}
+
+.aaziko-bridge-pro__card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.12), rgba(96, 165, 250, 0.08));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 50px;
+}
+
+.aaziko-bridge-pro__glow {
+  position: absolute;
+  inset: -10px;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: bridgePulse 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes bridgePulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+.aaziko-bridge-pro__content {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.aaziko-bridge-pro__icon {
+  width: 20px;
+  height: 20px;
+  color: #22d3ee;
+}
+
+.aaziko-bridge-pro__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.aaziko-bridge-pro__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Chips */
+.aaziko-bridge-pro__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  max-width: 360px;
+}
+
+.aaziko-bridge-pro__chip {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 14px;
+  opacity: 0;
+  transform: scale(0.85) translateZ(0);
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.aaziko-bridge-pro__chips--visible .aaziko-bridge-pro__chip {
+  opacity: 1;
+  transform: scale(1) translateZ(0);
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+
+@media (max-width: 900px) {
+  .seller-buyer-pro__content {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .seller-buyer-pro__side {
+    flex-direction: column !important;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .seller-buyer-pro__character-wrapper {
+    order: -1;
+  }
+
+  .problem-card-pro {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .network-svg-pro {
+    display: none;
+  }
+
+  .aaziko-bridge-pro {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: 2rem;
+  }
+
+  .illustrated-character {
+    width: 100px;
+    height: 170px;
+  }
+
+  .platform {
+    width: 120px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 600px) {
+  .seller-buyer-pro {
+    padding: 2rem 1rem;
+  }
+
+  .seller-buyer-pro__title {
+    font-size: 1.75rem;
+  }
+
+  .seller-buyer-pro__subtitle {
+    font-size: 0.9rem;
+  }
+
+  .problem-card-pro {
+    padding: 1rem;
+  }
+
+  .problem-card-pro__title {
+    font-size: 0.9rem;
+  }
+
+  .problem-card-pro__text {
+    font-size: 0.8rem;
+  }
+
+  .aaziko-bridge-pro__chips {
+    max-width: 280px;
+  }
+
+  .aaziko-bridge-pro__chip {
+    font-size: 0.62rem;
+    padding: 0.25rem 0.55rem;
+  }
+}
+
+/* ========================================
+   Reduced Motion
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .seller-buyer-pro__stars {
+    animation: none;
+  }
+
+  .aaziko-bridge-pro__glow {
+    animation: none;
+  }
+
+  .problem-card-pro__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .aaziko-bridge-pro__chip {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .aaziko-bridge-pro {
+    opacity: 1;
+    transition: none;
+  }
+}

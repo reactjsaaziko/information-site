@@ -1,0 +1,137 @@
+/* OrderStoryboard Styles */
+
+/* Scene overlay positioning */
+.scene-overlay {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+/* Inquiry overlay */
+.inquiry-overlay {
+  flex-direction: row;
+  gap: 12px;
+}
+
+.inquiry-overlay .bubble {
+  position: relative;
+}
+
+.inquiry-overlay .arrow {
+  position: relative;
+}
+
+/* Quote overlay */
+.quote-overlay {
+  flex-direction: row;
+  gap: 20px;
+}
+
+.quote-overlay .card {
+  position: relative;
+}
+
+.quote-overlay .tick {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+}
+
+/* Pay overlay */
+.pay-overlay {
+  position: relative;
+}
+
+.pay-overlay .ring {
+  position: relative;
+}
+
+.pay-overlay .stamp {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+}
+
+/* Production overlay */
+.production-overlay {
+  flex-direction: row;
+  gap: 24px;
+}
+
+.production-overlay .gear {
+  position: relative;
+}
+
+.production-overlay .box {
+  position: relative;
+}
+
+/* Inspection overlay */
+.inspection-overlay {
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inspection-overlay .scanner {
+  position: relative;
+}
+
+.inspection-overlay .checklist {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Shipping overlay */
+.shipping-overlay {
+  flex-direction: row;
+  gap: 24px;
+  align-items: flex-end;
+}
+
+.shipping-overlay .truck {
+  position: relative;
+}
+
+.shipping-overlay .pin {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+/* Reduced motion styles */
+@media (prefers-reduced-motion: reduce) {
+  .order-storyboard--desktop {
+    position: relative !important;
+  }
+  
+  .scene-overlay * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .scene-overlay {
+    transform: scale(0.8);
+  }
+  
+  .order-storyboard--mobile {
+    scroll-snap-type: y proximity;
+  }
+}
+
+/* Focus styles for accessibility */
+.order-progress-rail button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.order-scene-card:focus-visible {
+  outline: 2px solid var(--accent, var(--primary));
+  outline-offset: 4px;
+}

@@ -1,0 +1,2196 @@
+/* How We Work Page Styles - Aaziko Trade Journey */
+
+.hww-page {
+  background: var(--bg);
+  min-height: 100vh;
+  position: relative;
+}
+
+.hww-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  z-index: -1;
+}
+
+/* Hero Section */
+.hww-hero {
+  padding: 140px 24px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.hww-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hww-hero-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hww-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--primary-bg);
+  border-radius: var(--radius-full);
+  margin-bottom: 24px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.hww-hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+
+.hww-gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hww-hero-subtitle {
+  font-size: 18px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 36px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hww-hero-cta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.hww-trust-chips {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.hww-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.hww-chip svg {
+  color: var(--success);
+}
+
+
+/* Buttons */
+.hww-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: var(--primary);
+  border: none;
+  border-bottom: 4px solid var(--primary-dark);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.hww-btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.hww-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.hww-btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+/* Container & Sections */
+.hww-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hww-section {
+  padding: 80px 0;
+}
+
+.hww-section-alt {
+  background: var(--gray-50);
+}
+
+.hww-section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.hww-section-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--primary-bg);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.hww-section-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+
+.hww-section-desc {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* View Toggle */
+.hww-view-toggle {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  margin-top: 24px;
+}
+
+.hww-toggle-btn {
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hww-toggle-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+.hww-toggle-btn:hover:not(.active) {
+  background: var(--gray-100);
+}
+
+
+/* Milestones - Vertical Timeline Design (Freepik Style) */
+.hww-vertical-timeline {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 40px 0;
+  position: relative;
+}
+
+.hww-vertical-timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0;
+  position: relative;
+  min-height: 120px;
+}
+
+/* Left side - Step number and dotted line */
+.hww-vt-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  width: 100px;
+  position: relative;
+}
+
+.hww-vt-step-number {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  min-width: 50px;
+  text-align: right;
+  font-family: 'Inter', sans-serif;
+}
+
+.hww-vt-dot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 100%;
+}
+
+.hww-vt-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid;
+  background: white;
+  flex-shrink: 0;
+  z-index: 2;
+  position: relative;
+}
+
+.hww-vt-dotted-line {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: calc(100% + 80px);
+  border-left: 2px dashed #cbd5e1;
+  z-index: 1;
+}
+
+/* Right side - Icon and content */
+.hww-vt-right {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  flex: 1;
+  padding-bottom: 50px;
+  padding-left: 20px;
+}
+
+.hww-vt-icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  border: 5px solid white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Outer ring effect like in the design */
+.hww-vt-icon-circle::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border-radius: 50%;
+  border: 2px solid;
+  border-color: inherit;
+  opacity: 0.3;
+}
+
+/* Small accent circle on top-right of icon */
+.hww-vt-icon-circle::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.hww-vt-content {
+  flex: 1;
+  padding-top: 12px;
+}
+
+.hww-vt-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hww-vt-description {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.7;
+  margin: 0 0 12px;
+  max-width: 380px;
+}
+
+/* Hide old desktop/mobile views */
+.hww-milestones-desktop,
+.hww-milestones-mobile {
+  display: none;
+}
+
+.hww-milestone-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.hww-milestone-tag.buyer {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary);
+}
+
+.hww-milestone-tag.seller {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}
+
+.hww-milestone-tag.aaziko {
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--success);
+}
+
+.hww-milestone-tag.both {
+  background: rgba(139, 92, 246, 0.1);
+  color: #8b5cf6;
+}
+
+/* Icon wiggle animation */
+@keyframes hwwIconWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-12deg); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-8deg); }
+  80% { transform: rotate(5deg); }
+}
+
+/* Comparison Section */
+.hww-comparison-block {
+  margin-bottom: 60px;
+}
+
+.hww-comparison-block:last-child {
+  margin-bottom: 0;
+}
+
+.hww-comparison-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 24px;
+  justify-content: center;
+}
+
+.hww-comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.hww-comparison-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+
+.hww-comparison-card.without {
+  border-bottom: 4px solid var(--error);
+}
+
+.hww-comparison-card.with {
+  border-bottom: 4px solid var(--success);
+}
+
+.hww-comparison-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+
+.hww-comparison-card.without .hww-comparison-card-title {
+  color: var(--error);
+}
+
+.hww-comparison-card.with .hww-comparison-card-title {
+  color: var(--success);
+}
+
+.hww-comparison-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hww-comparison-list li {
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--gray-100);
+  line-height: 1.5;
+}
+
+.hww-comparison-list li:last-child {
+  border-bottom: none;
+}
+
+.hww-comparison-card.without .hww-comparison-list li {
+  color: var(--text-muted);
+}
+
+.hww-comparison-cta {
+  text-align: center;
+}
+
+
+/* Roles Grid */
+.hww-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.hww-role-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  transition: all 0.2s ease;
+}
+
+.hww-role-card:hover {
+  transform: translateY(-4px);
+}
+
+.hww-role-card.primary {
+  border-bottom: 4px solid var(--primary);
+}
+
+.hww-role-card.primary:hover {
+  border-color: var(--primary);
+}
+
+/* Aaziko card - Highlighted design */
+.hww-role-card.success {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.05) 0%, rgba(22, 163, 74, 0.02) 100%);
+  border: 2px solid rgba(22, 163, 74, 0.3);
+  border-bottom: 4px solid var(--success);
+  position: relative;
+  overflow: hidden;
+}
+
+.hww-role-card.success::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--success), #34d399);
+}
+
+.hww-role-card.success::after {
+  content: 'AAZIKO';
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 4px 12px;
+  background: var(--success);
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  border-radius: var(--radius-full);
+}
+
+.hww-role-card.success:hover {
+  border-color: var(--success);
+  box-shadow: 0 8px 30px rgba(22, 163, 74, 0.15);
+}
+
+.hww-role-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.hww-role-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.hww-role-card.primary .hww-role-icon {
+  background: var(--sky);
+  color: var(--primary);
+}
+
+.hww-role-card.success .hww-role-icon {
+  background: rgba(22, 163, 74, 0.15);
+  color: var(--success);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+}
+
+.hww-role-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.hww-role-card.success .hww-role-title {
+  color: var(--success);
+}
+
+.hww-role-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.hww-role-card.success .hww-role-subtitle {
+  color: rgba(22, 163, 74, 0.7);
+  font-weight: 500;
+}
+
+.hww-role-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hww-role-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 15px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--gray-100);
+  line-height: 1.5;
+}
+
+.hww-role-list li:last-child {
+  border-bottom: none;
+}
+
+.hww-role-list li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.hww-role-card.primary .hww-role-list li svg {
+  color: var(--primary);
+}
+
+.hww-role-card.success .hww-role-list li {
+  border-bottom-color: rgba(22, 163, 74, 0.1);
+}
+
+.hww-role-card.success .hww-role-list li svg {
+  color: var(--success);
+}
+
+/* Win-Win Section */
+.hww-winwin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.hww-winwin-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  text-align: center;
+}
+
+.hww-winwin-card.seller {
+  border-bottom: 4px solid var(--warning);
+}
+
+.hww-winwin-card.buyer {
+  border-bottom: 4px solid var(--primary);
+}
+
+.hww-winwin-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.hww-winwin-card.seller .hww-winwin-icon {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}
+
+.hww-winwin-card.buyer .hww-winwin-icon {
+  background: var(--sky);
+  color: var(--primary);
+}
+
+.hww-winwin-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 16px;
+}
+
+.hww-winwin-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+.hww-winwin-highlight {
+  font-weight: 600;
+  color: var(--text) !important;
+}
+
+.hww-winwin-note {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 16px;
+}
+
+
+/* Cost Diagram */
+.hww-cost-diagram {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, rgba(22, 163, 74, 0.03) 100%);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  position: relative;
+}
+
+.hww-cost-diagram::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50px;
+  right: 50px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--success));
+  border-radius: 2px;
+}
+
+.hww-cost-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+
+.hww-cost-box {
+  padding: 20px 32px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.hww-cost-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.hww-cost-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.hww-cost-arrow {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.hww-cost-result {
+  display: flex;
+  gap: 16px;
+}
+
+.hww-cost-down,
+.hww-cost-up {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  border-radius: var(--radius-lg);
+  font-size: 15px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.hww-cost-down {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.hww-cost-down:hover {
+  background: rgba(239, 68, 68, 0.15);
+  transform: translateY(-2px);
+}
+
+.hww-cost-up {
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--success);
+  border-color: rgba(22, 163, 74, 0.2);
+}
+
+.hww-cost-up:hover {
+  background: rgba(22, 163, 74, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Trust Grid */
+.hww-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+/* ============================================
+   ORDER PROCESS - ROW LAYOUT (4-4-3)
+   ============================================ */
+
+.hww-order-process-section {
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hww-order-process-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(22, 163, 74, 0.03) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.hww-process-rows {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* Each Row */
+.hww-process-row {
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.hww-process-row.last-row {
+  margin-bottom: 0;
+}
+
+/* Row Label */
+.hww-row-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-left: 8px;
+}
+
+/* Filter Buttons */
+.hww-filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.hww-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hww-filter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.hww-filter-btn.active {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hww-row-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hww-row-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Row Cards Container */
+.hww-row-cards {
+  display: grid;
+  gap: 24px;
+}
+
+.hww-row-cards.four-cards {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.hww-row-cards.three-cards {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* Individual Step Card */
+.hww-step-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px 24px 24px;
+  border: 2px solid #e2e8f0;
+  border-top-width: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  margin-top: 28px;
+}
+
+.hww-step-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+}
+
+/* Card Header - Number and Role Badge */
+.hww-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+/* Step Number Badge - Left side */
+.hww-card-number {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 3px solid white;
+  z-index: 3;
+}
+
+/* Role Badge Wrapper - Centered */
+.hww-card-role-wrapper {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+/* Role Badge - Same style as number */
+.hww-card-role-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 3px solid white;
+  color: white !important;
+}
+
+/* Dimmed state for filtered cards */
+.hww-step-card.dimmed {
+  opacity: 0.4;
+  transform: scale(0.98);
+}
+
+.hww-step-card.dimmed:hover {
+  opacity: 0.6;
+  transform: scale(0.98) translateY(-4px);
+}
+
+/* Card Image */
+.hww-card-image {
+  width: 100%;
+  height: 160px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hww-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.hww-card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card Content */
+.hww-card-content {
+  flex: 1;
+}
+
+.hww-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.hww-card-desc {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Arrow to next card */
+.hww-card-arrow {
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+/* Hide arrow on last card of each row */
+.hww-row-cards > .hww-step-card:last-child .hww-card-arrow {
+  display: none;
+}
+
+/* Row Connector (arrow between rows) */
+.hww-row-connector {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  color: #cbd5e1;
+}
+
+/* Order Process CTA */
+.hww-order-cta {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Filtered Cards Grid */
+.hww-filtered-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+  justify-items: center;
+}
+
+/* Center cards when there are only 2 or 3 cards */
+.hww-filtered-cards:has(.hww-step-card:nth-child(2):last-child) {
+  grid-template-columns: repeat(2, minmax(250px, 280px));
+  justify-content: center;
+}
+
+.hww-filtered-cards:has(.hww-step-card:nth-child(3):last-child) {
+  grid-template-columns: repeat(3, minmax(250px, 280px));
+  justify-content: center;
+}
+
+/* Center the 5th card (last card in second row for buyer) */
+.hww-filtered-cards:has(.hww-step-card:nth-child(5):last-child) .hww-step-card:nth-child(5) {
+  grid-column: 2 / 4;
+  justify-self: center;
+  max-width: 280px;
+}
+
+/* ============================================
+   RESPONSIVE STYLES
+   ============================================ */
+
+@media (max-width: 1100px) {
+  .hww-row-cards.four-cards,
+  .hww-row-cards.three-cards {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: none;
+  }
+
+  .hww-filtered-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hww-row-cards > .hww-step-card:nth-child(2) .hww-card-arrow,
+  .hww-row-cards > .hww-step-card:nth-child(4) .hww-card-arrow {
+    display: none;
+  }
+
+  .hww-row-cards.three-cards > .hww-step-card:nth-child(2) .hww-card-arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .hww-process-rows {
+    padding: 10px 0;
+  }
+
+  .hww-process-row {
+    margin-bottom: 40px;
+  }
+
+  .hww-row-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .hww-row-title {
+    font-size: 16px;
+  }
+
+  .hww-row-cards.four-cards,
+  .hww-row-cards.three-cards {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    max-width: none;
+  }
+
+  .hww-filtered-cards {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .hww-step-card {
+    padding: 20px 20px 20px;
+    min-height: auto;
+    margin-top: 26px;
+  }
+
+  .hww-card-header {
+    gap: 6px;
+    top: -18px;
+  }
+
+  .hww-card-number {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    top: -18px;
+    left: -10px;
+  }
+
+  .hww-card-role-wrapper {
+    top: -18px;
+  }
+
+  .hww-card-role-badge {
+    height: 36px;
+    padding: 0 14px;
+    font-size: 10px;
+  }
+
+  .hww-card-image {
+    height: 180px;
+  }
+
+  .hww-card-title {
+    font-size: 18px;
+  }
+
+  .hww-card-desc {
+    font-size: 13px;
+  }
+
+  .hww-card-arrow {
+    display: none !important;
+  }
+
+  .hww-row-connector {
+    padding: 16px 0;
+  }
+
+  .hww-filter-buttons {
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .hww-filter-btn {
+    padding: 10px 16px;
+    font-size: 12px;
+    gap: 6px;
+  }
+}
+
+.hww-trust-item {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.hww-trust-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  border-bottom-color: var(--primary-dark);
+}
+
+.hww-trust-item-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sky);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+}
+
+.hww-trust-item:hover .hww-trust-item-icon {
+  animation: hwwIconWiggle 0.5s ease-in-out;
+}
+
+.hww-trust-item h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.hww-trust-item p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.hww-trust-cta {
+  text-align: center;
+}
+
+
+/* Final CTA Section */
+.hww-final-cta {
+  padding: 80px 0;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+.hww-cta-card {
+  text-align: center;
+  color: white;
+}
+
+.hww-cta-card h2 {
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.hww-cta-card p {
+  font-size: 18px;
+  opacity: 0.9;
+  margin: 0 0 32px;
+}
+
+.hww-cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hww-btn-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary);
+  background: white;
+  border: none;
+  border-bottom: 4px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.hww-btn-cta-primary:hover {
+  transform: translateY(-2px);
+  background: var(--gray-50);
+}
+
+.hww-btn-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.hww-btn-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .hww-trust-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hww-hero-title {
+    font-size: 44px;
+  }
+
+  .hww-section-title {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .hww-roles-grid,
+  .hww-winwin-grid,
+  .hww-comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hww-trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hww-hero {
+    padding: 130px 20px 70px;
+  }
+
+  .hww-hero-title {
+    font-size: 40px;
+  }
+
+  .hww-hero-subtitle {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hww-hero {
+    padding: 120px 18px 60px;
+  }
+
+  .hww-hero-badge {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .hww-hero-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  .hww-hero-subtitle {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .hww-trust-chips {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .hww-chip {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .hww-section {
+    padding: 70px 0;
+  }
+
+  .hww-section-title {
+    font-size: 30px;
+  }
+
+  .hww-section-desc {
+    font-size: 16px;
+  }
+
+  .hww-role-card {
+    padding: 28px;
+  }
+
+  .hww-role-title {
+    font-size: 20px;
+  }
+
+  .hww-role-list li {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+
+  .hww-winwin-card {
+    padding: 28px;
+  }
+
+  .hww-comparison-card {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hww-hero {
+    padding: 110px 16px 50px;
+  }
+
+  .hww-hero::before {
+    width: 600px;
+    height: 500px;
+  }
+
+  .hww-hero-badge {
+    padding: 6px 12px;
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .hww-hero-title {
+    font-size: 28px;
+    margin-bottom: 18px;
+  }
+
+  .hww-hero-subtitle {
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+
+  .hww-hero-cta {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hww-btn-primary,
+  .hww-btn-secondary {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .hww-trust-chips {
+    margin-top: 24px;
+  }
+
+  .hww-chip {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .hww-section {
+    padding: 60px 0;
+  }
+
+  .hww-container {
+    padding: 0 16px;
+  }
+
+  .hww-section-header {
+    margin-bottom: 36px;
+  }
+
+  .hww-section-badge {
+    padding: 5px 12px;
+    font-size: 11px;
+    margin-bottom: 14px;
+  }
+
+  .hww-section-title {
+    font-size: 26px;
+    margin-bottom: 14px;
+  }
+
+  .hww-section-desc {
+    font-size: 15px;
+  }
+
+  /* Vertical Timeline Mobile */
+  .hww-vertical-timeline {
+    padding: 20px 0;
+  }
+
+  .hww-vertical-timeline-item {
+    min-height: 100px;
+  }
+
+  .hww-vt-left {
+    width: 70px;
+    gap: 8px;
+  }
+
+  .hww-vt-step-number {
+    font-size: 26px;
+    min-width: 36px;
+  }
+
+  .hww-vt-dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  .hww-vt-dotted-line {
+    top: 20px;
+    height: calc(100% + 60px);
+  }
+
+  .hww-vt-icon-circle {
+    width: 60px;
+    height: 60px;
+    border-width: 4px;
+  }
+
+  .hww-vt-icon-circle::before {
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+  }
+
+  .hww-vt-icon-circle::after {
+    width: 16px;
+    height: 16px;
+    top: -2px;
+    right: -2px;
+  }
+
+  .hww-vt-icon-circle svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .hww-vt-right {
+    gap: 16px;
+    padding-bottom: 35px;
+    padding-left: 12px;
+  }
+
+  .hww-vt-content {
+    padding-top: 8px;
+  }
+
+  .hww-vt-title {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .hww-vt-description {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .hww-trust-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .hww-trust-item {
+    padding: 20px;
+  }
+
+  .hww-trust-item-icon {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 14px;
+  }
+
+  .hww-trust-item h4 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .hww-trust-item p {
+    font-size: 12px;
+  }
+
+  .hww-cost-diagram {
+    padding: 24px 16px;
+  }
+
+  .hww-cost-flow {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .hww-cost-result {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .hww-cost-down,
+  .hww-cost-up {
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+
+  .hww-cost-box {
+    width: 100%;
+    text-align: center;
+    padding: 16px 24px;
+  }
+
+  .hww-cost-label {
+    font-size: 14px;
+  }
+
+  .hww-cost-arrow {
+    font-size: 24px;
+    transform: rotate(90deg);
+  }
+
+  .hww-role-card {
+    padding: 24px;
+  }
+
+  .hww-role-header {
+    margin-bottom: 20px;
+  }
+
+  .hww-role-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .hww-role-title {
+    font-size: 18px;
+  }
+
+  .hww-role-subtitle {
+    font-size: 13px;
+  }
+
+  .hww-role-list li {
+    font-size: 14px;
+    padding: 10px 0;
+    gap: 10px;
+  }
+
+  .hww-winwin-card {
+    padding: 24px;
+  }
+
+  .hww-winwin-icon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 16px;
+  }
+
+  .hww-winwin-card h3 {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  .hww-winwin-card p {
+    font-size: 13px;
+  }
+
+  .hww-comparison-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .hww-comparison-card {
+    padding: 20px;
+  }
+
+  .hww-comparison-card-title {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .hww-comparison-list li {
+    font-size: 13px;
+    padding: 8px 0;
+  }
+
+  .hww-final-cta {
+    padding: 60px 0;
+  }
+
+  .hww-cta-card h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .hww-cta-card p {
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
+
+  .hww-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hww-btn-cta-primary,
+  .hww-btn-cta-secondary {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hww-hero {
+    padding: 100px 14px 45px;
+  }
+
+  .hww-hero-badge {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .hww-hero-title {
+    font-size: 24px;
+  }
+
+  .hww-hero-subtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .hww-btn-primary,
+  .hww-btn-secondary {
+    padding: 11px 20px;
+    font-size: 13px;
+  }
+
+  .hww-section {
+    padding: 50px 0;
+  }
+
+  .hww-container {
+    padding: 0 14px;
+  }
+
+  .hww-section-title {
+    font-size: 22px;
+  }
+
+  .hww-section-desc {
+    font-size: 14px;
+  }
+
+  .hww-vertical-timeline-item {
+    min-height: 90px;
+  }
+
+  .hww-vt-left {
+    width: 60px;
+  }
+
+  .hww-vt-step-number {
+    font-size: 22px;
+    min-width: 30px;
+  }
+
+  .hww-vt-icon-circle {
+    width: 52px;
+    height: 52px;
+  }
+
+  .hww-vt-icon-circle svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .hww-vt-title {
+    font-size: 13px;
+  }
+
+  .hww-vt-description {
+    font-size: 11px;
+  }
+
+  .hww-role-card {
+    padding: 20px;
+  }
+
+  .hww-role-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .hww-role-title {
+    font-size: 16px;
+  }
+
+  .hww-role-list li {
+    font-size: 13px;
+  }
+
+  .hww-winwin-card {
+    padding: 20px;
+  }
+
+  .hww-winwin-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .hww-winwin-card h3 {
+    font-size: 16px;
+  }
+
+  .hww-winwin-card p {
+    font-size: 12px;
+  }
+
+  .hww-cost-diagram {
+    padding: 20px 14px;
+  }
+
+  .hww-cost-box {
+    padding: 14px 20px;
+  }
+
+  .hww-cost-label {
+    font-size: 13px;
+  }
+
+  .hww-cost-down,
+  .hww-cost-up {
+    padding: 12px 18px;
+    font-size: 13px;
+  }
+
+  .hww-final-cta {
+    padding: 50px 0;
+  }
+
+  .hww-cta-card h2 {
+    font-size: 24px;
+  }
+
+  .hww-cta-card p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hww-hero {
+    padding: 95px 12px 40px;
+  }
+
+  .hww-hero-badge {
+    padding: 4px 8px;
+    font-size: 10px;
+    gap: 6px;
+  }
+
+  .hww-hero-title {
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+
+  .hww-hero-subtitle {
+    font-size: 13px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .hww-trust-chips {
+    gap: 6px;
+    margin-top: 20px;
+  }
+
+  .hww-chip {
+    padding: 5px 8px;
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .hww-btn-primary,
+  .hww-btn-secondary {
+    padding: 10px 18px;
+    font-size: 12px;
+    max-width: 260px;
+  }
+
+  .hww-section {
+    padding: 40px 0;
+  }
+
+  .hww-container {
+    padding: 0 12px;
+  }
+
+  .hww-section-header {
+    margin-bottom: 28px;
+  }
+
+  .hww-section-badge {
+    padding: 4px 10px;
+    font-size: 10px;
+  }
+
+  .hww-section-title {
+    font-size: 20px;
+  }
+
+  .hww-section-desc {
+    font-size: 13px;
+  }
+
+  .hww-vertical-timeline {
+    padding: 15px 0;
+  }
+
+  .hww-vt-left {
+    width: 50px;
+    gap: 6px;
+  }
+
+  .hww-vt-step-number {
+    font-size: 20px;
+    min-width: 26px;
+  }
+
+  .hww-vt-dot {
+    width: 10px;
+    height: 10px;
+    border-width: 2px;
+  }
+
+  .hww-vt-icon-circle {
+    width: 46px;
+    height: 46px;
+    border-width: 3px;
+  }
+
+  .hww-vt-icon-circle svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hww-vt-right {
+    gap: 12px;
+    padding-bottom: 30px;
+    padding-left: 10px;
+  }
+
+  .hww-vt-title {
+    font-size: 12px;
+  }
+
+  .hww-vt-description {
+    font-size: 10px;
+    max-width: 200px;
+  }
+
+  .hww-milestone-tag {
+    font-size: 9px;
+    padding: 3px 8px;
+  }
+
+  .hww-trust-item {
+    padding: 16px;
+  }
+
+  .hww-trust-item-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 12px;
+  }
+
+  .hww-trust-item h4 {
+    font-size: 13px;
+  }
+
+  .hww-trust-item p {
+    font-size: 11px;
+  }
+
+  .hww-role-card {
+    padding: 16px;
+  }
+
+  .hww-role-header {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .hww-role-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .hww-role-title {
+    font-size: 15px;
+  }
+
+  .hww-role-subtitle {
+    font-size: 12px;
+  }
+
+  .hww-role-list li {
+    font-size: 12px;
+    padding: 8px 0;
+    gap: 8px;
+  }
+
+  .hww-winwin-card {
+    padding: 16px;
+  }
+
+  .hww-winwin-icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 14px;
+  }
+
+  .hww-winwin-card h3 {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .hww-winwin-card p {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  .hww-winwin-note {
+    font-size: 10px;
+    margin-top: 12px;
+  }
+
+  .hww-comparison-title {
+    font-size: 18px;
+    gap: 10px;
+  }
+
+  .hww-comparison-card {
+    padding: 16px;
+  }
+
+  .hww-comparison-card-title {
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+
+  .hww-comparison-list li {
+    font-size: 12px;
+    padding: 7px 0;
+  }
+
+  .hww-cost-diagram {
+    padding: 16px 12px;
+    border-radius: var(--radius-lg);
+  }
+
+  .hww-cost-box {
+    padding: 12px 16px;
+  }
+
+  .hww-cost-label {
+    font-size: 12px;
+  }
+
+  .hww-cost-arrow {
+    font-size: 20px;
+  }
+
+  .hww-cost-down,
+  .hww-cost-up {
+    padding: 10px 14px;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .hww-final-cta {
+    padding: 40px 0;
+  }
+
+  .hww-cta-card h2 {
+    font-size: 20px;
+  }
+
+  .hww-cta-card p {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .hww-btn-cta-primary,
+  .hww-btn-cta-secondary {
+    padding: 10px 18px;
+    font-size: 12px;
+    max-width: 260px;
+  }
+}

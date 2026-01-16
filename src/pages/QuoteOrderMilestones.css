@@ -1,0 +1,843 @@
+/* Quote & Order Milestones Page - Visual/Graphical Styles */
+/* Color Theme:
+   Navy: #0B1F3B (Authority/Headers)
+   Blue: #2563EB (Primary Action/Links)
+   Sky: #EAF2FF (Highlights)
+   Background: #F7FAFF
+   Surface: #FFFFFF
+   Section Alt: #EEF5FF
+   Border: #E3ECFA
+   Text Primary: #0B1220
+   Text Secondary: #475569
+   Success/Verified: #16A34A (ONLY for verified/passed/safe)
+   Warning: #F59E0B
+   Error: #EF4444
+   Info: #0EA5E9
+*/
+
+.qom-page {
+  background: #F7FAFF;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Hero Section */
+.qom-hero {
+  padding: 120px 24px 60px;
+  text-align: center;
+  position: relative;
+}
+
+.qom-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.qom-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.qom-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #EAF2FF;
+  border-radius: 100px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  font-size: 14px;
+  font-weight: 600;
+  color: #2563EB;
+}
+
+.qom-hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #0B1220;
+  margin: 0 0 16px;
+}
+
+.qom-gradient-text {
+  background: linear-gradient(135deg, #0B1F3B 0%, #2563EB 50%, #0EA5E9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.qom-hero-subtitle {
+  font-size: 18px;
+  color: #475569;
+  line-height: 1.7;
+  margin: 0 0 32px;
+}
+
+.qom-hero-cta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Container */
+.qom-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Sections */
+.qom-section {
+  padding: 70px 0;
+}
+
+.qom-section-alt {
+  background: #EEF5FF;
+}
+
+.qom-section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.qom-section-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #EAF2FF;
+  color: #2563EB;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.qom-section-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0B1F3B;
+  margin: 0 0 8px;
+}
+
+.qom-section-tagline {
+  font-size: 16px;
+  color: #475569;
+  margin: 0;
+}
+
+/* Buttons - Blue for actions */
+.qom-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: #2563EB;
+  border: none;
+  border-bottom: 4px solid #1d4ed8;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.qom-btn-primary:hover {
+  transform: translateY(-2px);
+  background: #1d4ed8;
+}
+
+.qom-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0B1220;
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-bottom: 4px solid #E3ECFA;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.qom-btn-secondary:hover {
+  transform: translateY(-2px);
+  background: #EAF2FF;
+  border-color: #2563EB;
+}
+
+/* Section 1 - Why Milestones Matter */
+.qom-why-grid {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.qom-why-visual {
+  text-align: center;
+}
+
+.qom-why-icon-main {
+  width: 100px;
+  height: 100px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 3px solid #F59E0B;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F59E0B;
+  margin: 0 auto 12px;
+}
+
+.qom-why-visual span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #F59E0B;
+  text-transform: uppercase;
+}
+
+.qom-why-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.qom-why-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-left: 4px solid #F59E0B;
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.qom-why-item-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(245, 158, 11, 0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F59E0B;
+  flex-shrink: 0;
+}
+
+.qom-why-item span {
+  font-size: 15px;
+  font-weight: 500;
+  color: #0B1220;
+}
+
+.qom-simple-idea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #EAF2FF 0%, #FFFFFF 100%);
+  border: 2px solid #2563EB;
+  border-radius: 12px;
+  padding: 16px 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.qom-simple-idea svg {
+  color: #2563EB;
+  flex-shrink: 0;
+}
+
+.qom-simple-idea p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0B1220;
+  margin: 0;
+}
+
+
+/* Section 2 - Milestone Definition */
+.qom-milestone-def {
+  text-align: center;
+}
+
+.qom-def-intro {
+  font-size: 16px;
+  color: #475569;
+  margin: 0 0 32px;
+}
+
+.qom-def-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.qom-def-item {
+  position: relative;
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  min-width: 200px;
+}
+
+.qom-def-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin: 0 auto 16px;
+}
+
+.qom-def-item h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0B1220;
+  margin: 0 0 8px;
+}
+
+.qom-def-example {
+  font-size: 13px;
+  color: #2563EB;
+  font-style: italic;
+}
+
+.qom-def-arrow {
+  position: absolute;
+  right: -28px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #2563EB;
+  opacity: 0.5;
+  z-index: 2;
+}
+
+.qom-def-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #EAF2FF;
+  border: 2px solid #2563EB;
+  border-radius: 100px;
+  padding: 12px 20px;
+}
+
+.qom-def-note svg {
+  color: #2563EB;
+  flex-shrink: 0;
+}
+
+.qom-def-note span {
+  font-size: 14px;
+  color: #0B1220;
+  font-weight: 500;
+}
+
+/* Section 3 - Quote Clarity */
+.qom-quote-split {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.qom-quote-column {
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.qom-quote-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #EEF5FF;
+}
+
+.qom-quote-label {
+  width: 36px;
+  height: 36px;
+  background: #2563EB;
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qom-quote-header h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0B1F3B;
+  margin: 0;
+}
+
+.qom-quote-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.qom-quote-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #F7FAFF;
+  border-radius: 10px;
+}
+
+.qom-quote-item svg {
+  color: #2563EB;
+  flex-shrink: 0;
+}
+
+.qom-quote-item span {
+  font-size: 14px;
+  color: #0B1220;
+}
+
+.qom-quote-goal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #EAF2FF;
+  border: 2px solid #2563EB;
+  border-radius: 12px;
+  padding: 16px 24px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.qom-quote-goal svg {
+  color: #2563EB;
+}
+
+.qom-quote-goal span {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2563EB;
+}
+
+/* Section 4 - Order Milestones Flow */
+.qom-flow-timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Wiggle animation for icons */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+
+.qom-flow-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-radius: 14px;
+  padding: 18px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.qom-flow-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.12);
+}
+
+.qom-flow-primary:hover { border-color: #2563EB; }
+.qom-flow-info:hover { border-color: #0EA5E9; }
+.qom-flow-warning:hover { border-color: #F59E0B; }
+.qom-flow-success:hover { border-color: #16A34A; }
+
+.qom-flow-icon {
+  width: 48px;
+  height: 48px;
+  background: #EAF2FF;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563EB;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.qom-flow-item:hover .qom-flow-icon {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+.qom-flow-primary .qom-flow-icon { background: #EAF2FF; color: #2563EB; }
+.qom-flow-info .qom-flow-icon { background: rgba(14, 165, 233, 0.1); color: #0EA5E9; }
+.qom-flow-warning .qom-flow-icon { background: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+.qom-flow-success .qom-flow-icon { background: rgba(22, 163, 74, 0.1); color: #16A34A; } /* Only for verified/completed */
+
+.qom-flow-content h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0B1220;
+  margin: 0 0 4px;
+}
+
+.qom-flow-content p {
+  font-size: 12px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.4;
+}
+
+
+/* Section 5 - Proof Pack - Blue for actions, structure */
+.qom-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.qom-proof-item {
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-radius: 14px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.qom-proof-item:hover {
+  border-color: #2563EB;
+  transform: translateY(-2px);
+}
+
+.qom-proof-icon {
+  width: 56px;
+  height: 56px;
+  background: #EAF2FF;
+  border: 2px solid #2563EB;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563EB;
+  margin: 0 auto 12px;
+}
+
+.qom-proof-item span {
+  font-size: 13px;
+  font-weight: 500;
+  color: #0B1220;
+  line-height: 1.4;
+}
+
+.qom-proof-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #F7FAFF;
+  border: 1px solid #E3ECFA;
+  border-radius: 8px;
+  padding: 12px 20px;
+}
+
+.qom-proof-note svg {
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.qom-proof-note span {
+  font-size: 13px;
+  color: #475569;
+}
+
+/* Section 6 - Common Mistakes - Error/Risk color */
+.qom-mistakes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.qom-mistake-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-left: 4px solid #EF4444;
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.qom-mistake-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #EF4444;
+  flex-shrink: 0;
+}
+
+.qom-mistake-item span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0B1220;
+}
+
+/* Section 7 - Quick Takeaways - Blue for actions */
+.qom-takeaways {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.qom-takeaway {
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-bottom: 4px solid #2563EB;
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  max-width: 280px;
+  transition: all 0.2s ease;
+}
+
+.qom-takeaway:hover {
+  transform: translateY(-4px);
+  border-color: #2563EB;
+}
+
+.qom-takeaway-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin: 0 auto 16px;
+}
+
+.qom-takeaway p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0B1220;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Final CTA - Blue for actions */
+.qom-final-cta {
+  padding: 70px 0 100px;
+  background: linear-gradient(180deg, #EEF5FF 0%, #F7FAFF 100%);
+}
+
+.qom-cta-visual {
+  background: linear-gradient(135deg, #2563EB 0%, #0B1F3B 100%);
+  border-radius: 24px;
+  padding: 50px 40px;
+  text-align: center;
+  color: white;
+}
+
+.qom-cta-visual h2 {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 28px;
+}
+
+.qom-cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.qom-btn-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2563EB;
+  background: white;
+  border: none;
+  border-bottom: 4px solid #E3ECFA;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.qom-btn-cta-primary:hover {
+  transform: translateY(-2px);
+  background: #EAF2FF;
+}
+
+.qom-btn-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.qom-btn-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .qom-flow-timeline {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .qom-proof-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .qom-why-grid {
+    flex-direction: column;
+    gap: 32px;
+  }
+  
+  .qom-quote-split {
+    grid-template-columns: 1fr;
+  }
+  
+  .qom-def-flow {
+    flex-direction: column;
+  }
+  
+  .qom-def-arrow {
+    display: none;
+  }
+  
+  .qom-mistakes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .qom-hero {
+    padding: 100px 16px 40px;
+  }
+
+  .qom-hero-title {
+    font-size: 32px;
+  }
+
+  .qom-hero-subtitle {
+    font-size: 16px;
+  }
+
+  .qom-hero-cta {
+    flex-direction: column;
+  }
+
+  .qom-section {
+    padding: 50px 0;
+  }
+
+  .qom-section-title {
+    font-size: 26px;
+  }
+  
+  .qom-flow-timeline {
+    grid-template-columns: 1fr;
+  }
+  
+  .qom-proof-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .qom-takeaways {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .qom-takeaway {
+    max-width: 100%;
+  }
+
+  .qom-cta-visual {
+    padding: 36px 20px;
+  }
+
+  .qom-cta-visual h2 {
+    font-size: 22px;
+  }
+
+  .qom-cta-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .qom-proof-grid {
+    grid-template-columns: 1fr;
+  }
+}

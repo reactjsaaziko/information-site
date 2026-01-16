@@ -1,0 +1,812 @@
+/* Find Verified Indian Suppliers - Inspection & Quality Checks Page */
+
+.fvis-page {
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+/* Hero */
+.fvis-hero {
+  padding: 140px 24px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.fvis-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(22, 163, 74, 0.1) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.fvis-hero-content {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.fvis-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.3);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--success);
+  margin-bottom: 24px;
+}
+
+.fvis-hero-title {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--text);
+  margin: 0 0 20px;
+}
+
+.fvis-gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--success) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.fvis-hero-subtitle {
+  font-size: 18px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 32px;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fvis-hero-cta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+/* Trust Strip */
+.fvis-trust-strip {
+  display: inline-flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 16px;
+}
+
+.fvis-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.fvis-trust-item svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.fvis-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border: none;
+  border-bottom: 4px solid var(--primary-dark);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.fvis-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
+}
+
+.fvis-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.fvis-btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.fvis-btn-lg {
+  padding: 16px 32px;
+  font-size: 16px;
+}
+
+/* Container & Sections */
+.fvis-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.fvis-section {
+  padding: 80px 0;
+}
+
+.fvis-section-alt {
+  background: var(--gray-50);
+}
+
+.fvis-section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.fvis-section-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--primary-bg);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.fvis-section-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 16px;
+}
+
+.fvis-section-desc {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Benefits Grid */
+.fvis-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.fvis-benefit-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--primary);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.fvis-benefit-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+}
+
+.fvis-benefit-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-bg);
+  border-radius: var(--radius-lg);
+  color: var(--primary);
+}
+
+.fvis-benefit-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.fvis-benefit-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Steps Grid */
+.fvis-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.fvis-step-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 28px 20px;
+  text-align: center;
+  position: relative;
+  transition: all 0.2s ease;
+  min-height: 220px;
+}
+
+.fvis-step-card:hover {
+  transform: translateY(-4px);
+}
+
+.fvis-step-primary { border-bottom-color: var(--primary); }
+.fvis-step-primary:hover { border-color: var(--primary); }
+.fvis-step-info { border-bottom-color: var(--info); }
+.fvis-step-info:hover { border-color: var(--info); }
+.fvis-step-warning { border-bottom-color: var(--warning); }
+.fvis-step-warning:hover { border-color: var(--warning); }
+.fvis-step-success { border-bottom-color: var(--success); }
+.fvis-step-success:hover { border-color: var(--success); }
+.fvis-step-purple { border-bottom-color: #8b5cf6; }
+.fvis-step-purple:hover { border-color: #8b5cf6; }
+
+.fvis-step-number {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.fvis-step-primary .fvis-step-number { background: var(--primary); }
+.fvis-step-info .fvis-step-number { background: var(--info); }
+.fvis-step-warning .fvis-step-number { background: var(--warning); }
+.fvis-step-success .fvis-step-number { background: var(--success); }
+.fvis-step-purple .fvis-step-number { background: #8b5cf6; }
+
+.fvis-step-icon {
+  width: 56px;
+  height: 56px;
+  margin: 8px auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.fvis-icon-primary { background: var(--sky); color: var(--primary); }
+.fvis-icon-info { background: rgba(14, 165, 233, 0.1); color: var(--info); }
+.fvis-icon-warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.fvis-icon-success { background: rgba(22, 163, 74, 0.1); color: var(--success); }
+.fvis-icon-purple { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+
+.fvis-step-card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.fvis-step-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Benefits Row */
+.fvis-benefits-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.fvis-benefit-item {
+  display: flex;
+  gap: 14px;
+  padding: 20px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s ease;
+}
+
+.fvis-benefit-item:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.fvis-benefit-icon-sm {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-bg);
+  border-radius: var(--radius);
+  color: var(--primary);
+}
+
+.fvis-benefit-item h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.fvis-benefit-item p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Examples Grid */
+.fvis-examples-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.fvis-example-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  transition: all 0.2s ease;
+}
+
+.fvis-example-card:hover {
+  transform: translateY(-4px);
+}
+
+.fvis-example-primary { border-bottom-color: var(--primary); }
+.fvis-example-primary:hover { border-color: var(--primary); }
+.fvis-example-info { border-bottom-color: var(--info); }
+.fvis-example-info:hover { border-color: var(--info); }
+
+.fvis-example-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+}
+
+.fvis-example-card h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.fvis-example-type {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  background: var(--gray-50);
+  border-radius: var(--radius);
+}
+
+.fvis-example-type strong {
+  color: var(--text);
+}
+
+.fvis-example-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Deliverables */
+.fvis-deliverables {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.fvis-deliverable-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s ease;
+}
+
+.fvis-deliverable-item:hover {
+  border-color: var(--success);
+  transform: translateX(4px);
+}
+
+.fvis-deliverable-item svg {
+  color: var(--success);
+  flex-shrink: 0;
+}
+
+.fvis-deliverable-item span {
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Why Grid */
+.fvis-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.fvis-why-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.fvis-why-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px);
+}
+
+.fvis-why-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-bg);
+  border-radius: var(--radius-lg);
+  color: var(--primary);
+}
+
+.fvis-why-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.fvis-why-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Cost Card */
+.fvis-cost-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 32px 40px;
+  background: white;
+  border: 2px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-lg);
+}
+
+.fvis-cost-card svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.fvis-cost-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.fvis-cost-card p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Next Steps */
+.fvis-next-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.fvis-next-step {
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s ease;
+}
+
+.fvis-next-step:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.fvis-next-step-num {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+.fvis-next-step h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.fvis-next-step p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* FAQ */
+.fvis-faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.fvis-faq-item {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  overflow: hidden;
+  background: white;
+}
+
+.fvis-faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.fvis-faq-question:hover {
+  background: var(--gray-50);
+}
+
+.fvis-faq-question svg {
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.fvis-faq-question.open svg {
+  transform: rotate(180deg);
+}
+
+.fvis-faq-answer {
+  padding: 0 20px 18px;
+}
+
+.fvis-faq-answer p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* CTA Section */
+.fvis-cta-section {
+  padding: 60px 0 80px;
+}
+
+.fvis-cta-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px 56px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--success) 100%);
+  border-radius: var(--radius-xl);
+  color: white;
+}
+
+.fvis-cta-content h3 {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.fvis-cta-content p {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.fvis-cta-buttons {
+  display: flex;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.fvis-cta-card .fvis-btn-primary {
+  background: white;
+  color: var(--primary);
+  border-bottom-color: var(--gray-300);
+}
+
+.fvis-cta-card .fvis-btn-secondary {
+  background: transparent;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.fvis-cta-card .fvis-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .fvis-steps-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .fvis-benefits-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .fvis-next-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .fvis-hero {
+    padding: 120px 16px 60px;
+  }
+  
+  .fvis-hero-title {
+    font-size: 28px;
+  }
+  
+  .fvis-hero-subtitle {
+    font-size: 15px;
+  }
+  
+  .fvis-hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .fvis-trust-strip {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .fvis-trust-item {
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .fvis-section {
+    padding: 60px 0;
+  }
+  
+  .fvis-section-title {
+    font-size: 24px;
+  }
+  
+  .fvis-benefits-grid,
+  .fvis-steps-grid,
+  .fvis-benefits-row,
+  .fvis-examples-grid,
+  .fvis-why-grid,
+  .fvis-next-steps {
+    grid-template-columns: 1fr;
+  }
+  
+  .fvis-cost-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+  }
+  
+  .fvis-cta-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 32px 24px;
+  }
+  
+  .fvis-cta-content h3 {
+    font-size: 22px;
+  }
+  
+  .fvis-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .fvis-cta-buttons .fvis-btn-primary,
+  .fvis-cta-buttons .fvis-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,1053 @@
+/* Aaziko Insurance Partners Page Styles */
+
+.ip-page {
+  background: var(--bg);
+  min-height: 100vh;
+  position: relative;
+}
+
+.ip-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  z-index: -1;
+}
+
+/* Hero Section */
+.ip-hero {
+  padding: 140px 24px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.ip-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ip-hero-content {
+  max-width: 850px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.ip-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--primary-bg);
+  border-radius: var(--radius-full);
+  margin-bottom: 24px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.ip-hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+
+.ip-gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ip-hero-subtitle {
+  font-size: 18px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 36px;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ip-hero-cta {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+/* Trust Strip */
+.ip-trust-strip {
+  display: inline-flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 16px;
+}
+
+.ip-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.ip-trust-item svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.ip-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  background: var(--primary);
+  border: none;
+  border-bottom: 4px solid var(--primary-dark);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.ip-btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.ip-btn-primary:active {
+  transform: translateY(1px);
+  border-bottom-width: 2px;
+}
+
+.ip-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--gray-300);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.ip-btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.ip-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary);
+  background: transparent;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.ip-btn-outline:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.ip-btn-lg {
+  padding: 16px 32px;
+  font-size: 16px;
+}
+
+/* Container & Sections */
+.ip-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ip-section {
+  padding: 80px 0;
+}
+
+.ip-section-alt {
+  background: var(--gray-50);
+}
+
+.ip-section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.ip-section-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--primary-bg);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.ip-section-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+
+.ip-section-desc {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.ip-subsection-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin: 48px 0 24px;
+}
+
+/* Icon Colors */
+.ip-icon-primary { background: var(--sky); color: var(--primary); }
+.ip-icon-info { background: rgba(14, 165, 233, 0.1); color: var(--info); }
+.ip-icon-success { background: rgba(22, 163, 74, 0.1); color: var(--success); }
+.ip-icon-warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.ip-icon-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+/* Risks Grid */
+.ip-risks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.ip-risk-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 28px 20px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.ip-risk-card:hover {
+  transform: translateY(-4px);
+}
+
+.ip-risk-primary { border-bottom-color: var(--primary); }
+.ip-risk-primary:hover { border-color: var(--primary); }
+
+.ip-risk-info { border-bottom-color: var(--info); }
+.ip-risk-info:hover { border-color: var(--info); }
+
+.ip-risk-warning { border-bottom-color: var(--warning); }
+.ip-risk-warning:hover { border-color: var(--warning); }
+
+.ip-risk-danger { border-bottom-color: #ef4444; }
+.ip-risk-danger:hover { border-color: #ef4444; }
+
+.ip-risk-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.ip-risk-card:hover .ip-risk-icon {
+  animation: ipIconWiggle 0.5s ease-in-out;
+}
+
+@keyframes ipIconWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-12deg); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-8deg); }
+  80% { transform: rotate(5deg); }
+}
+
+.ip-risk-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.ip-risk-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Benefits Grid */
+.ip-benefits-section {
+  margin-top: 48px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.ip-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.ip-benefit-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.ip-benefit-card:hover {
+  transform: translateY(-4px);
+}
+
+.ip-benefit-primary { border-bottom-color: var(--primary); }
+.ip-benefit-primary:hover { border-color: var(--primary); }
+
+.ip-benefit-info { border-bottom-color: var(--info); }
+.ip-benefit-info:hover { border-color: var(--info); }
+
+.ip-benefit-success { border-bottom-color: var(--success); }
+.ip-benefit-success:hover { border-color: var(--success); }
+
+.ip-benefit-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.ip-benefit-card:hover .ip-benefit-icon {
+  animation: ipIconWiggle 0.5s ease-in-out;
+}
+
+.ip-benefit-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.ip-benefit-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Roles Grid */
+.ip-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.ip-role-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+
+.ip-role-aaziko {
+  border-bottom-color: var(--primary);
+}
+
+.ip-role-partner {
+  border-bottom-color: var(--success);
+}
+
+.ip-role-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ip-role-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+}
+
+.ip-role-header h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.ip-role-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ip-role-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.ip-role-item svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Coverage Grid */
+.ip-coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.ip-coverage-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  transition: all 0.2s ease;
+}
+
+.ip-coverage-card:hover {
+  transform: translateY(-4px);
+}
+
+.ip-coverage-primary { border-bottom-color: var(--primary); }
+.ip-coverage-primary:hover { border-color: var(--primary); }
+
+.ip-coverage-info { border-bottom-color: var(--info); }
+.ip-coverage-info:hover { border-color: var(--info); }
+
+.ip-coverage-success { border-bottom-color: var(--success); }
+.ip-coverage-success:hover { border-color: var(--success); }
+
+.ip-coverage-warning { border-bottom-color: var(--warning); }
+.ip-coverage-warning:hover { border-color: var(--warning); }
+
+.ip-coverage-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.ip-coverage-card:hover .ip-coverage-icon {
+  animation: ipIconWiggle 0.5s ease-in-out;
+}
+
+.ip-coverage-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.ip-coverage-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Steps Grid */
+.ip-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  position: relative;
+}
+
+.ip-step-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 28px 20px;
+  text-align: center;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.ip-step-card:hover {
+  transform: translateY(-4px);
+}
+
+.ip-step-primary { border-bottom-color: var(--primary); }
+.ip-step-primary:hover { border-color: var(--primary); }
+
+.ip-step-info { border-bottom-color: var(--info); }
+.ip-step-info:hover { border-color: var(--info); }
+
+.ip-step-warning { border-bottom-color: var(--warning); }
+.ip-step-warning:hover { border-color: var(--warning); }
+
+.ip-step-success { border-bottom-color: var(--success); }
+.ip-step-success:hover { border-color: var(--success); }
+
+.ip-step-number {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.ip-step-primary .ip-step-number { background: var(--primary); }
+.ip-step-info .ip-step-number { background: var(--info); }
+.ip-step-warning .ip-step-number { background: var(--warning); }
+.ip-step-success .ip-step-number { background: var(--success); }
+
+.ip-step-icon {
+  width: 52px;
+  height: 52px;
+  margin: 8px auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.ip-step-card:hover .ip-step-icon {
+  animation: ipIconWiggle 0.5s ease-in-out;
+}
+
+.ip-step-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.ip-step-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.ip-step-arrow {
+  position: absolute;
+  right: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-300);
+  z-index: 1;
+}
+
+.ip-step-card:last-child .ip-step-arrow {
+  display: none;
+}
+
+/* Docs Grid */
+.ip-docs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.ip-docs-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--primary);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+
+.ip-docs-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ip-docs-header svg {
+  color: var(--primary);
+}
+
+.ip-docs-header h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.ip-docs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ip-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.ip-doc-item svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Evidence Card */
+.ip-evidence-card {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--success);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+
+.ip-evidence-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ip-evidence-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+}
+
+.ip-evidence-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(22, 163, 74, 0.1);
+  border-radius: var(--radius);
+  color: var(--success);
+  flex-shrink: 0;
+}
+
+.ip-evidence-item span {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Vendor Benefits Grid */
+.ip-vendor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.ip-vendor-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-lg);
+  padding: 28px 20px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.ip-vendor-card:hover {
+  transform: translateY(-4px);
+}
+
+.ip-vendor-success { border-bottom-color: var(--success); }
+.ip-vendor-success:hover { border-color: var(--success); }
+
+.ip-vendor-primary { border-bottom-color: var(--primary); }
+.ip-vendor-primary:hover { border-color: var(--primary); }
+
+.ip-vendor-info { border-bottom-color: var(--info); }
+.ip-vendor-info:hover { border-color: var(--info); }
+
+.ip-vendor-warning { border-bottom-color: var(--warning); }
+.ip-vendor-warning:hover { border-color: var(--warning); }
+
+.ip-vendor-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.ip-vendor-card:hover .ip-vendor-icon {
+  animation: ipIconWiggle 0.5s ease-in-out;
+}
+
+.ip-vendor-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.ip-vendor-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Limits Card */
+.ip-limits-card {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  border: 2px solid rgba(245, 158, 11, 0.3);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--warning);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  display: flex;
+  gap: 24px;
+}
+
+.ip-limits-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 158, 11, 0.1);
+  border-radius: var(--radius-lg);
+  color: var(--warning);
+  flex-shrink: 0;
+}
+
+.ip-limits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.ip-limit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.ip-limit-item svg {
+  color: var(--warning);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* FAQ */
+.ip-faq-container {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ip-faq-item {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: white;
+}
+
+.ip-faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.ip-faq-question:hover {
+  background: var(--gray-50);
+}
+
+.ip-faq-question svg {
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ip-faq-question.open svg {
+  transform: rotate(180deg);
+}
+
+.ip-faq-answer {
+  padding: 0 20px 20px;
+  background: white;
+}
+
+.ip-faq-answer p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* CTA Section */
+.ip-cta-section {
+  padding: 80px 0;
+}
+
+.ip-cta-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-bottom-color: var(--primary);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.ip-cta-content h3 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.ip-cta-content p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.ip-cta-buttons {
+  display: flex;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .ip-steps-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .ip-step-arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .ip-risks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .ip-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ip-roles-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ip-coverage-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ip-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .ip-docs-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ip-vendor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .ip-cta-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .ip-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .ip-cta-buttons a {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .ip-hero {
+    padding: 120px 16px 60px;
+  }
+
+  .ip-hero-title {
+    font-size: 28px;
+  }
+
+  .ip-hero-subtitle {
+    font-size: 15px;
+  }
+
+  .ip-hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ip-trust-strip {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ip-trust-item {
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .ip-section {
+    padding: 60px 0;
+  }
+
+  .ip-section-title {
+    font-size: 26px;
+  }
+  
+  .ip-risks-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ip-steps-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ip-vendor-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ip-limits-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .ip-limit-item {
+    justify-content: center;
+  }
+
+  .ip-cta-card {
+    padding: 32px 24px;
+  }
+
+  .ip-cta-content h3 {
+    font-size: 22px;
+  }
+}

@@ -1,0 +1,583 @@
+/* Get Verified - Compact Engaging Design */
+
+.verify-page {
+  background: #F7FAFF;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Hero - Compact */
+.verify-hero {
+  padding: 100px 24px 40px;
+  text-align: center;
+  position: relative;
+}
+
+.verify-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.verify-hero-content {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.verify-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #EAF2FF;
+  border-radius: 100px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  font-size: 16px;
+  font-weight: 600;
+  color: #2563EB;
+}
+
+.verify-hero-title {
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #0B1F3B;
+  margin: 0 0 12px;
+}
+
+.verify-gradient-text {
+  background: linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.verify-hero-subtitle {
+  font-size: 22px;
+  font-weight: 500;
+  color: #475569;
+  margin: 0 0 28px;
+}
+
+/* CTA Buttons */
+.verify-cta-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.verify-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  background: #2563EB;
+  border: none;
+  border-bottom: 3px solid #1d4ed8;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.verify-cta-primary:hover {
+  transform: translateY(-2px);
+  background: #1d4ed8;
+}
+
+.verify-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0B1220;
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.verify-cta-secondary:hover {
+  border-color: #2563EB;
+}
+
+/* Container */
+.verify-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+/* Intro Grid - Why + Process */
+.verify-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.verify-why-card,
+.verify-process-card {
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.verify-why-card h3,
+.verify-process-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0B1F3B;
+  margin: 0 0 16px;
+}
+
+.verify-why-card h3 svg,
+.verify-process-card h3 svg {
+  color: #2563EB;
+}
+
+.verify-why-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.verify-why-card li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  color: #0B1220;
+  font-weight: 500;
+}
+
+.verify-why-card li svg {
+  color: #2563EB;
+  flex-shrink: 0;
+}
+
+/* Process Steps */
+.verify-process-steps {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.verify-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.verify-step-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EAF2FF;
+  border-radius: 8px;
+  color: #2563EB;
+}
+
+.verify-step span {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0B1220;
+}
+
+.verify-step-arrow {
+  color: #E3ECFA;
+  margin: 0 4px;
+}
+
+/* Checklist Section */
+.verify-checklist-section {
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.verify-checklist-header {
+  margin-bottom: 20px;
+}
+
+.verify-checklist-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0B1F3B;
+  margin: 0 0 8px;
+}
+
+.verify-checklist-header p {
+  font-size: 17px;
+  color: #475569;
+  margin: 0;
+}
+
+/* Tabs */
+.verify-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.verify-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #475569;
+  background: #EEF5FF;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.verify-tab:hover {
+  background: #EAF2FF;
+  color: #2563EB;
+}
+
+.verify-tab.active {
+  background: #2563EB;
+  color: white;
+}
+
+.verify-tab svg {
+  flex-shrink: 0;
+}
+
+.verify-tab-optional {
+  font-size: 12px;
+  padding: 3px 8px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.verify-tab:not(.active) .verify-tab-optional {
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563EB;
+}
+
+/* Tab Content */
+.verify-tab-content {
+  min-height: 120px;
+}
+
+.verify-tab-items {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.verify-tab-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: #EEF5FF;
+  border-radius: 10px;
+  font-size: 17px;
+  color: #0B1220;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.verify-tab-item:hover {
+  background: #EAF2FF;
+  transform: translateX(4px);
+}
+
+.verify-tab-item svg {
+  color: #2563EB;
+  flex-shrink: 0;
+}
+
+.verify-tab-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 14px 18px;
+  background: rgba(14, 165, 233, 0.08);
+  border-radius: 10px;
+  font-size: 16px;
+  color: #0EA5E9;
+  font-weight: 500;
+}
+
+/* Transparency Section */
+.verify-transparency {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.verify-trans-col {
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.verify-trans-do {
+  background: rgba(22, 163, 74, 0.06);
+  border: 1px solid rgba(22, 163, 74, 0.15);
+}
+
+.verify-trans-dont {
+  background: rgba(239, 68, 68, 0.04);
+  border: 1px solid rgba(239, 68, 68, 0.12);
+}
+
+.verify-trans-col h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 0 14px;
+}
+
+.verify-trans-do h4 {
+  color: #16A34A;
+}
+
+.verify-trans-dont h4 {
+  color: #EF4444;
+}
+
+.verify-trans-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.verify-trans-col li {
+  font-size: 16px;
+  color: #0B1220;
+  font-weight: 500;
+  padding-left: 14px;
+  position: relative;
+}
+
+.verify-trans-col li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #475569;
+}
+
+/* Tips Section */
+.verify-tips-section {
+  margin-bottom: 24px;
+}
+
+.verify-tips-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0B1F3B;
+  margin: 0 0 16px;
+}
+
+.verify-tips-section h3 svg {
+  color: #2563EB;
+}
+
+.verify-tips-scroll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.verify-tip {
+  padding: 14px 22px;
+  background: #FFFFFF;
+  border: 2px solid #E3ECFA;
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0B1220;
+  transition: all 0.2s ease;
+}
+
+.verify-tip:hover {
+  border-color: #2563EB;
+  color: #2563EB;
+}
+
+/* Bottom CTA */
+.verify-bottom-cta {
+  margin-bottom: 16px;
+}
+
+.verify-cta-card {
+  background: linear-gradient(135deg, #0B1F3B 0%, #1e3a5f 100%);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+}
+
+.verify-cta-content h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 24px;
+  line-height: 1.4;
+}
+
+.verify-cta-card .verify-cta-primary {
+  background: #2563EB;
+  border-bottom-color: #1d4ed8;
+}
+
+.verify-cta-help {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-size: 17px;
+  color: rgba(255,255,255,0.7);
+}
+
+.verify-cta-help a {
+  color: #EAF2FF;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* Info Note */
+.verify-info-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 20px;
+  background: rgba(14, 165, 233, 0.08);
+  border-radius: 10px;
+  font-size: 16px;
+  color: #0EA5E9;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .verify-hero {
+    padding: 90px 16px 32px;
+  }
+
+  .verify-hero-title {
+    font-size: 32px;
+  }
+
+  .verify-hero-subtitle {
+    font-size: 16px;
+  }
+
+  .verify-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .verify-cta-primary,
+  .verify-cta-secondary {
+    justify-content: center;
+  }
+
+  .verify-container {
+    padding: 0 16px 40px;
+  }
+
+  .verify-intro-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .verify-process-steps {
+    justify-content: center;
+  }
+
+  .verify-checklist-section {
+    padding: 20px 16px;
+  }
+
+  .verify-tabs {
+    gap: 6px;
+  }
+
+  .verify-tab {
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+
+  .verify-tab-items {
+    grid-template-columns: 1fr;
+  }
+
+  .verify-transparency {
+    grid-template-columns: 1fr;
+  }
+
+  .verify-cta-card {
+    padding: 24px 20px;
+  }
+
+  .verify-cta-content h3 {
+    font-size: 18px;
+  }
+}
+
+
+
+/* Animation */
+@media (prefers-reduced-motion: no-preference) {
+  .verify-why-card,
+  .verify-process-card,
+  .verify-checklist-section {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .verify-why-card:hover,
+  .verify-process-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+  }
+}

@@ -1,0 +1,851 @@
+/* Buyer Cost Savings Page - Modern Interactive Design */
+
+.savings-page {
+  background: var(--bg);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Hero Section */
+.savings-hero {
+  padding: 120px 24px 60px;
+  text-align: center;
+  position: relative;
+}
+
+.savings-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.savings-hero-content {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.savings-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--sky);
+  border-radius: var(--radius-full);
+  margin-bottom: 20px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.savings-hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 0 0 20px;
+}
+
+.savings-gradient-text {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--info) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.savings-hero-subtitle {
+  font-size: 18px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 40px;
+}
+
+/* Savings Calculator Preview */
+.savings-calculator {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.savings-calc-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.savings-calc-header svg {
+  color: var(--primary);
+}
+
+.savings-calc-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.savings-calc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.savings-calc-item:hover {
+  background: var(--sky);
+}
+
+.savings-calc-item svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.savings-calc-label {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.savings-calc-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.savings-calc-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid var(--border);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.savings-calc-total-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--success);
+}
+
+/* Trust Strip */
+.savings-trust-strip {
+  display: inline-flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 32px auto 0;
+  max-width: 100%;
+  padding: 0 16px;
+}
+
+.savings-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.savings-trust-item svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Container & Sections */
+.savings-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.savings-levers-section,
+.savings-flow-section {
+  padding: 80px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.savings-flow-section {
+  background: var(--section-alt);
+}
+
+.savings-section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.savings-section-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #ffffff;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.savings-section-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+
+.savings-section-desc {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Lever Navigation Tabs */
+.savings-lever-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.savings-lever-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 140px;
+  flex-shrink: 0;
+}
+
+.savings-lever-tab:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.savings-lever-tab.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.savings-lever-tab svg {
+  color: var(--primary);
+  transition: color 0.2s ease;
+}
+
+.savings-lever-tab.active svg {
+  color: white;
+}
+
+.savings-tab-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text);
+  transition: color 0.2s ease;
+}
+
+.savings-lever-tab.active .savings-tab-title {
+  color: white;
+}
+
+.savings-tab-value {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--success);
+  transition: color 0.2s ease;
+}
+
+.savings-lever-tab.active .savings-tab-value {
+  color: #86efac;
+}
+
+/* Lever Detail Card */
+.savings-lever-detail {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.savings-lever-detail-primary { border-left: 4px solid var(--primary); }
+.savings-lever-detail-info { border-left: 4px solid var(--info); }
+.savings-lever-detail-success { border-left: 4px solid var(--success); }
+.savings-lever-detail-warning { border-left: 4px solid var(--warning); }
+.savings-lever-detail-navy { border-left: 4px solid var(--navy); }
+
+.savings-detail-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 0;
+}
+
+.savings-detail-content {
+  padding: 32px;
+  border-right: 1px solid var(--border);
+}
+
+.savings-detail-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.savings-detail-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+}
+
+.savings-icon-primary { background: var(--sky); color: var(--primary); }
+.savings-icon-info { background: rgba(14, 165, 233, 0.1); color: var(--info); }
+.savings-icon-success { background: rgba(22, 163, 74, 0.1); color: var(--success); }
+.savings-icon-warning { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+.savings-icon-navy { background: rgba(11, 31, 59, 0.08); color: var(--navy); }
+
+.savings-detail-subtitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.savings-detail-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 4px 0 0;
+}
+
+.savings-detail-badge {
+  margin-left: auto;
+  text-align: right;
+}
+
+.savings-badge-value {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--success);
+  line-height: 1;
+}
+
+.savings-badge-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Problem & Solution */
+.savings-problem-solution {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.savings-problem,
+.savings-solution {
+  padding: 16px;
+  border-radius: var(--radius-lg);
+}
+
+.savings-problem {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.1);
+}
+
+.savings-solution {
+  background: rgba(22, 163, 74, 0.05);
+  border: 1px solid rgba(22, 163, 74, 0.1);
+}
+
+.savings-ps-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.savings-problem .savings-ps-header {
+  color: var(--error);
+}
+
+.savings-solution .savings-ps-header {
+  color: var(--success);
+}
+
+.savings-problem p,
+.savings-solution p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Comparison Bar */
+.savings-comparison-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+}
+
+.savings-compare-item {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.savings-compare-item.traditional {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.savings-compare-item.aaziko {
+  background: rgba(22, 163, 74, 0.08);
+}
+
+.savings-compare-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.savings-compare-value {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.savings-compare-item.traditional .savings-compare-value {
+  color: var(--error);
+}
+
+.savings-compare-item.aaziko .savings-compare-value {
+  color: var(--success);
+}
+
+.savings-compare-arrow {
+  color: var(--text-muted);
+}
+
+/* Benefits List */
+.savings-detail-benefits {
+  padding: 32px;
+  background: var(--gray-50);
+}
+
+.savings-detail-benefits h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 20px;
+}
+
+.savings-detail-benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.savings-detail-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.savings-detail-benefits li svg {
+  color: var(--success);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Savings Flow */
+.savings-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-bottom: 40px;
+  overflow-x: auto;
+  padding: 20px 0;
+}
+
+.savings-flow-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 20px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  min-width: 180px;
+  position: relative;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.savings-flow-item:hover,
+.savings-flow-item.hovered {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.15);
+}
+
+.savings-flow-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+  transition: transform 0.3s ease;
+}
+
+.savings-flow-item:hover .savings-flow-icon {
+  animation: savingsIconWiggle 0.5s ease-in-out;
+}
+
+@keyframes savingsIconWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-12deg); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-8deg); }
+  80% { transform: rotate(5deg); }
+}
+
+.savings-flow-content {
+  flex: 1;
+}
+
+.savings-flow-step {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.savings-flow-content h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 6px 0 12px;
+}
+
+.savings-flow-savings {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(22, 163, 74, 0.1);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.savings-flow-connector {
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  z-index: 2;
+}
+
+/* Cumulative Savings Bar */
+.savings-cumulative {
+  position: relative;
+  padding-top: 20px;
+}
+
+.savings-cumulative-bar {
+  height: 48px;
+  background: var(--border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.savings-cumulative-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 50%, var(--info) 100%);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.savings-cumulative-markers {
+  position: relative;
+  height: 30px;
+  margin-top: 8px;
+}
+
+.savings-marker {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* CTA Section */
+.savings-cta-section {
+  padding: 40px 0 100px;
+}
+
+.savings-cta-card {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 48px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--primary) 100%);
+  border-radius: var(--radius-xl);
+  color: white;
+}
+
+.savings-cta-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.savings-cta-content {
+  flex: 1;
+}
+
+.savings-cta-content h3 {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.savings-cta-content p {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Buttons */
+.savings-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--surface);
+  border: none;
+  border-bottom: 4px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.savings-btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.savings-btn-lg {
+  padding: 16px 32px;
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .savings-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .savings-detail-content {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .savings-problem-solution {
+    grid-template-columns: 1fr;
+  }
+  
+  .savings-flow {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 20px 10px;
+  }
+  
+  .savings-flow-item {
+    min-width: 160px;
+  }
+  
+  .savings-flow-connector {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .savings-hero {
+    padding: 100px 16px 40px;
+  }
+
+  .savings-hero-title {
+    font-size: 32px;
+  }
+
+  .savings-hero-subtitle {
+    font-size: 16px;
+  }
+
+  .savings-calculator {
+    padding: 20px;
+  }
+
+  .savings-trust-strip {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .savings-trust-item {
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .savings-levers-section,
+  .savings-flow-section {
+    padding: 60px 0;
+  }
+
+  .savings-section-title {
+    font-size: 28px;
+  }
+
+  .savings-lever-tabs {
+    gap: 8px;
+  }
+
+  .savings-lever-tab {
+    min-width: 120px;
+    padding: 12px 16px;
+  }
+
+  .savings-detail-content,
+  .savings-detail-benefits {
+    padding: 24px;
+  }
+
+  .savings-detail-header {
+    flex-wrap: wrap;
+  }
+
+  .savings-detail-badge {
+    width: 100%;
+    text-align: left;
+    margin-top: 12px;
+    margin-left: 0;
+  }
+
+  .savings-comparison-bar {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .savings-compare-arrow {
+    transform: rotate(90deg);
+  }
+
+  .savings-cta-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 32px 24px;
+  }
+
+  .savings-cta-content h3 {
+    font-size: 22px;
+  }
+
+  .savings-cumulative-fill {
+    font-size: 14px;
+  }
+}

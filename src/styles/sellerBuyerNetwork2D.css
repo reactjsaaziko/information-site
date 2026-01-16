@@ -1,0 +1,799 @@
+/* ========================================
+   Seller-Buyer Network 2D Section
+   Light Mode - Premium SaaS Design
+   ======================================== */
+
+.network-2d {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem 2.5rem;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+/* Background - Clean light with subtle highlight */
+.network-2d__bg {
+  position: absolute;
+  inset: 0;
+  background: #F7F9FC;
+  z-index: -1;
+}
+
+/* Soft radial highlight behind center */
+.network-2d__bg::before {
+  content: '';
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, rgba(59,130,246,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.network-2d__vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 60%, rgba(15,23,42,0.03) 100%);
+  pointer-events: none;
+}
+
+.network-2d__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.network-2d__stars {
+  display: none;
+}
+
+/* ========================================
+   Header
+   ======================================== */
+
+.network-2d__header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  margin-bottom: 3.5rem;
+  padding-top: 1rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.network-2d__header--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.network-2d__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: #0F172A;
+  margin-bottom: 0.75rem;
+}
+
+.network-2d__subtitle {
+  font-size: clamp(0.875rem, 1.6vw, 1rem);
+  color: #475569;
+  max-width: 420px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ========================================
+   Story Microtext (Center)
+   ======================================== */
+
+.network-2d__story-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 8;
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #475569;
+  text-align: center;
+  padding: 0.5rem 1.25rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.95);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.network-2d__story-text--visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ========================================
+   Main Content
+   ======================================== */
+
+.network-2d__content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1100px;
+  flex: 1;
+  gap: 1.5rem;
+}
+
+/* Network lines SVG */
+.network-lines-2d {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.network-label-2d {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  fill: #64748B;
+  transition: opacity 0.5s ease;
+}
+
+.network-label-2d--muted {
+  fill: #6D28D9;
+}
+
+/* Network path hover highlight */
+.network-path {
+  transition: stroke-opacity 0.3s ease, opacity 0.5s ease;
+}
+
+.network-path--highlighted {
+  stroke-opacity: 1;
+}
+
+.network-path--dimmed {
+  filter: url(#line-glow-subtle) brightness(0.6);
+}
+
+.network-path--hero {
+  filter: url(#line-glow-subtle) brightness(1.15);
+}
+
+/* Node pulse animation */
+.network-node--pulsing circle {
+  animation: nodePulse 0.4s ease-out;
+}
+
+@keyframes nodePulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.8); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+/* ========================================
+   Sides
+   ======================================== */
+
+.network-2d__side {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  flex: 1;
+  max-width: 380px;
+  position: relative;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  cursor: default;
+}
+
+.network-2d__side--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.network-2d__side--seller {
+  flex-direction: row;
+}
+
+.network-2d__side--buyer {
+  flex-direction: row;
+}
+
+/* Avatar wrapper */
+.network-2d__avatar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.network-2d__avatar-wrapper--glowing {
+  transform: translateY(-2px);
+}
+
+.avatar-svg {
+  width: 115px;
+  height: 250px;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.35));
+  transition: filter 0.3s ease;
+}
+
+.network-2d__avatar-wrapper--glowing .avatar-svg {
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 20px rgba(91, 155, 213, 0.15));
+}
+
+.network-2d__side--buyer .network-2d__avatar-wrapper--glowing .avatar-svg {
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 20px rgba(77, 184, 184, 0.15));
+}
+
+/* Platform */
+.platform-2d {
+  width: 145px;
+  height: 50px;
+  margin-top: -18px;
+  transition: transform 0.3s ease;
+}
+
+.platform-2d--glowing {
+  transform: scale(1.02);
+}
+
+/* Labels */
+.network-2d__label {
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2563EB;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.network-2d__label--cyan {
+  color: #2563EB;
+  background: rgba(37, 99, 235, 0.06);
+  border-color: rgba(37, 99, 235, 0.12);
+}
+
+.network-2d__avatar-wrapper--glowing .network-2d__label {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+
+.network-2d__avatar-wrapper--glowing .network-2d__label--cyan {
+  background: rgba(37, 99, 235, 0.1);
+  border-color: rgba(37, 99, 235, 0.18);
+}
+
+/* ========================================
+   Problem Card
+   ======================================== */
+
+.problem-card-2d {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 14px;
+  padding: 1.35rem;
+  flex: 1;
+  min-width: 175px;
+  transform: translateZ(0);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.10);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Subtle left accent bar */
+.problem-card-2d::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: rgba(37, 99, 235, 0.55);
+}
+
+.problem-card-2d--seller::before {
+  background: rgba(37, 99, 235, 0.55);
+}
+
+.problem-card-2d--buyer::before {
+  background: rgba(37, 99, 235, 0.35);
+}
+
+.problem-card-2d--seller {
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+.problem-card-2d--buyer {
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+.problem-card-2d--hovered {
+  transform: translateY(-3px) translateZ(0);
+  box-shadow: 0 18px 55px rgba(15, 23, 42, 0.12);
+}
+
+.problem-card-2d--buyer.problem-card-2d--hovered {
+  transform: translateY(-3px) translateZ(0);
+}
+
+.problem-card-2d__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.problem-card-2d__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid;
+  transition: all 0.3s ease;
+}
+
+.problem-card-2d__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.problem-card-2d__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.problem-card-2d__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0F172A;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.problem-card-2d__helper {
+  font-size: 0.7rem;
+  color: #64748B;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.problem-card-2d__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.problem-card-2d__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.45rem 0;
+  opacity: 0;
+  transform: translateX(-8px) translateZ(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  will-change: opacity, transform;
+}
+
+.problem-card-2d__item--visible {
+  opacity: 1;
+  transform: translateX(0) translateZ(0);
+}
+
+.problem-card-2d__bullet {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.4rem;
+  background: #60A5FA;
+  opacity: 1;
+}
+
+.problem-card-2d__text {
+  font-size: 0.8rem;
+  color: #334155;
+  line-height: 1.45;
+}
+
+/* ========================================
+   Aaziko Bridge
+   ======================================== */
+
+.aaziko-bridge-2d {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%) translateZ(0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 15;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  will-change: opacity;
+}
+
+.aaziko-bridge-2d--visible {
+  opacity: 1;
+  animation: bridgeReveal 0.6s ease-out;
+}
+
+/* Solution glow behind the card */
+.aaziko-bridge-2d::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140%;
+  height: 180%;
+  background: radial-gradient(circle at center, rgba(109, 40, 217, 0.18) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes bridgeReveal {
+  0% { opacity: 0; transform: translateX(-50%) scale(0.95); }
+  50% { transform: translateX(-50%) scale(1.02); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+.aaziko-bridge-2d__card {
+  position: relative;
+  padding: 1.25rem 2rem;
+  padding-top: 1.5rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(109, 40, 217, 0.22);
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(109, 40, 217, 0.08);
+}
+
+/* Solution badge */
+.aaziko-bridge-2d__badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #6D28D9;
+  background: rgba(109, 40, 217, 0.1);
+  border: 1px solid rgba(109, 40, 217, 0.2);
+  border-radius: 12px;
+}
+
+.aaziko-bridge-2d__content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.aaziko-bridge-2d__icon {
+  width: 32px;
+  height: 32px;
+  color: #6D28D9;
+  flex-shrink: 0;
+}
+
+.aaziko-bridge-2d__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.aaziko-bridge-2d__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.aaziko-bridge-2d__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.aaziko-bridge-2d__desc {
+  font-size: 0.78rem;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.aaziko-bridge-2d__solution {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(109, 40, 217, 0.7);
+  letter-spacing: 0.01em;
+  margin-top: 0.4rem;
+}
+
+/* Chips */
+.aaziko-bridge-2d__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+  max-width: 440px;
+}
+
+.aaziko-bridge-2d__chip-wrapper {
+  position: relative;
+}
+
+.aaziko-bridge-2d__chip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.38rem 0.8rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #4C1D95;
+  background: rgba(109, 40, 217, 0.08);
+  border: 1px solid rgba(109, 40, 217, 0.18);
+  border-radius: 10px;
+  opacity: 0;
+  transform: scale(0.9) translateZ(0);
+  transition: all 0.35s ease;
+  will-change: opacity, transform;
+  cursor: default;
+}
+
+.aaziko-bridge-2d__chips--visible .aaziko-bridge-2d__chip {
+  opacity: 1;
+  transform: scale(1) translateZ(0);
+}
+
+.aaziko-bridge-2d__chip:hover {
+  background: rgba(109, 40, 217, 0.14);
+  border-color: rgba(109, 40, 217, 0.28);
+  transform: translateY(-1px) scale(1) translateZ(0);
+}
+
+.aaziko-bridge-2d__chip-dot {
+  width: 5px;
+  height: 5px;
+  background: #6D28D9;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+/* Tooltip */
+.aaziko-bridge-2d__tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 0.4rem 0.7rem;
+  font-size: 0.65rem;
+  font-weight: 450;
+  color: #ffffff;
+  background: #6D28D9;
+  border: none;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(109, 40, 217, 0.25);
+}
+
+.aaziko-bridge-2d__tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #6D28D9;
+}
+
+.aaziko-bridge-2d__tooltip--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+
+@media (max-width: 900px) {
+  .network-2d {
+    padding: 2.5rem 1.5rem 1.5rem;
+  }
+
+  .network-2d__content {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .network-2d__side {
+    flex-direction: column !important;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .network-2d__avatar-wrapper {
+    order: -1;
+  }
+
+  .avatar-svg {
+    width: 100px;
+    height: 220px;
+  }
+
+  .platform-2d {
+    width: 130px;
+    height: 45px;
+  }
+
+  .problem-card-2d {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .network-lines-2d {
+    display: none;
+  }
+
+  .network-2d__story-text {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: 1rem auto;
+  }
+
+  .network-2d__story-text--visible {
+    transform: none;
+  }
+
+  .aaziko-bridge-2d {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: 1.5rem;
+  }
+
+  .aaziko-bridge-2d--visible {
+    animation: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .network-2d {
+    padding: 2rem 1rem 1rem;
+  }
+
+  .network-2d__title {
+    font-size: 1.5rem;
+  }
+
+  .network-2d__subtitle {
+    font-size: 0.85rem;
+  }
+
+  .avatar-svg {
+    width: 90px;
+    height: 200px;
+  }
+
+  .problem-card-2d {
+    padding: 1rem;
+  }
+
+  .problem-card-2d__title {
+    font-size: 0.85rem;
+  }
+
+  .problem-card-2d__text {
+    font-size: 0.75rem;
+  }
+
+  .aaziko-bridge-2d__chips {
+    max-width: 280px;
+  }
+
+  .aaziko-bridge-2d__chip {
+    font-size: 0.62rem;
+    padding: 0.25rem 0.55rem;
+  }
+
+  .aaziko-bridge-2d__tooltip {
+    display: none;
+  }
+}
+
+/* ========================================
+   Reduced Motion
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .network-2d__stars {
+    animation: none;
+  }
+
+  .network-2d__header,
+  .network-2d__side {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .network-2d__story-text {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    transition: none;
+  }
+
+  .problem-card-2d__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .aaziko-bridge-2d__chip {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .aaziko-bridge-2d {
+    opacity: 1;
+    transition: none;
+    animation: none;
+  }
+
+  .network-node--pulsing circle {
+    animation: none;
+  }
+
+  @keyframes bridgeReveal {
+    0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+  }
+}

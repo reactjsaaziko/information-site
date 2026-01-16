@@ -1,0 +1,237 @@
+/* People Ring Section */
+.people-ring-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.people-ring-section__bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #9CB8C6 0%, #A8C3D0 100%);
+  z-index: 0;
+}
+
+.people-ring-section__fog-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: 
+    radial-gradient(ellipse 80% 50% at 25% 90%, rgba(255,255,255,0.4) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 50% at 75% 90%, rgba(255,255,255,0.4) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 40% at 50% 100%, rgba(180,200,210,0.5) 0%, transparent 70%);
+  filter: blur(20px);
+  opacity: 0.6;
+}
+
+.people-ring-section__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+/* WebGL Canvas */
+.people-ring-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Fallback 2D Version */
+.fallback-people-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fallback-fog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.fallback-fog--1 {
+  background: linear-gradient(to top, rgba(255,255,255,0.5) 0%, transparent 100%);
+  animation: fogDrift1 12s ease-in-out infinite;
+}
+
+.fallback-fog--2 {
+  background: radial-gradient(ellipse 120% 60% at 50% 100%, rgba(200,215,225,0.6) 0%, transparent 70%);
+  animation: fogDrift2 15s ease-in-out infinite;
+}
+
+@keyframes fogDrift1 {
+  0%, 100% { transform: translateX(-2%); opacity: 0.5; }
+  50% { transform: translateX(2%); opacity: 0.7; }
+}
+
+@keyframes fogDrift2 {
+  0%, 100% { transform: translateX(3%) scale(1); }
+  50% { transform: translateX(-3%) scale(1.05); }
+}
+
+/* Figures */
+.fallback-figure {
+  position: absolute;
+  bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+.fallback-figure--left {
+  left: 20%;
+}
+
+.fallback-figure--right {
+  right: 20%;
+}
+
+.fallback-person {
+  width: 140px;
+  height: auto;
+  filter: drop-shadow(0 0 30px rgba(255,255,255,0.3));
+}
+
+/* Spotlight under figures */
+.fallback-spotlight {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 60px;
+  background: radial-gradient(ellipse 100% 100% at 50% 50%, rgba(255,255,255,0.35) 0%, transparent 70%);
+  filter: blur(15px);
+  z-index: -1;
+}
+
+/* Chrome Ring */
+.fallback-ring {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 30px;
+  perspective: 200px;
+}
+
+.fallback-ring__band {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(90deg, 
+    #F5FBFF 0%, 
+    #AEBBC5 25%, 
+    #FFFFFF 50%, 
+    #95A4AF 75%, 
+    #F5FBFF 100%
+  );
+  box-shadow: 
+    inset 0 2px 4px rgba(255,255,255,0.8),
+    inset 0 -2px 4px rgba(0,0,0,0.1),
+    0 4px 12px rgba(0,0,0,0.15);
+  animation: ringRotate 20s linear infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes ringRotate {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.fallback-ring__badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #7BA3B8 0%, #5A8A9F 100%);
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fallback-ring__badge-icon {
+  width: 8px;
+  height: 8px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 1px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .fallback-fog--1,
+  .fallback-fog--2 {
+    animation: none;
+  }
+  
+  .fallback-ring__band {
+    animation: none;
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .fallback-figure--left {
+    left: 15%;
+  }
+  
+  .fallback-figure--right {
+    right: 15%;
+  }
+  
+  .fallback-person {
+    width: 110px;
+  }
+  
+  .fallback-ring {
+    width: 70px;
+    height: 24px;
+  }
+  
+  .fallback-ring__badge {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .fallback-figure--left {
+    left: 10%;
+  }
+  
+  .fallback-figure--right {
+    right: 10%;
+  }
+  
+  .fallback-person {
+    width: 90px;
+  }
+  
+  .fallback-ring {
+    width: 55px;
+    height: 20px;
+  }
+  
+  .fallback-spotlight {
+    width: 120px;
+    height: 40px;
+  }
+}
