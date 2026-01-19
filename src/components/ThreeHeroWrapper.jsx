@@ -92,52 +92,6 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
     }
   }, [reducedMotion, onComplete]);
 
-  // Smooth animation loop for scrubbing
-  useEffect(() => {
-    const animate = () => {
-      rafIdRef.current = requestAnimationFrame(animate);
-      
-      const currentState = stateRef.current;
-      
-      // Lerp section 1 progress
-      const s1Diff = targetSection1ProgressRef.current - section1ProgressRef.current;
-      if (Math.abs(s1Diff) > 0.001) {
-        section1ProgressRef.current += s1Diff * SCRUB_CONFIG.SMOOTHING_FACTOR;
-        if (section1Ref.current?.setProgress) {
-          section1Ref.current.setProgress(section1ProgressRef.current);
-        }
-      }
-      
-      // Lerp section 2 progress
-      const s2Diff = targetSection2ProgressRef.current - section2ProgressRef.current;
-      if (Math.abs(s2Diff) > 0.001) {
-        section2ProgressRef.current += s2Diff * SCRUB_CONFIG.SMOOTHING_FACTOR;
-        if (section2Ref.current?.setProgress) {
-          section2Ref.current.setProgress(section2ProgressRef.current);
-        }
-      }
-      
-      // Check for section transitions
-      if (currentState === SCROLL_STATES.S1_SCRUBBING && 
-          section1ProgressRef.current >= SCRUB_CONFIG.SECTION_COMPLETE_THRESHOLD &&
-          targetSection1ProgressRef.current >= 1) {
-        transitionToSection2();
-      }
-      
-      if (currentState === SCROLL_STATES.S2_SCRUBBING &&
-          section2ProgressRef.current >= SCRUB_CONFIG.SECTION_COMPLETE_THRESHOLD &&
-          targetSection2ProgressRef.current >= 1) {
-        completeAnimation();
-      }
-    };
-    
-    rafIdRef.current = requestAnimationFrame(animate);
-    
-    return () => {
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-    };
-  }, []);
-
   const runTransition = useCallback(async (fromRef, toRef, direction = 'forward') => {
     if (reducedMotion) {
       return Promise.resolve();
@@ -211,6 +165,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
   const transitionToSection1 = useCallback(async () => {
     if (stateRef.current === SCROLL_STATES.S1_TRANSITION_TO_S2) return;
     
+    console.log('[ThreeHeroWrapper] Transitioning back to Section 1');
     setState(SCROLL_STATES.S1_TRANSITION_TO_S2);
     
     await runTransition(section2ContainerRef, section1ContainerRef, 'reverse');
@@ -219,6 +174,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
     setShowSection2(false);
     targetSection1ProgressRef.current = 1;
     section1ProgressRef.current = 1;
+    console.log('[ThreeHeroWrapper] Now in Section 1, ready for reverse scrubbing');
     setState(SCROLL_STATES.S1_SCRUBBING);
   }, [runTransition]);
 
@@ -228,21 +184,73 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
     if (onComplete) onComplete();
   }, [onComplete]);
 
+  // Smooth animation loop for scrubbing
+  useEffect(() => {
+    const animate = () => {
+      rafIdRef.current = requestAnimationFrame(animate);
+      
+      const currentState = stateRef.current;
+      
+      // Lerp section 1 progress
+      const s1Diff = targetSection1ProgressRef.current - section1ProgressRef.current;
+      if (Math.abs(s1Diff) > 0.001) {
+        section1ProgressRef.current += s1Diff * SCRUB_CONFIG.SMOOTHING_FACTOR;
+        if (section1Ref.current?.setProgress) {
+          section1Ref.current.setProgress(section1ProgressRef.current);
+        }
+      }
+      
+      // Lerp section 2 progress
+      const s2Diff = targetSection2ProgressRef.current - section2ProgressRef.current;
+      if (Math.abs(s2Diff) > 0.001) {
+        section2ProgressRef.current += s2Diff * SCRUB_CONFIG.SMOOTHING_FACTOR;
+        if (section2Ref.current?.setProgress) {
+          section2Ref.current.setProgress(section2ProgressRef.current);
+        }
+      }
+      
+      // Check for section transitions
+      if (currentState === SCROLL_STATES.S1_SCRUBBING && 
+          section1ProgressRef.current >= SCRUB_CONFIG.SECTION_COMPLETE_THRESHOLD &&
+          targetSection1ProgressRef.current >= 1) {
+        transitionToSection2();
+      }
+      
+      if (currentState === SCROLL_STATES.S2_SCRUBBING &&
+          section2ProgressRef.current >= SCRUB_CONFIG.SECTION_COMPLETE_THRESHOLD &&
+          targetSection2ProgressRef.current >= 1) {
+        completeAnimation();
+      }
+    };
+    
+    rafIdRef.current = requestAnimationFrame(animate);
+    
+    return () => {
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+    };
+  }, [transitionToSection2, completeAnimation]);
+
   const handleReturnFromStatic = useCallback(async () => {
     if (isTransitioning) return;
     
-    // Notify parent that we're returning to animation
-    if (onReturn) onReturn();
+    console.log('[ThreeHeroWrapper] Returning from static content');
     
     // First, scroll to top immediately
     window.scrollTo({ top: 0, behavior: 'instant' });
     
+    // Notify parent that we're returning to animation
+    if (onReturn) onReturn();
+    
     setState(SCROLL_STATES.STATIC_TRANSITION_TO_S2);
     setIsLocked(true);
     
+    // Ensure section 2 is visible
+    setShowSection2(true);
+    setActiveSection(2);
+    
     await new Promise(r => setTimeout(r, reducedMotion ? 0 : 50));
     
-    // Reset section 2 to end state and allow scrubbing back
+    // Reset section 2 to end state (100%) and allow scrubbing back
     targetSection2ProgressRef.current = 1;
     section2ProgressRef.current = 1;
     
@@ -253,6 +261,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
     
     await new Promise(r => requestAnimationFrame(r));
     
+    console.log('[ThreeHeroWrapper] Ready for reverse scrubbing');
     setState(SCROLL_STATES.S2_SCRUBBING);
   }, [reducedMotion, isTransitioning, onReturn]);
 
@@ -275,8 +284,8 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       return;
     }
     
-    // If complete and scrolling up at top, return to animation
-    if (currentState === SCROLL_STATES.S2_COMPLETE && e.deltaY < 0 && window.scrollY <= 150) {
+    // If complete and scrolling up at top of page, return to animation
+    if (currentState === SCROLL_STATES.S2_COMPLETE && e.deltaY < 0 && window.scrollY <= 10) {
       e.preventDefault();
       handleReturnFromStatic();
       return;
@@ -306,6 +315,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       
       // If scrolling back past 0, transition to section 1
       if (newProgress < 0) {
+        console.log('[ThreeHeroWrapper] Section 2 scrolled past 0, transitioning to Section 1');
         transitionToSection1();
         return;
       }
@@ -345,8 +355,8 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       return;
     }
     
-    // If complete and swiping up at top, return to animation
-    if (currentState === SCROLL_STATES.S2_COMPLETE && deltaY < -30 && window.scrollY <= 150) {
+    // If complete and swiping up at top of page, return to animation
+    if (currentState === SCROLL_STATES.S2_COMPLETE && deltaY < -30 && window.scrollY <= 10) {
       e.preventDefault();
       handleReturnFromStatic();
       touchStartRef.current.y = touchY;
@@ -429,7 +439,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
 
   const getSection2Style = () => {
     const isActive = activeSection === 2;
-    const isVisible = showSection2 && (isActive || state === SCROLL_STATES.S1_TRANSITION_TO_S2);
+    const isVisible = showSection2 && (isActive || state === SCROLL_STATES.S1_TRANSITION_TO_S2 || state === SCROLL_STATES.STATIC_TRANSITION_TO_S2);
     
     return {
       position: 'absolute',
@@ -458,13 +468,15 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       ref={wrapperRef}
       className="three-hero-wrapper"
       style={{
-        position: isLocked ? 'fixed' : 'relative',
+        position: 'fixed',
         top: 0,
         left: 0,
         width: '100%',
-        height: isLocked ? '100vh' : 'auto',
-        zIndex: isLocked ? 100 : 1,
+        height: '100vh',
+        zIndex: isLocked ? 100 : -1,
         overflow: 'hidden',
+        pointerEvents: isLocked ? 'auto' : 'none',
+        display: isLocked ? 'block' : 'none',
       }}
     >
       {/* Section 1: Hero with Globe */}

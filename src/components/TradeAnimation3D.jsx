@@ -30,6 +30,18 @@ function TradeAnimation3D({ onAnimationComplete }) {
   const [isActive, setIsActive] = useState(false)
   const [earthContainerReady, setEarthContainerReady] = useState(false)
   const [isReadyToAnimate, setIsReadyToAnimate] = useState(false)
+  const [hasCompletedOnce, setHasCompletedOnce] = useState(false) // Track if animation has completed at least once
+  const hasCompletedOnceRef = useRef(false) // Ref version for use in callbacks
+  const animationCompleteRef = useRef(false) // Ref to permanently track completion
+  const hasPlayedForwardOnce = useRef(false) // Track if animation has played forward to completion once
+
+  // Debug: Log component mount/unmount
+  useEffect(() => {
+    console.log('[TradeAnimation] Component MOUNTED')
+    return () => {
+      console.log('[TradeAnimation] Component UNMOUNTED')
+    }
+  }, [])
 
   const buttonTexts = [
     '+ 0.2% inspection',
@@ -154,9 +166,16 @@ function TradeAnimation3D({ onAnimationComplete }) {
   }
 
   const updateAnimationState = (totalScroll) => {
+    // Don't lock the animation - allow it to reverse
+    // Just update based on scroll position
+    
+    // Limit animation to Phase 3 only - stop before problem cards appear
+    const maxAnimationScroll = 600 // Stop at end of Phase 3
+    const clampedScroll = Math.min(totalScroll, maxAnimationScroll)
+    
     // Phase 1: Cube rotation (0 to 200)
-    if (totalScroll <= 200) {
-      const cubeProgress = totalScroll / 200
+    if (clampedScroll <= 200) {
+      const cubeProgress = clampedScroll / 200
       targetRotation.current.y = 45 + cubeProgress * 180
       targetRotation.current.x = -30 + cubeProgress * 90
       targetRingOpacity.current = 0
@@ -172,12 +191,12 @@ function TradeAnimation3D({ onAnimationComplete }) {
       targetSceneScale.current = 1.5
       targetRingRotation.current = 0
     }
-    // Phase 2 & 3: Rings appear, spin, separate (200 to 600)
-    else if (totalScroll <= 600) {
+    // Phase 2 & 3: Rings appear, spin, separate (200 to 600) - FINAL PHASE
+    else {
       targetRotation.current.y = 45 + 180
       targetRotation.current.x = -30 + 90
 
-      const ringPhaseProgress = (totalScroll - 200) / 400
+      const ringPhaseProgress = (clampedScroll - 200) / 400
       const newOpacity = Math.min(1, ringPhaseProgress * 1.25)
 
       targetRingRotation.current = ringPhaseProgress * 360
@@ -208,49 +227,12 @@ function TradeAnimation3D({ onAnimationComplete }) {
         targetSceneScale.current = 1.5
       }
     }
-    // Phase 4: Video cards appear (600 to 700)
-    else if (totalScroll <= 700) {
-      targetRotation.current.y = 45 + 180
-      targetRotation.current.x = -30 + 90
-      targetRingOpacity.current = 1
-      targetRingRotation.current = 360
-      targetCubeScale.current = 0.1
-      targetCubeOpacity.current = 0
-      targetAnimationProgress.current = 1
-      targetRing1Opacity.current = 1
-      targetRing2Opacity.current = 1
-      targetRing3Opacity.current = 0
-      targetPersonOpacity.current = 1
-      targetSceneScale.current = 1.5
-      targetAazikoOpacity.current = 0
-
-      const videoProgress = (totalScroll - 600) / 100
-      targetVideoCardOpacity.current = Math.min(1, videoProgress)
-    }
-    // Phase 5: Camera zoom out (700 to 900)
-    else {
-      targetRotation.current.y = 45 + 180
-      targetRotation.current.x = -30 + 90
-      targetRingOpacity.current = 1
-      targetRingRotation.current = 360
-      targetCubeScale.current = 0.1
-      targetCubeOpacity.current = 0
-      targetAnimationProgress.current = 1
-      targetRing1Opacity.current = 1
-      targetRing2Opacity.current = 1
-      targetRing3Opacity.current = 0
-      targetPersonOpacity.current = 1
-      // Keep all cards visible at full opacity
-      targetVideoCardOpacity.current = 1
-      targetAazikoOpacity.current = 1
-
-      const zoomProgress = (totalScroll - 700) / 200
-      targetSceneScale.current = 1.5 - (Math.min(1, zoomProgress) * 0.5)
-    }
+    // Remove Phase 4 and Phase 5 - animation ends at Phase 3
   }
 
   useEffect(() => {
     const animate = () => {
+      // Don't freeze animation - allow it to update for reversibility
       timeRef.current += 0.016
 
       // Determine if we're scrolling backwards (reversing animation)
@@ -429,13 +411,22 @@ function TradeAnimation3D({ onAnimationComplete }) {
       const sectionMostlyVisible = rect.top <= viewportHeight * 0.1 && rect.bottom >= viewportHeight * 0.9
 
       const delta = e.deltaY
-      const maxScroll = 900
+      const maxScroll = 600 // Reduced from 900 to end at Phase 3
+
+      // If animation has completed once and we're scrolling down, allow normal scroll
+      // But if scrolling up, allow animation to reverse
+      if (hasPlayedForwardOnce.current && !isActive && delta > 0) {
+        return // Allow normal scroll down after first completion
+      }
 
       // Activate when section reaches top of viewport (only after delay) - for scrolling DOWN
       if (!isActive && sectionAtTop && delta > 0 && isReadyToAnimate) {
-        // Reset scroll position when re-activating to ensure animation plays from start
-        scrollPositionRef.current = 0
-        updateAnimationState(0)
+        console.log('[TradeAnimation] Activating animation - scroll DOWN')
+        // If animation has played before, start from current position, otherwise from 0
+        if (!hasPlayedForwardOnce.current) {
+          scrollPositionRef.current = 0
+        }
+        updateAnimationState(scrollPositionRef.current)
         setAnimationComplete(false)
         setIsActive(true)
         e.preventDefault()
@@ -450,11 +441,13 @@ function TradeAnimation3D({ onAnimationComplete }) {
           return // Let page scroll normally
         }
         
-        // Section covers viewport - now activate animation
+        // Section covers viewport - now activate animation for reversing
         if (isReadyToAnimate) {
-          // When scrolling up into this section, start from the end (animation complete state)
-          scrollPositionRef.current = maxScroll
-          updateAnimationState(maxScroll)
+          // When scrolling up into this section, start from current position or end
+          if (scrollPositionRef.current < maxScroll * 0.5) {
+            scrollPositionRef.current = maxScroll
+          }
+          updateAnimationState(scrollPositionRef.current)
           setAnimationComplete(false) // Allow animation to reverse
           setIsActive(true)
           e.preventDefault()
@@ -462,19 +455,28 @@ function TradeAnimation3D({ onAnimationComplete }) {
         }
       }
 
+      // If animation has completed once, don't reactivate - allow normal scrolling
+      if (hasPlayedForwardOnce.current && !isActive) {
+        return // Allow normal scroll through the section
+      }
+
       // If not active, allow normal scroll
       if (!isActive) return
 
       // If animation complete and scrolling down, notify parent and allow scroll
       if (animationComplete && delta > 0) {
-        if (onAnimationComplete) {
+        console.log('[TradeAnimation] Animation already complete, allowing scroll down')
+        setIsActive(false) // Deactivate to allow normal scrolling
+        // Only call onAnimationComplete once
+        if (onAnimationComplete && !animationCompleteRef.current) {
+          animationCompleteRef.current = true
           onAnimationComplete()
         }
         return
       }
 
       // If scrolling up at start of animation, check if animation has fully reversed
-      // Only allow scroll up to hero section if ring animation is complete (reversed)
+      // Allow scroll up to hero section if ring animation is complete (reversed)
       if (scrollPositionRef.current <= 0 && delta < 0) {
         // Check if animation has fully reversed to initial state
         if (isAnimationReversedRef.current) {
@@ -488,13 +490,10 @@ function TradeAnimation3D({ onAnimationComplete }) {
         return
       }
 
-      // If animation complete and scrolling up, restart animation from current position
-      if (animationComplete && delta < 0 && sectionInView) {
-        setAnimationComplete(false)
-        e.preventDefault()
-        scrollPositionRef.current = Math.max(0, scrollPositionRef.current + delta * 0.4)
-        updateAnimationState(scrollPositionRef.current)
-        return
+      // If animation complete and scrolling up, allow normal scroll (don't restart animation)
+      if ((animationComplete || animationCompleteRef.current) && delta < 0) {
+        setIsActive(false) // Deactivate to allow normal scrolling
+        return // Allow scroll up
       }
 
       // During animation, prevent default scroll and control animation
@@ -505,10 +504,25 @@ function TradeAnimation3D({ onAnimationComplete }) {
         scrollPositionRef.current = Math.max(0, Math.min(maxScroll, scrollPositionRef.current + delta * scrollMultiplier))
         updateAnimationState(scrollPositionRef.current)
 
-        // Check if animation is complete
-        if (scrollPositionRef.current >= maxScroll) {
+        // Check if animation is complete (reached the end)
+        if (scrollPositionRef.current >= maxScroll && !hasPlayedForwardOnce.current) {
+          console.log('[TradeAnimation] Animation COMPLETE - marking as completed')
+          hasPlayedForwardOnce.current = true // Mark that animation has played forward once
           setAnimationComplete(true)
-          if (onAnimationComplete) {
+          setHasCompletedOnce(true)
+          hasCompletedOnceRef.current = true
+          
+          // Immediately set final state to hide Earth
+          cubeOpacityRef.current = 0
+          cubeScaleRef.current = 0.01
+          if (cubeRef.current) {
+            cubeRef.current.style.opacity = 0
+            cubeRef.current.style.transform = `translate(-50%, -50%) scale(0.01)`
+          }
+          
+          setIsActive(false) // Deactivate to allow normal scrolling
+          if (onAnimationComplete && !animationCompleteRef.current) {
+            animationCompleteRef.current = true
             onAnimationComplete()
           }
         }
@@ -530,6 +544,10 @@ function TradeAnimation3D({ onAnimationComplete }) {
       isScrollingUpRef.current = currentScrollY < lastScrollYRef.current
       lastScrollYRef.current = currentScrollY
       
+      // Only use scroll handler as a backup for fast scrolling detection
+      // Don't activate if already active to prevent double activation
+      if (isActive) return
+      
       // Check if section fully covers viewport
       const sectionFullyCovered = rect.top <= 50 && rect.bottom >= viewportHeight - 50
       const sectionMostlyVisible = rect.top <= viewportHeight * 0.1 && rect.bottom >= viewportHeight * 0.9
@@ -537,9 +555,11 @@ function TradeAnimation3D({ onAnimationComplete }) {
       // If scrolling up and section covers viewport and we're not active, activate immediately
       // This catches fast scrolling scenarios where wheel events might be missed
       if (isScrollingUpRef.current && (sectionFullyCovered || sectionMostlyVisible) && isReadyToAnimate && !isActive) {
-        const maxScroll = 900
-        scrollPositionRef.current = maxScroll
-        updateAnimationState(maxScroll)
+        const maxScroll = 600 // Reduced from 900 to end at Phase 3
+        if (scrollPositionRef.current < maxScroll * 0.5) {
+          scrollPositionRef.current = maxScroll
+        }
+        updateAnimationState(scrollPositionRef.current)
         setAnimationComplete(false)
         setIsActive(true)
       }
@@ -570,10 +590,17 @@ function TradeAnimation3D({ onAnimationComplete }) {
       const sectionFullyCovered = rect.top <= 50 && rect.bottom >= viewportHeight - 50
       const sectionMostlyVisible = rect.top <= viewportHeight * 0.1 && rect.bottom >= viewportHeight * 0.9
 
-      const maxScroll = 900
+      const maxScroll = 600 // Reduced from 900 to end at Phase 3
+
+      // If animation has completed once, NEVER reactivate - always allow normal scrolling
+      if (hasCompletedOnceRef.current || animationCompleteRef.current) {
+        touchStartY = touchY
+        return // Allow normal scroll, don't interfere
+      }
 
       // Activate when section reaches top of viewport - for scrolling DOWN
-      if (!isActive && sectionAtTop && delta > 0 && isReadyToAnimate) {
+      // Only activate if animation has never completed before
+      if (!isActive && sectionAtTop && delta > 0 && isReadyToAnimate && !hasCompletedOnce && !hasCompletedOnceRef.current) {
         scrollPositionRef.current = 0
         updateAnimationState(0)
         setAnimationComplete(false)
@@ -584,7 +611,8 @@ function TradeAnimation3D({ onAnimationComplete }) {
       }
 
       // For scrolling UP: Only activate animation when section covers viewport
-      if (!isActive && delta < 0) {
+      // Only activate if animation has never completed before
+      if (!isActive && delta < 0 && !hasCompletedOnce && !hasCompletedOnceRef.current) {
         // If section doesn't cover viewport enough, allow normal scroll
         if (!sectionFullyCovered && !sectionMostlyVisible) {
           touchStartY = touchY
@@ -603,13 +631,22 @@ function TradeAnimation3D({ onAnimationComplete }) {
         }
       }
 
+      // If animation has completed once, don't reactivate
+      if (hasCompletedOnce && !isActive) {
+        touchStartY = touchY
+        return // Allow normal scroll
+      }
+
       if (!isActive) {
         touchStartY = touchY
         return
       }
 
-      if (animationComplete && delta > 0) {
-        if (onAnimationComplete) {
+      if ((animationComplete || animationCompleteRef.current) && delta > 0) {
+        setIsActive(false) // Deactivate to allow normal scrolling
+        // Only call onAnimationComplete once
+        if (onAnimationComplete && !animationCompleteRef.current) {
+          animationCompleteRef.current = true
           onAnimationComplete()
         }
         touchStartY = touchY
@@ -617,6 +654,13 @@ function TradeAnimation3D({ onAnimationComplete }) {
       }
 
       if (scrollPositionRef.current <= 0 && delta < 0) {
+        // If animation has completed once, don't allow reversing - just allow normal scroll
+        if (hasCompletedOnceRef.current || animationCompleteRef.current) {
+          setIsActive(false)
+          touchStartY = touchY
+          return // Allow normal scroll without reversing animation
+        }
+        
         if (isAnimationReversedRef.current) {
           setIsActive(false)
           // Don't scroll to top - let the page scroll naturally to reveal hero section
@@ -629,24 +673,35 @@ function TradeAnimation3D({ onAnimationComplete }) {
         return
       }
 
-      if (animationComplete && delta < 0 && sectionInView) {
-        setAnimationComplete(false)
-        e.preventDefault()
-        scrollPositionRef.current = Math.max(0, scrollPositionRef.current + delta * 0.4)
-        updateAnimationState(scrollPositionRef.current)
+      // If animation complete and scrolling up, allow normal scroll
+      if ((animationComplete || animationCompleteRef.current) && delta < 0) {
+        setIsActive(false) // Deactivate to allow normal scrolling
         touchStartY = touchY
-        return
+        return // Allow scroll up
       }
 
-      if (isActive && !animationComplete) {
+      if (isActive && !animationComplete && !hasCompletedOnceRef.current && !animationCompleteRef.current) {
         e.preventDefault()
         // Use faster scroll multiplier for more responsive feel
         const scrollMultiplier = Math.abs(delta) > 30 ? 0.6 : 0.4
         scrollPositionRef.current = Math.max(0, Math.min(maxScroll, scrollPositionRef.current + delta * scrollMultiplier))
         updateAnimationState(scrollPositionRef.current)
 
-        if (scrollPositionRef.current >= maxScroll) {
+        if (scrollPositionRef.current >= maxScroll && !animationCompleteRef.current) {
+          animationCompleteRef.current = true
           setAnimationComplete(true)
+          setHasCompletedOnce(true) // Mark that animation has completed once
+          hasCompletedOnceRef.current = true // Update ref as well
+          
+          // Immediately set final state to hide Earth
+          cubeOpacityRef.current = 0
+          cubeScaleRef.current = 0.01
+          if (cubeRef.current) {
+            cubeRef.current.style.opacity = 0
+            cubeRef.current.style.transform = `translate(-50%, -50%) scale(0.01)`
+          }
+          
+          setIsActive(false) // Deactivate to allow normal scrolling
           if (onAnimationComplete) {
             onAnimationComplete()
           }
@@ -665,7 +720,7 @@ function TradeAnimation3D({ onAnimationComplete }) {
       window.removeEventListener('touchstart', handleTouchStart)
       window.removeEventListener('touchmove', handleTouchMove)
     }
-  }, [animationComplete, isActive, onAnimationComplete, isReadyToAnimate])
+  }, [animationComplete, isActive, onAnimationComplete, isReadyToAnimate, hasCompletedOnce])
 
   // Button text rotation
   useEffect(() => {
@@ -811,7 +866,7 @@ function TradeAnimation3D({ onAnimationComplete }) {
 
 
   return (
-    <div ref={sectionRef} className={`trade-animation-section ${isActive ? 'active' : ''} ${animationComplete ? 'complete' : ''}`}>
+    <div ref={sectionRef} className={`trade-animation-section ${isActive ? 'active' : ''} ${hasCompletedOnce ? 'complete' : ''}`}>
       {/* Background */}
       <div className="trade-anim-bg" style={{ backgroundImage: 'url(/background.png)' }}>
         <div className="trade-anim-bg-overlay" />

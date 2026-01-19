@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import HeroSection from './components/HeroSection';
+import ThreeHeroWrapper from './components/ThreeHeroWrapper';
 import TradeAnimation3D from './components/TradeAnimation3D';
 import SectionD_PainPoints from './components/SectionD_PainPoints';
 import SectionE_WinWin from './components/SectionE_WinWin';
@@ -285,10 +285,21 @@ function HomePage() {
   const [showStaticContent, setShowStaticContent] = useState(false);
   const [isInHeroSection, setIsInHeroSection] = useState(true);
   const [tradeAnimationComplete, setTradeAnimationComplete] = useState(false);
+  const [isLightTheme, setIsLightTheme] = useState(false);
+  const [bgTransitionProgress, setBgTransitionProgress] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const threeHeroRef = useRef(null);
 
-<<<<<<< HEAD
-  // Track scroll position to detect if user is in hero section or trade animation
-=======
+  // Detect reduced motion preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mediaQuery.matches);
+    
+    const handleChange = (e) => setReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
   // Handle completion of Three.js sections
   const handleThreeHeroComplete = useCallback(() => {
     setShowStaticContent(true);
@@ -297,13 +308,14 @@ function HomePage() {
 
   // Handle return from static content to animation
   const handleThreeHeroReturn = useCallback(() => {
+    console.log('[HomePage] Returning to animation from static content');
     setShowStaticContent(false);
-    setIsInHeroSection(true);
     setBgTransitionProgress(0);
+    setIsInHeroSection(true);
+    setTradeAnimationComplete(false);
   }, []);
 
-  // Smooth background color transition based on scroll
->>>>>>> 7964ee4 (changed animation)
+  // Track scroll position to detect if user is in hero section or trade animation
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -334,12 +346,6 @@ function HomePage() {
       )}
 
       <ErrorBoundary>
-<<<<<<< HEAD
-        {/* Hero with Globe - scroll animated */}
-        <HeroSection 
-          quality={quality} 
-          onGlobeComplete={() => setShowStaticContent(true)}
-=======
         {/* Three.js Hero Sections (Section 1 + Section 2) with scroll lock */}
         <ThreeHeroWrapper
           ref={threeHeroRef}
@@ -348,36 +354,37 @@ function HomePage() {
           onComplete={handleThreeHeroComplete}
           onReturn={handleThreeHeroReturn}
           reducedMotion={reducedMotion}
->>>>>>> 7964ee4 (changed animation)
         />
         
         {/* Static content sections - appear after globe animation completes */}
-        <AnimatePresence>
-          {showStaticContent && (
-            <motion.div 
-              className="static-sections-wrapper"
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.8, 
-                ease: [0.25, 0.46, 0.45, 0.94],
-                delay: 0.1
-              }}
-            >
-              {/* Trade Animation - Dark section with scroll lock */}
-              <TradeAnimation3D onAnimationComplete={() => setTradeAnimationComplete(true)} />
-              
-              {/* Light sections - only visible after trade animation completes */}
-              <div className={`light-sections ${tradeAnimationComplete ? 'visible' : 'hidden'}`}>
-                <SectionD_PainPoints />
-                <SectionE_WinWin />
-                <SectionF_CoreModules />
-                <SectionG_FinalCTA />
-                <Footer />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Keep mounted once shown to preserve animation state */}
+        {showStaticContent && (
+          <motion.div 
+            key="static-content"
+            className="static-sections-wrapper"
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.8, 
+              ease: [0.25, 0.46, 0.45, 0.94],
+              delay: 0.1
+            }}
+          >
+            {/* Trade Animation - Dark section with scroll lock */}
+            <TradeAnimation3D key="trade-animation" onAnimationComplete={() => setTradeAnimationComplete(true)} />
+            
+            {/* Industry Challenge section - appears immediately after trade animation */}
+            <SectionD_PainPoints />
+            
+            {/* Other sections - only visible after trade animation completes */}
+            <div className={`light-sections ${tradeAnimationComplete ? 'visible' : 'hidden'}`}>
+              <SectionE_WinWin />
+              <SectionF_CoreModules />
+              <SectionG_FinalCTA />
+              <Footer />
+            </div>
+          </motion.div>
+        )}
       </ErrorBoundary>
     </>
   );

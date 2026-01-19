@@ -82,6 +82,7 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
   const ring2OpacityRef = useRef(1);
   const ring3OpacityRef = useRef(1);
   const personOpacityRef = useRef(0);
+  const revolvingRingOpacityRef = useRef(0); // Separate opacity for revolving rings with labels
   const videoCardOpacityRef = useRef(0);
   const aazikoOpacityRef = useRef(0);
   const sceneScaleRef = useRef(1.5);
@@ -148,6 +149,7 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
       ring2OpacityRef.current = 1;
       ring3OpacityRef.current = 1;
       personOpacityRef.current = 0;
+      revolvingRingOpacityRef.current = 0;
       videoCardOpacityRef.current = 0;
       aazikoOpacityRef.current = 0;
       sceneScaleRef.current = 1.5;
@@ -170,6 +172,7 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
         ring2OpacityRef.current = 1;
         ring3OpacityRef.current = 1;
         personOpacityRef.current = 0;
+        revolvingRingOpacityRef.current = 0;
         videoCardOpacityRef.current = 0;
         sceneScaleRef.current = 1.5;
       } else {
@@ -180,7 +183,9 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
         ring1OpacityRef.current = 1;
         ring2OpacityRef.current = 1;
         ring3OpacityRef.current = 1 - fadeProgress;
-        personOpacityRef.current = fadeProgress > 0.3 ? (fadeProgress - 0.3) / 0.7 : 0;
+        // Don't show people or revolving rings during separation - wait until next phase
+        personOpacityRef.current = 0;
+        revolvingRingOpacityRef.current = 0;
         videoCardOpacityRef.current = 0;
         aazikoOpacityRef.current = 0;
         sceneScaleRef.current = 1.5;
@@ -198,7 +203,9 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
       ring1OpacityRef.current = 1;
       ring2OpacityRef.current = 1;
       ring3OpacityRef.current = 0;
+      // Show people but NOT revolving rings during video card phase
       personOpacityRef.current = 1;
+      revolvingRingOpacityRef.current = 0; // Keep revolving rings hidden
       sceneScaleRef.current = 1.5;
       aazikoOpacityRef.current = 0;
       const videoProgress = (totalScroll - 600) / 100;
@@ -217,6 +224,7 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
       ring2OpacityRef.current = 1;
       ring3OpacityRef.current = 0;
       personOpacityRef.current = 1;
+      revolvingRingOpacityRef.current = 1; // Show revolving rings in Phase 5
       videoCardOpacityRef.current = 1;
       aazikoOpacityRef.current = 1;
       const zoomProgress = (totalScroll - 700) / 200;
@@ -283,8 +291,8 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
     }
     if (personLeftRef.current) personLeftRef.current.style.opacity = personOpacityRef.current;
     if (personRightRef.current) personRightRef.current.style.opacity = personOpacityRef.current;
-    if (leftRevolvingRingRef.current) leftRevolvingRingRef.current.style.opacity = personOpacityRef.current;
-    if (rightRevolvingRingRef.current) rightRevolvingRingRef.current.style.opacity = personOpacityRef.current;
+    if (leftRevolvingRingRef.current) leftRevolvingRingRef.current.style.opacity = revolvingRingOpacityRef.current;
+    if (rightRevolvingRingRef.current) rightRevolvingRingRef.current.style.opacity = revolvingRingOpacityRef.current;
     if (sceneContainerRef.current && !rv.isMobile) {
       sceneContainerRef.current.style.transform = `scale(${sceneScaleRef.current})`;
     }

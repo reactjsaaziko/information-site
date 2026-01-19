@@ -17,7 +17,6 @@
   height: 100vh;
   overflow: hidden;
   background-color: #030014;
-  /* Smooth transition for opacity changes */
   transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
   z-index: 5;
 }
@@ -31,6 +30,7 @@
 .trade-animation-section.complete {
   position: relative;
   z-index: 5;
+  /* Lock at final state - no further changes */
 }
 
 /* Background - matching original */
@@ -564,7 +564,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) translateY(-180px);
+  transform: translate(-50%, -50%) translateY(-220px);
   width: 1000px;
   height: 100px;
   z-index: 92;
@@ -822,7 +822,7 @@
 
   .trade-anim-aaziko {
     width: 900px;
-    transform: translate(-50%, -50%) translateY(-150px);
+    transform: translate(-50%, -50%) translateY(-190px);
   }
 
   .trade-anim-aaziko-logo {
@@ -889,7 +889,7 @@
   /* Aaziko section - responsive arrows - fixed width to maintain curve shape */
   .trade-anim-aaziko {
     width: 800px;
-    transform: translate(-50%, -50%) translateY(-150px);
+    transform: translate(-50%, -50%) translateY(-180px);
   }
   
   .trade-anim-aaziko svg {
@@ -965,7 +965,7 @@
   /* Aaziko section - responsive arrows - fixed width */
   .trade-anim-aaziko {
     width: 700px;
-    transform: translate(-50%, -50%) translateY(-130px);
+    transform: translate(-50%, -50%) translateY(-160px);
   }
   
   .trade-anim-aaziko svg {
@@ -1062,7 +1062,7 @@
   /* Aaziko section - responsive arrows - fixed width */
   .trade-anim-aaziko {
     width: 600px;
-    transform: translate(-50%, -50%) translateY(-110px);
+    transform: translate(-50%, -50%) translateY(-140px);
   }
   
   .trade-anim-aaziko svg {
@@ -1162,7 +1162,7 @@
   /* Aaziko section - responsive arrows - fixed width */
   .trade-anim-aaziko {
     width: 500px;
-    transform: translate(-50%, -50%) translateY(-100px);
+    transform: translate(-50%, -50%) translateY(-130px);
   }
   
   .trade-anim-aaziko svg {
