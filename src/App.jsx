@@ -9,8 +9,8 @@ import SectionG_FinalCTA from './components/SectionG_FinalCTA';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import ErrorBoundary from './components/ErrorBoundary';
-import SectionTransition from './components/SectionTransition';
 import { usePerformance } from './hooks/usePerformance';
+import { useScrollDampening } from './hooks/useScrollDampening';
 import './index.css';
 import './styles/sellerBuyerNetwork2D.css';
 
@@ -198,10 +198,13 @@ function HomePage() {
   const { quality, isDetecting } = usePerformance();
   const [isLightTheme, setIsLightTheme] = useState(false);
   const [showStaticContent, setShowStaticContent] = useState(false);
+  const [threeHeroCompleted, setThreeHeroCompleted] = useState(false);
   const [isInHeroSection, setIsInHeroSection] = useState(true);
   const [bgTransitionProgress, setBgTransitionProgress] = useState(0);
+  const [isInTransitionZone, setIsInTransitionZone] = useState(false);
   const bgRef = useRef(null);
   const threeHeroRef = useRef(null);
+  const lastScrollY = useRef(0);
   
   // Check for reduced motion preference
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -213,32 +216,64 @@ function HomePage() {
     return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
+  // Activate scroll dampening when transitioning from 3D to static content
+  useScrollDampening({
+    isActive: isInTransitionZone && showStaticContent,
+    dampeningFactor: 0.35, // 65% slower scroll speed
+    transitionHeight: 1000 // Dampen for first 1000px of scroll
+  });
+
   // Handle completion of Three.js sections
   const handleThreeHeroComplete = useCallback(() => {
+    setThreeHeroCompleted(true);
     setShowStaticContent(true);
     setIsInHeroSection(false);
+    setIsInTransitionZone(true); // Activate dampening zone
+    
+    // Disable dampening after 3 seconds or when user scrolls past zone
+    setTimeout(() => {
+      setIsInTransitionZone(false);
+    }, 5000);
   }, []);
 
   // Smooth background color transition based on scroll
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
+      const scrollDirection = scrollY > lastScrollY.current ? 'down' : 'up';
+      lastScrollY.current = scrollY;
       
-      // Only transition background when static content is visible
+      // Show/hide static content based on scroll position and completion status
+      if (threeHeroCompleted) {
+        // Show static content when scrolled down past threshold
+        const showThreshold = window.innerHeight * 0.3;
+        const hideThreshold = window.innerHeight * 0.1;
+        
+        if (scrollDirection === 'down' && scrollY > showThreshold) {
+          setShowStaticContent(true);
+        } else if (scrollDirection === 'up' && scrollY < hideThreshold) {
+          setShowStaticContent(false);
+        }
+      }
+      
+      // Calculate background transition progress
       if (!showStaticContent) {
         setBgTransitionProgress(0);
-        return;
-      }
+      } else {
+        // Disable transition zone when user scrolls past 1000px
+        if (scrollY > 1000 && isInTransitionZone) {
+          setIsInTransitionZone(false);
+        }
 
-      // Calculate background transition progress
-      const transitionStart = 0;
-      const transitionEnd = window.innerHeight * 0.5;
-      
-      let progress = 0;
-      if (scrollY > transitionStart) {
-        progress = Math.min(1, (scrollY - transitionStart) / (transitionEnd - transitionStart));
+        const transitionStart = 0;
+        const transitionEnd = window.innerHeight * 0.5;
+        
+        let progress = 0;
+        if (scrollY > transitionStart) {
+          progress = Math.min(1, (scrollY - transitionStart) / (transitionEnd - transitionStart));
+        }
+        setBgTransitionProgress(progress);
       }
-      setBgTransitionProgress(progress);
       
       // Update header mode based on scroll position
       setIsInHeroSection(scrollY < 100);
@@ -246,7 +281,7 @@ function HomePage() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [showStaticContent]);
+  }, [showStaticContent, isInTransitionZone, threeHeroCompleted]);
 
   // Header is dark when in hero section or when static content hasn't loaded
   const headerDarkMode = !showStaticContent || isInHeroSection;
@@ -318,6 +353,30 @@ function HomePage() {
       {/* Navigation */}
       <Navbar darkMode={headerDarkMode} />
 
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(1.2);
+          }
+        }
+      `}</style>
+
       {/* Loading */}
       {isDetecting && (
         <div className="detecting-overlay">
@@ -336,48 +395,36 @@ function HomePage() {
         />
 
         {/* Static content sections - ONLY render after Three.js animations complete */}
-        {showStaticContent && (
-          <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait">
+          {showStaticContent && (
             <motion.div
+              key="static-content"
               className="static-sections-wrapper"
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
+              exit={{ opacity: 0, y: 60 }}
               transition={{
-                duration: 0.8,
+                duration: 0.5,
                 ease: [0.25, 0.46, 0.45, 0.94],
-                y: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
+                opacity: { duration: 0.3 },
+                y: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
               }}
               style={{
                 position: 'relative',
                 zIndex: 1,
               }}
             >
-              {/* Light sections with smooth scroll transitions */}
+              {/* Light sections - static components without scroll animations */}
               <div className="light-sections visible">
-                <SectionTransition direction="up" duration={0.8} threshold={0.1}>
-                  <SectionD_PainPoints />
-                </SectionTransition>
-                
-                <SectionTransition direction="up" duration={0.8} delay={0.1} threshold={0.1}>
-                  <SectionE_WinWin />
-                </SectionTransition>
-                
-                <SectionTransition direction="slideScale" duration={0.8} delay={0.1} threshold={0.1}>
-                  <SectionF_CoreModules />
-                </SectionTransition>
-                
-                <SectionTransition direction="scale" duration={0.7} threshold={0.15}>
-                  <SectionG_FinalCTA />
-                </SectionTransition>
-                
-                <SectionTransition direction="fade" duration={0.6} threshold={0.2}>
-                  <Footer />
-                </SectionTransition>
+                <SectionD_PainPoints />
+                <SectionE_WinWin />
+                <SectionF_CoreModules />
+                <SectionG_FinalCTA />
+                <Footer />
               </div>
             </motion.div>
-          </AnimatePresence>
-        )}
+          )}
+        </AnimatePresence>
       </ErrorBoundary>
     </>
   );

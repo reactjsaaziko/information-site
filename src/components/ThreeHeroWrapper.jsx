@@ -24,7 +24,8 @@ import { normalizeWheelDelta, lerp, clamp, SCROLL_CONFIG } from '../hooks/useScr
 // Scrub configuration
 const SCRUB_CONFIG = {
   // How much scroll delta maps to progress change (lower = slower animation)
-  SCROLL_SENSITIVITY: SCROLL_CONFIG.SCRUB_SENSITIVITY || 0.0004,
+  // REDUCED from 0.00015 to 0.00008 = Much slower scroll animation (47% slower than previous)
+  SCROLL_SENSITIVITY: SCROLL_CONFIG.SCRUB_SENSITIVITY || 0.00008,
   // Smoothing factor for lerp (lower = smoother but more lag)
   SMOOTHING: SCROLL_CONFIG.SMOOTHING_FACTOR || 0.12,
   // Minimum progress change to trigger update
@@ -84,53 +85,62 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
   const updateSectionProgress = useCallback((progress) => {
     const clampedProgress = clamp(progress, 0, 1);
     
-    // Section 1: 0 to 0.5 progress
+    // Section 1: 0 to 0.5 progress - MUST complete fully before Section 2 shows
     if (clampedProgress <= SCRUB_CONFIG.SECTION_TRANSITION_POINT) {
       const section1Progress = clampedProgress / SCRUB_CONFIG.SECTION_TRANSITION_POINT;
       if (section1Ref.current?.setProgress) {
         section1Ref.current.setProgress(section1Progress);
       }
       
-      // Handle section transition
+      // Handle section transition - switching back to Section 1
       if (activeSection !== 1) {
         setActiveSection(1);
       }
       
-      // Fade out section 1 near transition point
+      // FIXED: Restore Section 1 opacity when scrolling back
       if (section1ContainerRef.current) {
-        const fadeStart = 0.4;
-        if (clampedProgress > fadeStart) {
-          const fadeProgress = (clampedProgress - fadeStart) / (SCRUB_CONFIG.SECTION_TRANSITION_POINT - fadeStart);
-          section1ContainerRef.current.style.opacity = 1 - fadeProgress * 0.3;
-        } else {
-          section1ContainerRef.current.style.opacity = 1;
-        }
+        section1ContainerRef.current.style.opacity = 1;
+      }
+      
+      // FIXED: Fade out Section 2 when scrolling back below transition point
+      if (section2ContainerRef.current) {
+        section2ContainerRef.current.style.opacity = 0;
+      }
+      
+      // Hide Section 2 when scrolling back to Section 1
+      // Use a small delay to allow fade out animation
+      if (showSection2 && clampedProgress < SCRUB_CONFIG.SECTION_TRANSITION_POINT - 0.02) {
+        setTimeout(() => setShowSection2(false), 100);
       }
     }
     
-    // Section 2: 0.5 to 1.0 progress
-    if (clampedProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT * 0.9) {
-      // Show section 2 slightly before transition point
-      if (!showSection2 && clampedProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT * 0.95) {
+    // Section 2: 0.5 to 1.0 progress - ONLY shows after Section 1 is 100% complete
+    if (clampedProgress > SCRUB_CONFIG.SECTION_TRANSITION_POINT) {
+      // Show section 2 ONLY after Section 1 is fully complete
+      if (!showSection2) {
         setShowSection2(true);
       }
       
-      if (clampedProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT) {
-        const section2Progress = (clampedProgress - SCRUB_CONFIG.SECTION_TRANSITION_POINT) / (1 - SCRUB_CONFIG.SECTION_TRANSITION_POINT);
-        if (section2Ref.current?.setProgress) {
-          section2Ref.current.setProgress(section2Progress);
-        }
-        
-        // Handle section transition
-        if (activeSection !== 2 && clampedProgress > SCRUB_CONFIG.SECTION_TRANSITION_POINT + 0.02) {
-          setActiveSection(2);
-        }
-        
-        // Fade in section 2
-        if (section2ContainerRef.current) {
-          const fadeInProgress = Math.min(1, (clampedProgress - SCRUB_CONFIG.SECTION_TRANSITION_POINT) / 0.1);
-          section2ContainerRef.current.style.opacity = fadeInProgress;
-        }
+      const section2Progress = (clampedProgress - SCRUB_CONFIG.SECTION_TRANSITION_POINT) / (1 - SCRUB_CONFIG.SECTION_TRANSITION_POINT);
+      if (section2Ref.current?.setProgress) {
+        section2Ref.current.setProgress(section2Progress);
+      }
+      
+      // Handle section transition
+      if (activeSection !== 2) {
+        setActiveSection(2);
+      }
+      
+      // Fade in section 2 smoothly
+      if (section2ContainerRef.current) {
+        const fadeInProgress = Math.min(1, (clampedProgress - SCRUB_CONFIG.SECTION_TRANSITION_POINT) / 0.08);
+        section2ContainerRef.current.style.opacity = fadeInProgress;
+      }
+      
+      // Fade out section 1 smoothly
+      if (section1ContainerRef.current) {
+        const fadeOutProgress = Math.min(1, (clampedProgress - SCRUB_CONFIG.SECTION_TRANSITION_POINT) / 0.08);
+        section1ContainerRef.current.style.opacity = 1 - fadeOutProgress;
       }
     }
     
@@ -139,12 +149,13 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       // Start fade out animation
       setIsFadingOut(true);
       
-      // Delay the actual completion to allow fade animation
+      // UPDATED: Hold the completed animation for 1 second, then fade out and switch
+      // Total delay: 1000ms (hold) + 500ms (fade) = 1.5 seconds before showing static content
       setTimeout(() => {
         setIsComplete(true);
         setIsLocked(false);
         if (onComplete) onComplete();
-      }, 600); // 600ms fade out duration
+      }, 1500); // 1 second hold + 500ms fade out
     } else if (clampedProgress < SCRUB_CONFIG.COMPLETION_THRESHOLD - 0.05 && (isComplete || isFadingOut)) {
       // Reset if user scrolls back up significantly
       setIsComplete(false);
@@ -193,9 +204,20 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       return;
     }
     
-    // If at top of page and scrolling up while complete, re-lock
-    if (isComplete && e.deltaY < 0 && window.scrollY <= 5) {
+    // If at top of page and scrolling up while complete, re-lock and show 3D at full completion
+    if (isComplete && e.deltaY < 0 && window.scrollY <= 10) {
       e.preventDefault();
+      
+      // Re-lock the 3D section
+      setIsLocked(true);
+      setIsComplete(false);
+      setIsFadingOut(false);
+      
+      // FIXED: Reset to 99.5% (just before completion) so Section 2 shows at 99% progress
+      // This shows the full animation completed, then user can scroll back through it
+      targetProgressRef.current = 0.995;
+      currentProgressRef.current = 0.995;
+      
       // Allow scrolling back up through the animation
       const normalizedDelta = normalizeWheelDelta(e.deltaY, e.deltaMode);
       const progressDelta = normalizedDelta * SCRUB_CONFIG.SCROLL_SENSITIVITY;
@@ -203,13 +225,20 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       return;
     }
     
-    // If locked, handle scroll-driven animation
+    // If locked, handle scroll-driven animation with section-specific speed
     if (isLocked) {
       e.preventDefault();
       
       const normalizedDelta = normalizeWheelDelta(e.deltaY, e.deltaMode);
-      const progressDelta = normalizedDelta * SCRUB_CONFIG.SCROLL_SENSITIVITY;
+      const currentProgress = targetProgressRef.current;
       
+      // Section 2 (0.5 to 1.0) - Apply 50% slower speed (multiply by 0.5)
+      let sensitivity = SCRUB_CONFIG.SCROLL_SENSITIVITY;
+      if (currentProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT) {
+        sensitivity = SCRUB_CONFIG.SCROLL_SENSITIVITY * 0.5; // 50% slower for Section 2
+      }
+      
+      const progressDelta = normalizedDelta * sensitivity;
       targetProgressRef.current = clamp(targetProgressRef.current + progressDelta, 0, 1);
     }
   }, [reducedMotion, isComplete, isLocked]);
@@ -238,19 +267,39 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       return;
     }
     
-    // If at top of page and scrolling up while complete
-    if (isComplete && deltaY < 0 && window.scrollY <= 5) {
+    // If at top of page and scrolling up while complete, re-lock and show 3D at full completion
+    if (isComplete && deltaY < 0 && window.scrollY <= 10) {
       e.preventDefault();
-      const progressDelta = deltaY * SCRUB_CONFIG.SCROLL_SENSITIVITY * 2; // Touch needs more sensitivity
+      
+      // Re-lock the 3D section
+      setIsLocked(true);
+      setIsComplete(false);
+      setIsFadingOut(false);
+      
+      // FIXED: Reset to 99.5% (just before completion) so Section 2 shows at 99% progress
+      // This shows the full animation completed, then user can scroll back through it
+      targetProgressRef.current = 0.995;
+      currentProgressRef.current = 0.995;
+      
+      // REDUCED: Touch sensitivity from *2 to *1.25 for slower animation
+      const progressDelta = deltaY * SCRUB_CONFIG.SCROLL_SENSITIVITY * 1.25;
       targetProgressRef.current = clamp(targetProgressRef.current + progressDelta, 0, 1);
       return;
     }
     
-    // If locked, handle scroll-driven animation
+    // If locked, handle scroll-driven animation with section-specific speed
     if (isLocked) {
       e.preventDefault();
       
-      const progressDelta = deltaY * SCRUB_CONFIG.SCROLL_SENSITIVITY * 2;
+      const currentProgress = targetProgressRef.current;
+      
+      // Section 2 (0.5 to 1.0) - Apply 50% slower speed (multiply by 0.5)
+      let sensitivity = SCRUB_CONFIG.SCROLL_SENSITIVITY * 1.25; // Base touch sensitivity
+      if (currentProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT) {
+        sensitivity = SCRUB_CONFIG.SCROLL_SENSITIVITY * 1.25 * 0.5; // 50% slower for Section 2
+      }
+      
+      const progressDelta = deltaY * sensitivity;
       targetProgressRef.current = clamp(targetProgressRef.current + progressDelta, 0, 1);
     }
   }, [reducedMotion, isComplete, isLocked]);
@@ -272,7 +321,8 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
 
   const getSection1Style = () => {
     const isActive = activeSection === 1;
-    const isVisible = isActive || displayProgress < SCRUB_CONFIG.SECTION_TRANSITION_POINT + 0.1;
+    // FIXED: Keep Section 1 visible during reverse scroll (when progress < 0.6)
+    const isVisible = isActive || displayProgress < SCRUB_CONFIG.SECTION_TRANSITION_POINT + 0.15;
     
     return {
       position: 'absolute',
@@ -286,6 +336,8 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       willChange: 'opacity, transform',
       backfaceVisibility: 'hidden',
       transform: 'translateZ(0)',
+      // FIXED: Add smooth opacity transition for reverse scroll
+      transition: 'opacity 0.2s ease-out',
     };
   };
 
@@ -306,6 +358,8 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       willChange: 'opacity, transform',
       backfaceVisibility: 'hidden',
       transform: 'translateZ(0)',
+      // FIXED: Add smooth opacity transition for reverse scroll
+      transition: 'opacity 0.2s ease-out',
     };
   };
 
@@ -323,9 +377,12 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
         overflow: 'hidden',
         // IMPORTANT: Solid dark background to prevent static content from showing through
         backgroundColor: '#080c14',
-        // Fade out animation when completing
+        // Fade out animation when completing - holds for 1 second then fades
         opacity: isFadingOut ? 0 : 1,
-        transition: isFadingOut ? 'opacity 0.6s ease-out' : 'none',
+        transition: isFadingOut ? 'opacity 0.5s ease-out 1s' : (isLocked && !isFadingOut ? 'opacity 0.3s ease-in' : 'none'),
+        // Show wrapper when locked or fading
+        visibility: (isLocked || isFadingOut) ? 'visible' : 'hidden',
+        pointerEvents: isLocked ? 'auto' : 'none',
       }}
     >
       {/* Dark background overlay - ensures no content shows through during transitions */}
