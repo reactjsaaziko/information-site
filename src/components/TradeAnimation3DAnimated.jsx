@@ -592,7 +592,7 @@ const TradeAnimation3DAnimated = forwardRef(function TradeAnimation3DAnimated(pr
               if (el && !earthContainerReady) setEarthContainerReady(true);
             }}
             className="trade-anim-earth"
-            style={{ width: size, height: size }}
+            style={{ width: size, height: size, opacity: 0, pointerEvents: 'none' }}
           />
         </div>
       </div>

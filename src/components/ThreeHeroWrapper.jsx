@@ -97,10 +97,11 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
         setActiveSection(1);
       }
       
-      // FIXED: Restore Section 1 opacity and scale when scrolling back
+      // FIXED: Restore Section 1 opacity, scale, and visibility when scrolling back
       if (section1ContainerRef.current) {
         section1ContainerRef.current.style.opacity = 1;
         section1ContainerRef.current.style.transform = 'scale(1)';
+        section1ContainerRef.current.style.visibility = 'visible';
       }
       
       // FIXED: Fade out Section 2 when scrolling back below transition point
@@ -142,13 +143,13 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
         section2ContainerRef.current.style.opacity = transitionProgress;
       }
       
-      // Fade out and scale down section 1 smoothly
+      // Keep Section 1 visible during transition so Earth stays visible
+      // The Earth will shrink via HeroSectionAnimated's internal animation
       if (section1ContainerRef.current) {
-        const fadeOutProgress = transitionProgress;
-        const scaleProgress = 1 - (fadeOutProgress * 0.3); // Scale from 1.0 to 0.7
-        
-        section1ContainerRef.current.style.opacity = 1 - fadeOutProgress;
-        section1ContainerRef.current.style.transform = `scale(${scaleProgress})`;
+        // Keep Section 1 fully visible - Earth shrinks internally
+        section1ContainerRef.current.style.opacity = 1;
+        section1ContainerRef.current.style.transform = 'scale(1)';
+        section1ContainerRef.current.style.visibility = 'visible';
       }
     }
     
@@ -240,6 +241,11 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       const normalizedDelta = normalizeWheelDelta(e.deltaY, e.deltaMode);
       const currentProgress = targetProgressRef.current;
       
+      // Block scroll when at completion threshold and fading out (1-second hold)
+      if (isFadingOut && currentProgress >= SCRUB_CONFIG.COMPLETION_THRESHOLD) {
+        return; // Ignore scroll during hold period
+      }
+      
       // Section 2 (0.5 to 1.0) - Apply 50% slower speed (multiply by 0.5)
       let sensitivity = SCRUB_CONFIG.SCROLL_SENSITIVITY;
       if (currentProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT) {
@@ -300,6 +306,11 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       e.preventDefault();
       
       const currentProgress = targetProgressRef.current;
+      
+      // Block scroll when at completion threshold and fading out (1-second hold)
+      if (isFadingOut && currentProgress >= SCRUB_CONFIG.COMPLETION_THRESHOLD) {
+        return; // Ignore scroll during hold period
+      }
       
       // Section 2 (0.5 to 1.0) - Apply 50% slower speed (multiply by 0.5)
       let sensitivity = SCRUB_CONFIG.SCROLL_SENSITIVITY * 1.25; // Base touch sensitivity

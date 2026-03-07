@@ -135,14 +135,15 @@ const HeroSectionAnimated = forwardRef(function HeroSectionAnimated({
       setShowRings(false);
       setRingProgress(0);
     } else {
-      // Phase 2: progress 1 to 2
+      // Phase 2: progress 1 to 2 - Keep Earth visible and shrink to Section 2 size
       const phase2Progress = progress - 1;
       const shrinkProgress = Math.min(phase2Progress, 1);
       const shrinkEased = shrinkProgress * shrinkProgress * (3 - 2 * shrinkProgress);
 
       setDotOpacity(0);
       const maxScale = isMobile ? 0.35 : isTablet ? 0.45 : 0.6;
-      const minScale = isMobile ? 0.15 : isTablet ? 0.2 : 0.2;
+      // Shrink to very small size to match Section 2's cube (200px at scale 1 = ~0.05 of viewport)
+      const minScale = 0.05;
       setGlobeScale(maxScale - shrinkEased * (maxScale - minScale));
       setGlobeX(15 - shrinkEased * 15);
       setScrollRotation(Math.PI * 3 + phase2Progress * Math.PI * 1.5);
@@ -150,17 +151,12 @@ const HeroSectionAnimated = forwardRef(function HeroSectionAnimated({
       const headlineFade = 1 - Math.min(phase2Progress * 2, 1);
       setHeadlineOpacity(headlineFade * headlineFade);
       setLeftTextOpacity(0);
+      // Keep Earth visible throughout transition
       setEarthOpacity(1);
 
-      // Rings
-      if (phase2Progress >= 0.3) {
-        setShowRings(true);
-        const ringsAnimProgress = Math.min((phase2Progress - 0.3) / 0.7, 1);
-        setRingProgress(ringsAnimProgress);
-      } else {
-        setShowRings(false);
-        setRingProgress(0);
-      }
+      // Rings removed - no rings during transition
+      setShowRings(false);
+      setRingProgress(0);
 
       setLightBeamsOpacity(0);
     }
