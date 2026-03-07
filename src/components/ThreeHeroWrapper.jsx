@@ -97,9 +97,10 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
         setActiveSection(1);
       }
       
-      // FIXED: Restore Section 1 opacity when scrolling back
+      // FIXED: Restore Section 1 opacity and scale when scrolling back
       if (section1ContainerRef.current) {
         section1ContainerRef.current.style.opacity = 1;
+        section1ContainerRef.current.style.transform = 'scale(1)';
       }
       
       // FIXED: Fade out Section 2 when scrolling back below transition point
@@ -131,16 +132,23 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
         setActiveSection(2);
       }
       
+      // Smooth transition: Fade in section 2 and scale down section 1
+      // Extended transition duration from 0.08 to 0.15 for smoother effect
+      const transitionDuration = 0.15;
+      const transitionProgress = Math.min(1, (clampedProgress - SCRUB_CONFIG.SECTION_TRANSITION_POINT) / transitionDuration);
+      
       // Fade in section 2 smoothly
       if (section2ContainerRef.current) {
-        const fadeInProgress = Math.min(1, (clampedProgress - SCRUB_CONFIG.SECTION_TRANSITION_POINT) / 0.08);
-        section2ContainerRef.current.style.opacity = fadeInProgress;
+        section2ContainerRef.current.style.opacity = transitionProgress;
       }
       
-      // Fade out section 1 smoothly
+      // Fade out and scale down section 1 smoothly
       if (section1ContainerRef.current) {
-        const fadeOutProgress = Math.min(1, (clampedProgress - SCRUB_CONFIG.SECTION_TRANSITION_POINT) / 0.08);
+        const fadeOutProgress = transitionProgress;
+        const scaleProgress = 1 - (fadeOutProgress * 0.3); // Scale from 1.0 to 0.7
+        
         section1ContainerRef.current.style.opacity = 1 - fadeOutProgress;
+        section1ContainerRef.current.style.transform = `scale(${scaleProgress})`;
       }
     }
     
@@ -335,9 +343,9 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       zIndex: isActive ? 2 : 1,
       willChange: 'opacity, transform',
       backfaceVisibility: 'hidden',
-      transform: 'translateZ(0)',
-      // FIXED: Add smooth opacity transition for reverse scroll
-      transition: 'opacity 0.2s ease-out',
+      transformOrigin: 'center center',
+      // FIXED: Add smooth opacity and transform transition for reverse scroll
+      transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
     };
   };
 
@@ -357,9 +365,9 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       zIndex: isActive ? 2 : 1,
       willChange: 'opacity, transform',
       backfaceVisibility: 'hidden',
-      transform: 'translateZ(0)',
-      // FIXED: Add smooth opacity transition for reverse scroll
-      transition: 'opacity 0.2s ease-out',
+      transformOrigin: 'center center',
+      // FIXED: Add smooth opacity and transform transition for reverse scroll
+      transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
     };
   };
 
