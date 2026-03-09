@@ -58,6 +58,8 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
   const [showSection2, setShowSection2] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [displayProgress, setDisplayProgress] = useState(0);
+  const [section2AnimationComplete, setSection2AnimationComplete] = useState(false);
+  const [waitingForUnlockScroll, setWaitingForUnlockScroll] = useState(false);
   
   // Touch tracking
   const touchStartRef = useRef({ y: 0, time: 0 });
@@ -152,21 +154,21 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       }
     }
     
-    // Check for completion - only unlock when user scrolls to 100%
-    // Animation stays locked and waits for user scroll - no automatic transition
-    if (clampedProgress >= 0.999 && !isComplete) {
-      // User has scrolled to the very end (100%) - now unlock
-      setIsComplete(true);
-      setIsLocked(false);
-      if (onComplete) onComplete();
-    } else if (clampedProgress < 0.95 && isComplete) {
+    // Check if Section 2 animation has completed (reached 100% of Section 2)
+    if (clampedProgress >= 0.999 && !section2AnimationComplete) {
+      // Section 2 animation is complete - stop scrolling and wait for user to scroll again
+      setSection2AnimationComplete(true);
+      setWaitingForUnlockScroll(true);
+    } else if (clampedProgress < 0.95 && section2AnimationComplete) {
       // Reset if user scrolls back up significantly
+      setSection2AnimationComplete(false);
+      setWaitingForUnlockScroll(false);
       setIsComplete(false);
       setIsLocked(true);
     }
     
     setDisplayProgress(clampedProgress);
-  }, [activeSection, showSection2, isComplete, onComplete]);
+  }, [activeSection, showSection2, isComplete, section2AnimationComplete, onComplete]);
 
   // Animation loop for smooth interpolation
   useEffect(() => {
@@ -201,6 +203,17 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
   const handleWheel = useCallback((e) => {
     if (reducedMotion) return;
     
+    // If waiting for unlock scroll (animation complete but not yet unlocked)
+    if (waitingForUnlockScroll && e.deltaY > 0) {
+      e.preventDefault();
+      // User scrolled down after animation complete - now unlock
+      setWaitingForUnlockScroll(false);
+      setIsComplete(true);
+      setIsLocked(false);
+      if (onComplete) onComplete();
+      return;
+    }
+    
     // If complete and scrolling down, allow normal page scroll
     if (isComplete && e.deltaY > 0) {
       return;
@@ -213,6 +226,8 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       // Re-lock the 3D section
       setIsLocked(true);
       setIsComplete(false);
+      setSection2AnimationComplete(false);
+      setWaitingForUnlockScroll(false);
       
       // FIXED: Reset to 99.5% (just before completion) so Section 2 shows at 99% progress
       // This shows the full animation completed, then user can scroll back through it
@@ -233,6 +248,11 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       const normalizedDelta = normalizeWheelDelta(e.deltaY, e.deltaMode);
       const currentProgress = targetProgressRef.current;
       
+      // If animation is complete, prevent further scrolling until unlock
+      if (section2AnimationComplete && currentProgress >= 0.999) {
+        return; // Block scroll - animation complete, waiting for unlock scroll
+      }
+      
       // Section 2 (0.5 to 1.0) - Apply 50% slower speed (multiply by 0.5)
       let sensitivity = SCRUB_CONFIG.SCROLL_SENSITIVITY;
       if (currentProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT) {
@@ -242,7 +262,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       const progressDelta = normalizedDelta * sensitivity;
       targetProgressRef.current = clamp(targetProgressRef.current + progressDelta, 0, 1);
     }
-  }, [reducedMotion, isComplete, isLocked]);
+  }, [reducedMotion, isComplete, isLocked, waitingForUnlockScroll, section2AnimationComplete, onComplete]);
 
   // Handle touch start
   const handleTouchStart = useCallback((e) => {
@@ -263,6 +283,17 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
     const deltaY = lastTouchYRef.current - touchY; // Inverted for natural scroll feel
     lastTouchYRef.current = touchY;
     
+    // If waiting for unlock scroll (animation complete but not yet unlocked)
+    if (waitingForUnlockScroll && deltaY > 0) {
+      e.preventDefault();
+      // User scrolled down after animation complete - now unlock
+      setWaitingForUnlockScroll(false);
+      setIsComplete(true);
+      setIsLocked(false);
+      if (onComplete) onComplete();
+      return;
+    }
+    
     // If complete and scrolling down, allow normal page scroll
     if (isComplete && deltaY > 0) {
       return;
@@ -275,6 +306,8 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       // Re-lock the 3D section
       setIsLocked(true);
       setIsComplete(false);
+      setSection2AnimationComplete(false);
+      setWaitingForUnlockScroll(false);
       
       // FIXED: Reset to 99.5% (just before completion) so Section 2 shows at 99% progress
       // This shows the full animation completed, then user can scroll back through it
@@ -293,6 +326,11 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       
       const currentProgress = targetProgressRef.current;
       
+      // If animation is complete, prevent further scrolling until unlock
+      if (section2AnimationComplete && currentProgress >= 0.999) {
+        return; // Block scroll - animation complete, waiting for unlock scroll
+      }
+      
       // Section 2 (0.5 to 1.0) - Apply 50% slower speed (multiply by 0.5)
       let sensitivity = SCRUB_CONFIG.SCROLL_SENSITIVITY * 1.25; // Base touch sensitivity
       if (currentProgress >= SCRUB_CONFIG.SECTION_TRANSITION_POINT) {
@@ -302,7 +340,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       const progressDelta = deltaY * sensitivity;
       targetProgressRef.current = clamp(targetProgressRef.current + progressDelta, 0, 1);
     }
-  }, [reducedMotion, isComplete, isLocked]);
+  }, [reducedMotion, isComplete, isLocked, waitingForUnlockScroll, section2AnimationComplete, onComplete]);
 
   // Attach event listeners
   useEffect(() => {
@@ -449,6 +487,32 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
         </div>
       )}
 
+      {/* Unlock indicator - shows when animation is complete and waiting for scroll */}
+      {waitingForUnlockScroll && (
+        <div 
+          className="unlock-indicator-wrapper"
+          style={{
+            position: 'absolute',
+            bottom: '40px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 10,
+            animation: 'pulse 2s infinite',
+          }}
+        >
+          <div style={{
+            color: 'rgba(103, 232, 249, 0.9)',
+            fontSize: '16px',
+            textAlign: 'center',
+            fontWeight: '500',
+            textShadow: '0 0 20px rgba(103, 232, 249, 0.5)',
+          }}>
+            <span>Scroll to continue</span>
+            <div style={{ marginTop: '8px', fontSize: '24px' }}>↓</div>
+          </div>
+        </div>
+      )}
+
       {/* Progress indicator */}
       {isLocked && (
         <div 
@@ -489,6 +553,17 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
           60% { transform: translateX(-50%) translateY(-5px); }
         }
         
+        @keyframes pulse {
+          0%, 100% { 
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+          }
+          50% { 
+            transform: translateX(-50%) scale(1.1);
+            opacity: 0.8;
+          }
+        }
+        
         .three-section {
           transition: visibility 0s;
         }
@@ -498,7 +573,8 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
             transition: opacity 0.15s ease !important;
           }
           
-          .scroll-indicator-wrapper {
+          .scroll-indicator-wrapper,
+          .unlock-indicator-wrapper {
             animation: none !important;
           }
         }
