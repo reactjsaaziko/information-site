@@ -240,7 +240,7 @@ export default function SectionD_PainPoints() {
   const sectionRef = useRef(null);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.05 });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.3, margin: "0px 0px -100px 0px" });
 
   // Once in view, mark as animated permanently
   useEffect(() => {

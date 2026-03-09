@@ -24,8 +24,8 @@ import { normalizeWheelDelta, lerp, clamp, SCROLL_CONFIG } from '../hooks/useScr
 // Scrub configuration
 const SCRUB_CONFIG = {
   // How much scroll delta maps to progress change (lower = slower animation)
-  // REDUCED from 0.00015 to 0.00008 = Much slower scroll animation (47% slower than previous)
-  SCROLL_SENSITIVITY: SCROLL_CONFIG.SCRUB_SENSITIVITY || 0.00008,
+  // REDUCED to 0.00005 = Very slow scroll animation for better control
+  SCROLL_SENSITIVITY: SCROLL_CONFIG.SCRUB_SENSITIVITY || 0.00005,
   // Smoothing factor for lerp (lower = smoother but more lag)
   SMOOTHING: SCROLL_CONFIG.SMOOTHING_FACTOR || 0.12,
   // Minimum progress change to trigger update
@@ -58,7 +58,6 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
   const [showSection2, setShowSection2] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [displayProgress, setDisplayProgress] = useState(0);
-  const [isFadingOut, setIsFadingOut] = useState(false);
   
   // Touch tracking
   const touchStartRef = useRef({ y: 0, time: 0 });
@@ -153,27 +152,21 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       }
     }
     
-    // Check for completion - start fade out animation before unlocking
-    if (clampedProgress >= SCRUB_CONFIG.COMPLETION_THRESHOLD && !isComplete && !isFadingOut) {
-      // Start fade out animation
-      setIsFadingOut(true);
-      
-      // UPDATED: Hold the completed animation for 1 second, then fade out and switch
-      // Total delay: 1000ms (hold) + 500ms (fade) = 1.5 seconds before showing static content
-      setTimeout(() => {
-        setIsComplete(true);
-        setIsLocked(false);
-        if (onComplete) onComplete();
-      }, 1500); // 1 second hold + 500ms fade out
-    } else if (clampedProgress < SCRUB_CONFIG.COMPLETION_THRESHOLD - 0.05 && (isComplete || isFadingOut)) {
+    // Check for completion - only unlock when user scrolls to 100%
+    // Animation stays locked and waits for user scroll - no automatic transition
+    if (clampedProgress >= 0.999 && !isComplete) {
+      // User has scrolled to the very end (100%) - now unlock
+      setIsComplete(true);
+      setIsLocked(false);
+      if (onComplete) onComplete();
+    } else if (clampedProgress < 0.95 && isComplete) {
       // Reset if user scrolls back up significantly
       setIsComplete(false);
-      setIsFadingOut(false);
       setIsLocked(true);
     }
     
     setDisplayProgress(clampedProgress);
-  }, [activeSection, showSection2, isComplete, isFadingOut, onComplete]);
+  }, [activeSection, showSection2, isComplete, onComplete]);
 
   // Animation loop for smooth interpolation
   useEffect(() => {
@@ -220,7 +213,6 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       // Re-lock the 3D section
       setIsLocked(true);
       setIsComplete(false);
-      setIsFadingOut(false);
       
       // FIXED: Reset to 99.5% (just before completion) so Section 2 shows at 99% progress
       // This shows the full animation completed, then user can scroll back through it
@@ -240,11 +232,6 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       
       const normalizedDelta = normalizeWheelDelta(e.deltaY, e.deltaMode);
       const currentProgress = targetProgressRef.current;
-      
-      // Block scroll when at completion threshold and fading out (1-second hold)
-      if (isFadingOut && currentProgress >= SCRUB_CONFIG.COMPLETION_THRESHOLD) {
-        return; // Ignore scroll during hold period
-      }
       
       // Section 2 (0.5 to 1.0) - Apply 50% slower speed (multiply by 0.5)
       let sensitivity = SCRUB_CONFIG.SCROLL_SENSITIVITY;
@@ -288,7 +275,6 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       // Re-lock the 3D section
       setIsLocked(true);
       setIsComplete(false);
-      setIsFadingOut(false);
       
       // FIXED: Reset to 99.5% (just before completion) so Section 2 shows at 99% progress
       // This shows the full animation completed, then user can scroll back through it
@@ -306,11 +292,6 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
       e.preventDefault();
       
       const currentProgress = targetProgressRef.current;
-      
-      // Block scroll when at completion threshold and fading out (1-second hold)
-      if (isFadingOut && currentProgress >= SCRUB_CONFIG.COMPLETION_THRESHOLD) {
-        return; // Ignore scroll during hold period
-      }
       
       // Section 2 (0.5 to 1.0) - Apply 50% slower speed (multiply by 0.5)
       let sensitivity = SCRUB_CONFIG.SCROLL_SENSITIVITY * 1.25; // Base touch sensitivity
@@ -385,7 +366,7 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
   return (
     <div 
       ref={wrapperRef}
-      className={`three-hero-wrapper ${isFadingOut ? 'fading-out' : ''}`}
+      className="three-hero-wrapper"
       style={{
         position: isLocked ? 'fixed' : 'relative',
         top: 0,
@@ -396,11 +377,11 @@ const ThreeHeroWrapper = forwardRef(function ThreeHeroWrapper({
         overflow: 'hidden',
         // IMPORTANT: Solid dark background to prevent static content from showing through
         backgroundColor: '#080c14',
-        // Fade out animation when completing - holds for 1 second then fades
-        opacity: isFadingOut ? 0 : 1,
-        transition: isFadingOut ? 'opacity 0.5s ease-out 1s' : (isLocked && !isFadingOut ? 'opacity 0.3s ease-in' : 'none'),
-        // Show wrapper when locked or fading
-        visibility: (isLocked || isFadingOut) ? 'visible' : 'hidden',
+        // Smooth transition when unlocking
+        opacity: isLocked ? 1 : 0,
+        transition: isLocked ? 'none' : 'opacity 0.5s ease-out',
+        // Show wrapper when locked
+        visibility: isLocked ? 'visible' : 'hidden',
         pointerEvents: isLocked ? 'auto' : 'none',
       }}
     >
