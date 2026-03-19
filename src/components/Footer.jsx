@@ -21,7 +21,7 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: Facebook, href: 'https://facebook.com/AazikoIndia', label: 'Facebook' },
-    { icon: Instagram, href: 'https://instagram.com/aazikoindia', label: 'Instagram' },
+    { icon: Instagram, href: 'https://www.instagram.com/aaziko_india_/', label: 'Instagram' },
     { icon: Twitter, href: 'https://twitter.com/Aaziko_India', label: 'X (Twitter)' },
     { icon: Linkedin, href: 'https://linkedin.com/company/aaziko-india', label: 'LinkedIn' }
   ]

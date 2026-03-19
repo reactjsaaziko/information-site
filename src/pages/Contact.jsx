@@ -14,15 +14,15 @@ import './Contact.css'
 
 const contactInfo = {
   email: 'contact@aaziko.com',
-  phone: '+91 98765 43210',
+  phone: '+91 99042 24477',
   address: 'Aaziko Trade Center, Sector 62, Noida, Uttar Pradesh 201301, India',
   hours: 'Mon - Sat: 9:00 AM - 6:30 PM IST'
 }
 
 const offices = [
-  { city: 'Noida (HQ)', country: 'India', address: 'Sector 62, Noida, UP 201301' },
-  { city: 'Mumbai', country: 'India', address: 'Andheri East, Mumbai 400069' },
-  { city: 'Dubai', country: 'UAE', address: 'Business Bay, Dubai' }
+  { city: 'Surat', country: 'India', address: '9, Parisar Apartment, Sumul Dairy Road, Katargam, Surat, 395003' },
+  { city: 'Ahmedabad', country: 'India', address: 'A-406, Ratnakar Nine Square, Opp. ITC Narmada, Mansi Road, Vastrapur, Ahmedabad, 380025' },
+  { city: 'Surat', country: 'India', address: 'Basement-1, Alokik Tower, Sumul Dairy Road, Katargam, Surat, 395003' }
 ]
 
 const departments = [
@@ -291,18 +291,18 @@ const Contact = () => {
             <div className="contact-card">
               <h3 className="contact-card-title">Connect With Us</h3>
               <div className="contact-socials">
-                <a href="#" className="contact-social-btn" aria-label="LinkedIn">
-                  <Linkedin size={20} />
-                </a>
-                <a href="#" className="contact-social-btn" aria-label="Twitter">
-                  <Twitter size={20} />
-                </a>
-                <a href="#" className="contact-social-btn" aria-label="Facebook">
-                  <Facebook size={20} />
-                </a>
-                <a href="#" className="contact-social-btn" aria-label="Instagram">
-                  <Instagram size={20} />
-                </a>
+              <a href="https://linkedin.com/company/aaziko-india" target="_blank" rel="noopener noreferrer" className="contact-social-btn" aria-label="LinkedIn">
+                <Linkedin size={20} />
+              </a>
+              <a href="https://twitter.com/Aaziko_India" target="_blank" rel="noopener noreferrer" className="contact-social-btn" aria-label="Twitter">
+                <Twitter size={20} />
+              </a>
+              <a href="https://facebook.com/AazikoIndia" target="_blank" rel="noopener noreferrer" className="contact-social-btn" aria-label="Facebook">
+                <Facebook size={20} />
+              </a>
+              <a href="https://www.instagram.com/aaziko_india_/" target="_blank" rel="noopener noreferrer" className="contact-social-btn" aria-label="Instagram">
+                <Instagram size={20} />
+              </a>
               </div>
             </div>
           </motion.div>
