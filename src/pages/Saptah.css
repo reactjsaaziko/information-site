@@ -1,0 +1,696 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --s-maroon: hsl(0, 40%, 22%);
+  --s-maroon-deep: hsl(0, 45%, 15%);
+  --s-cream: hsl(35, 40%, 95%);
+  --s-cream-warm: hsl(35, 35%, 92%);
+  --s-gold: hsl(25, 45%, 25%);
+  --s-font-heading: 'Cormorant Garamond', Georgia, serif;
+  --s-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --s-space-2: 12px;
+  --s-space-3: 16px;
+  --s-space-4: 24px;
+  --s-space-5: 32px;
+  --s-space-6: 48px;
+  --s-space-7: 72px;
+  --s-space-8: 96px;
+  --s-space-9: 120px;
+}
+
+@keyframes saptah-float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes saptah-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes saptah-mandala-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes saptah-scroll-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+.saptah-page {
+  min-height: 100vh;
+  font-family: var(--s-font-body);
+  color: #4A2F24;
+  line-height: 1.6;
+  background-color: #ddd0b7;
+}
+.saptah-page h1, .saptah-page h2, .saptah-page h3, .saptah-page h4 {
+  font-family: var(--s-font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.saptah-om-bg {
+  position: absolute;
+  font-family: var(--s-font-heading);
+  pointer-events: none;
+  animation: saptah-float-gentle 6s ease-in-out infinite;
+  user-select: none;
+}
+
+.saptah-label-gold {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-weight: 600;
+  display: inline-block;
+  font-family: var(--s-font-body);
+  background: linear-gradient(90deg, #A86B34 0%, #B97A3D 50%, #A86B34 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: saptah-shimmer 3s linear infinite;
+}
+
+.saptah-section-label {
+  font-family: var(--s-font-body);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #A86B34;
+  line-height: 1.4;
+  font-size: 11px;
+}
+
+.saptah-divider-gold {
+  width: 96px;
+  height: 1px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  background: linear-gradient(90deg, transparent, #B97A3D, transparent);
+}
+.saptah-divider-gold::before,
+.saptah-divider-gold::after {
+  content: '\25C6';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #B97A3D;
+  font-size: 8px;
+}
+.saptah-divider-gold::before { left: -8px; }
+.saptah-divider-gold::after { right: -8px; }
+
+.saptah-divider-ornate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 24px 0;
+}
+.saptah-divider-ornate::before,
+.saptah-divider-ornate::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, #CDB9A5, transparent);
+}
+
+.saptah-sacred-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--s-cream) 0%, var(--s-cream-warm) 100%);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: inset 0 4px 16px hsla(0, 40%, 22%, 0.12), inset 0 8px 24px hsla(0, 40%, 22%, 0.08), inset 0 2px 4px hsla(25, 45%, 25%, 0.15), 0 8px 32px hsla(0, 40%, 22%, 0.08);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.saptah-sacred-card:hover {
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: inset 0 6px 20px hsla(0, 40%, 22%, 0.15), inset 0 10px 28px hsla(0, 40%, 22%, 0.1), inset 0 2px 6px hsla(25, 45%, 25%, 0.2), 0 12px 40px hsla(0, 40%, 22%, 0.12);
+}
+
+.saptah-sacred-icon {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, hsla(25, 45%, 25%, 0.15) 0%, hsla(28, 80%, 55%, 0.05) 70%, transparent 100%);
+  border-radius: 50%;
+  border: 1px solid hsla(25, 45%, 25%, 0.25);
+  transition: all 0.4s ease;
+  margin: 0 auto 24px;
+}
+.saptah-sacred-icon::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px dashed hsla(25, 45%, 25%, 0.15);
+  animation: saptah-mandala-spin 20s linear infinite;
+}
+
+.saptah-sacred-frame {
+  position: relative;
+}
+.saptah-sacred-frame::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1px solid hsla(25, 45%, 25%, 0.3);
+  pointer-events: none;
+  z-index: 1;
+}
+.saptah-sacred-frame::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border: 1px solid hsla(25, 45%, 25%, 0.1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Hero */
+.saptah-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.saptah-hero-bg { position: absolute; inset: 0; }
+.saptah-hero-bg iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.6;
+  border: none;
+}
+.saptah-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(20,10,6,0.65), rgba(20,10,6,0.72));
+}
+.saptah-hero-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 24px;
+}
+.saptah-hero-h1 {
+  font-family: var(--s-font-heading);
+  font-weight: 600;
+  color: #F8F1E7;
+  letter-spacing: -0.02em;
+  margin-bottom: 2.5rem;
+  text-shadow: 0 2px 24px rgba(185, 122, 61, 0.4);
+  font-size: 68px;
+  line-height: 1.08;
+}
+.saptah-hero-emphasis {
+  font-family: var(--s-font-heading);
+  font-weight: 500;
+  font-style: italic;
+  color: #B97A3D;
+  line-height: 1.15;
+  font-size: 38px;
+}
+.saptah-hero-support {
+  font-family: var(--s-font-body);
+  font-weight: 400;
+  color: rgba(248, 241, 231, 0.9);
+  line-height: 1.75;
+  max-width: 560px;
+  font-size: 16px;
+  margin: 0 auto 40px;
+}
+.saptah-hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.saptah-hero-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid hsla(25, 45%, 25%, 0.3);
+  background: hsla(0, 45%, 15%, 0.4);
+  backdrop-filter: blur(4px);
+}
+.saptah-hero-badge svg { width: 16px; height: 16px; color: #B97A3D; }
+.saptah-hero-badge span {
+  font-family: var(--s-font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(248, 241, 231, 0.82);
+}
+.saptah-hero-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsla(25, 45%, 25%, 0.4), transparent);
+}
+.saptah-scroll-indicator {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: saptah-scroll-bounce 2s infinite;
+}
+.saptah-scroll-dot {
+  width: 20px;
+  height: 32px;
+  border: 1px solid hsla(25, 45%, 25%, 0.3);
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+.saptah-scroll-dot-inner {
+  width: 4px;
+  height: 8px;
+  background: hsla(25, 45%, 25%, 0.5);
+  border-radius: 100px;
+}
+
+/* Cream section */
+.saptah-section-cream {
+  background-color: #ddd0b7;
+  padding: var(--s-space-8) 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Maroon section */
+.saptah-section-maroon {
+  background: #ddd0b7;
+  color: var(--s-maroon-deep);
+  padding: var(--s-space-8) 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Heading styles */
+.saptah-heading-spiritual {
+  font-family: var(--s-font-heading);
+  color: var(--s-maroon);
+  font-weight: 600;
+  line-height: 1.12;
+}
+.saptah-section-h2 {
+  font-family: var(--s-font-heading);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #4A2F24;
+  line-height: 1.12;
+  font-size: 42px;
+}
+.saptah-paragraph-body {
+  font-family: var(--s-font-body);
+  font-weight: 400;
+  color: #4A2F24;
+  line-height: 1.85;
+  font-size: 15px;
+}
+.saptah-section-intro {
+  font-family: var(--s-font-body);
+  font-weight: 400;
+  color: #4A2F24;
+  line-height: 1.8;
+  font-size: 16px;
+}
+.saptah-card-title {
+  font-family: var(--s-font-heading);
+  font-weight: 600;
+  color: #4A2F24;
+  line-height: 1.15;
+  font-size: 22px;
+}
+.saptah-card-body {
+  font-family: var(--s-font-body);
+  font-weight: 400;
+  font-size: 14px;
+  color: #4A2F24;
+  line-height: 1.7;
+}
+.saptah-stat-number {
+  font-family: var(--s-font-body);
+  font-weight: 600;
+  color: #4A2F24;
+  line-height: 1.15;
+  font-size: 28px;
+}
+.saptah-stat-label {
+  font-family: var(--s-font-body);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #7D6758;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* Container */
+.saptah-container { max-width: 1024px; margin: 0 auto; position: relative; z-index: 10; }
+.saptah-container-lg { max-width: 1152px; margin: 0 auto; position: relative; z-index: 10; }
+
+/* Grid */
+.saptah-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.saptah-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.saptah-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+/* Flex layouts */
+.saptah-flex-row { display: flex; gap: 48px; align-items: center; }
+.saptah-flex-col { display: flex; flex-direction: column; }
+
+/* Speaker stats card */
+.saptah-stat-card {
+  padding: 20px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(205, 185, 165, 0.3);
+  transition: all 0.3s ease;
+}
+.saptah-stat-card:hover { border-color: rgba(185, 122, 61, 0.4); }
+
+/* Experience card */
+.saptah-experience-card {
+  position: relative;
+  cursor: pointer;
+}
+.saptah-experience-card img {
+  width: 100%;
+  height: 288px;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+.saptah-experience-card:hover img { transform: scale(1.1); }
+.saptah-experience-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, hsla(0, 45%, 15%, 0.8), transparent, transparent);
+}
+.saptah-experience-tag {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: #CDB9A5;
+  font-family: var(--s-font-heading);
+  font-size: 2rem;
+}
+
+/* Gallery */
+.saptah-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  grid-auto-rows: 220px;
+}
+.saptah-gallery-item {
+  overflow: hidden;
+  border-radius: 2px;
+  position: relative;
+}
+.saptah-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+.saptah-gallery-item:hover img { transform: scale(1.1); }
+.saptah-gallery-item-large { grid-column: span 2; grid-row: span 2; }
+.saptah-gallery-item-wide { grid-column: span 2; }
+.saptah-gallery-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: hsla(0, 45%, 15%, 0);
+  transition: background 0.5s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+.saptah-gallery-item:hover .saptah-gallery-hover-overlay {
+  background: hsla(0, 45%, 15%, 0.4);
+}
+.saptah-gallery-hover-label {
+  color: #F8F1E7;
+  font-family: var(--s-font-heading);
+  font-size: 14px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.5s ease;
+}
+.saptah-gallery-item:hover .saptah-gallery-hover-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+.saptah-gallery-corner-tl {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 16px;
+  height: 16px;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  transition: border-color 0.5s;
+}
+.saptah-gallery-corner-br {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  border-bottom: 1px solid transparent;
+  border-right: 1px solid transparent;
+  transition: border-color 0.5s;
+}
+.saptah-gallery-item:hover .saptah-gallery-corner-tl { border-color: hsla(25, 45%, 25%, 0.5); }
+.saptah-gallery-item:hover .saptah-gallery-corner-br { border-color: hsla(25, 45%, 25%, 0.5); }
+
+/* CTA Section */
+.saptah-cta {
+  position: relative;
+  padding: var(--s-space-9) 24px;
+  overflow: hidden;
+}
+.saptah-cta-bg {
+  position: absolute;
+  inset: 0;
+}
+.saptah-cta-bg img { width: 100%; height: 100%; object-fit: cover; }
+.saptah-cta-bg-overlay1 {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, hsla(0, 45%, 15%, 0.98), hsla(0, 45%, 15%, 0.92), hsla(0, 40%, 22%, 0.85));
+}
+.saptah-cta-bg-overlay2 {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, hsla(0, 45%, 15%, 0.4), transparent, hsla(0, 45%, 15%, 0.4));
+}
+.saptah-cta-heading {
+  font-family: var(--s-font-heading);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #F8F1E7;
+  line-height: 1.08;
+  text-shadow: 0 3px 30px rgba(185, 122, 61, 0.5);
+  font-size: 52px;
+}
+.saptah-cta-intro-light {
+  font-family: var(--s-font-body);
+  font-weight: 400;
+  color: rgba(248, 241, 231, 0.95);
+  line-height: 1.8;
+  font-size: 16px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* Event details card */
+.saptah-event-card {
+  position: relative;
+  padding: 24px;
+  border-radius: 2px;
+  border: 1px solid hsla(25, 45%, 25%, 0.2);
+  background: hsla(0, 45%, 15%, 0.4);
+  backdrop-filter: blur(4px);
+  transition: all 0.5s ease;
+}
+.saptah-event-card:hover { background: hsla(0, 45%, 15%, 0.6); }
+.saptah-event-card-hover-border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  transition: border-color 0.5s ease;
+  pointer-events: none;
+}
+.saptah-event-card:hover .saptah-event-card-hover-border {
+  border-color: hsla(25, 45%, 25%, 0.4);
+}
+.saptah-event-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid hsla(25, 45%, 25%, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: hsla(25, 45%, 25%, 0.05);
+  transition: background 0.3s;
+}
+.saptah-event-card:hover .saptah-event-icon { background: hsla(25, 45%, 25%, 0.1); }
+.saptah-event-icon svg { width: 20px; height: 20px; color: #B97A3D; }
+
+/* Footer */
+.saptah-footer {
+  background: #ddd0b7;
+  padding: var(--s-space-7) 24px;
+  position: relative;
+}
+.saptah-footer-top-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsla(25, 45%, 25%, 0.2), transparent);
+}
+
+/* Speaker frame */
+.saptah-speaker-frame {
+  position: relative;
+  padding: 16px;
+  background: linear-gradient(135deg, hsla(25, 45%, 25%, 0.3), hsla(25, 45%, 25%, 0.2), hsla(25, 45%, 25%, 0.3));
+  border-radius: 8px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.saptah-speaker-inner {
+  position: relative;
+  padding: 12px;
+  background: hsla(0, 45%, 15%, 0.8);
+  border-radius: 6px;
+}
+.saptah-speaker-corner {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+}
+.saptah-speaker-corner-tl { top: 0; left: 0; border-top: 4px solid var(--s-gold); border-left: 4px solid var(--s-gold); }
+.saptah-speaker-corner-tr { top: 0; right: 0; border-top: 4px solid var(--s-gold); border-right: 4px solid var(--s-gold); }
+.saptah-speaker-corner-bl { bottom: 0; left: 0; border-bottom: 4px solid var(--s-gold); border-left: 4px solid var(--s-gold); }
+.saptah-speaker-corner-br { bottom: 0; right: 0; border-bottom: 4px solid var(--s-gold); border-right: 4px solid var(--s-gold); }
+
+/* Invitation card */
+.saptah-invitation-card {
+  padding: 32px 56px;
+  max-width: 768px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Why 10 Days banner */
+.saptah-banner {
+  padding: 32px;
+  border-radius: 2px;
+  border: 1px solid hsla(25, 45%, 25%, 0.3);
+  background: linear-gradient(to right, hsla(0, 45%, 15%, 0.6), hsla(0, 45%, 15%, 0.4));
+  backdrop-filter: blur(4px);
+  text-align: center;
+  margin-top: var(--s-space-6);
+}
+
+/* Grid for event details */
+.saptah-event-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .saptah-hero-h1 { font-size: 54px; line-height: 1.10; }
+  .saptah-hero-emphasis { font-size: 30px; }
+  .saptah-section-h2 { font-size: 34px; }
+  .saptah-cta-heading { font-size: 42px; }
+  .saptah-section-label { font-size: 10px; }
+  .saptah-label-gold { font-size: 10px; }
+}
+@media (max-width: 768px) {
+  .saptah-flex-row { flex-direction: column; gap: 32px; }
+  .saptah-grid-3 { grid-template-columns: 1fr; }
+  .saptah-grid-4 { grid-template-columns: 1fr 1fr; }
+  .saptah-event-grid { grid-template-columns: 1fr 1fr; }
+  .saptah-gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+  .saptah-gallery-item-large { grid-column: span 2; grid-row: span 2; }
+  .saptah-gallery-item-wide { grid-column: span 2; }
+  .saptah-invitation-card { padding: 24px 20px; }
+  .saptah-section-cream { padding: 64px 16px; }
+  .saptah-section-maroon { padding: 64px 16px; }
+}
+@media (max-width: 639px) {
+  .saptah-hero-h1 { font-size: 38px; line-height: 1.12; }
+  .saptah-hero-emphasis { font-size: 24px; }
+  .saptah-hero-support { font-size: 14px; }
+  .saptah-section-h2 { font-size: 28px; }
+  .saptah-cta-heading { font-size: 32px; }
+  .saptah-grid-2 { grid-template-columns: 1fr; }
+  .saptah-grid-4 { grid-template-columns: 1fr; }
+  .saptah-event-grid { grid-template-columns: 1fr; }
+  .saptah-gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 160px; }
+  .saptah-section-cream { padding: 48px 16px; }
+  .saptah-section-maroon { padding: 48px 16px; }
+}
+
+/* Text reveal animation on hover — sweeps text from top to bottom */
+@keyframes saptah-text-reveal {
+  0% { clip-path: inset(0% 0% 100% 0%); }
+  100% { clip-path: inset(0% 0% 0% 0%); }
+}
+
+/* Invitation card: hover triggers text reveal on inner content */
+.saptah-invitation-card {
+  position: relative;
+  overflow: hidden;
+}
+.saptah-invitation-content {
+  position: relative;
+}
+.saptah-invitation-card:hover .saptah-invitation-content {
+  animation: saptah-text-reveal 1.5s ease-in-out forwards;
+}
+
+/* Experience sacred cards: hover triggers text reveal */
+.saptah-sacred-card .saptah-card-inner {
+  position: relative;
+}
+.saptah-sacred-card:hover .saptah-card-inner {
+  animation: saptah-text-reveal 1.5s ease-in-out forwards;
+}
+
+html { scroll-behavior: smooth; }

@@ -19,6 +19,7 @@ const Navbar = ({ darkMode = false }) => {
     { label: 'Aaziko Logistics', path: '/logistics' },
     { label: 'Aaziko Inspection', path: '/inspection' },
     { label: 'Newsroom', path: '/newsroom' },
+    { label: 'For Community', path: '/community' },
     { label: 'Contact', path: '/contact' }
   ]
 
@@ -31,6 +32,7 @@ const Navbar = ({ darkMode = false }) => {
     { label: 'Aaziko Logistics', path: '/logistics' },
     { label: 'Aaziko Inspection', path: '/inspection' },
     { label: 'Newsroom', path: '/newsroom' },
+    { label: 'For Community', path: '/community' },
     { label: 'Contact', path: '/contact' }
   ]
 

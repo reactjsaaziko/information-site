@@ -11,7 +11,7 @@ import {
 } from 'lucide-react'
 import './Footer.css'
 
-const Footer = () => {
+const Footer = ({ hideCTA = false }) => {
   const [openAccordion, setOpenAccordion] = useState(null)
   const navigate = useNavigate()
 
@@ -87,6 +87,7 @@ const Footer = () => {
   return (
     <footer className="aaziko-footer">
       {/* Pre-Footer CTA Strip */}
+      {!hideCTA && (
       <div className="footer-cta-strip">
         <div className="footer-container">
           <div className="cta-content">
@@ -119,6 +120,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      )}
 
       {/* Main Footer */}
       <div className="footer-main">

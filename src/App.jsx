@@ -66,6 +66,7 @@ import PartnerSOPOnboarding from './pages/PartnerSOPOnboarding';
 import AboutPage from './pages/AboutPage';
 import Newsroom from './pages/Newsroom';
 import ComingSoon from './pages/ComingSoon';
+import Saptah from './pages/Saptah';
 
 function App() {
   return (
@@ -180,6 +181,10 @@ function App() {
 
       {/* Newsroom */}
       <Route path="/newsroom" element={<Newsroom />} />
+
+      {/* Community (formerly Saptah) */}
+      <Route path="/community" element={<Saptah />} />
+      <Route path="/saptah" element={<Saptah />} />
 
       {/* Policy & Contact */}
       <Route path="/policy" element={<PolicyPage />} />
